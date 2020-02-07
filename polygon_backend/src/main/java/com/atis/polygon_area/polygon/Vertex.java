@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 public class Vertex {
+    public int id;
     private float xCoord;
     private float yCoord;
     private float zCoord;

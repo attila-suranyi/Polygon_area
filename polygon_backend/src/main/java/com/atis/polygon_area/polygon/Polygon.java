@@ -1,0 +1,84 @@
+package com.atis.polygon_area.polygon;
+
+import lombok.Data;
+import org.paukov.combinatorics3.Generator;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+
+import static java.lang.Math.sqrt;
+
+@Data
+public abstract class Polygon {
+    private float area = 0;
+    private List<Vertex> vertices = new ArrayList<>();
+    private HashSet<List<Vertex>> triangles = new HashSet<>();
+
+    private void generatePossibleTriangleCombinations(Vertex vertex) {
+        List<Vertex> adjVertices = vertex.getAdjVertices();
+        List<List<Vertex>> possibleTriangleCombinations = new ArrayList();
+
+        // generates the possible pair combinations of the adjacent vertices
+        Generator.combination(adjVertices)
+                .simple(2)
+                .stream()
+                .forEach(possibleTriangleCombinations::add);
+
+        // adds the starting vertex to the end of the list
+        for (List<Vertex> triangle: possibleTriangleCombinations) {
+            triangle.add(vertex);
+            if (this.isTriangleValid(triangle)) {
+                this.addTriangle(triangle);
+            }
+        }
+    }
+
+    // examines if the other two vertices are adjacent to each other, not just to the starting vertex
+    private boolean isTriangleValid(List<Vertex> triangle) {
+        return triangle.get(0).getAdjVertices().contains(triangle.get(1)) && triangle.get(0).getAdjVertices().contains(triangle.get(2));
+    }
+
+    private void addTriangle(List<Vertex> triangle) {
+        triangle.sort(Comparator.comparing(Vertex::getId));
+        this.triangles.add(triangle);
+    }
+
+    private void calculatePolygonArea() {
+        for (List<Vertex> triangle : this.triangles) {
+
+            float sideA = this.calculateSideLength(triangle.get(0), triangle.get(1));
+            float sideB = this.calculateSideLength(triangle.get(0), triangle.get(2));
+            float sideC = this.calculateSideLength(triangle.get(1), triangle.get(2));
+
+            //Heron's formula
+            float s = (sideA + sideB + sideC) / 2;
+            this.area += (float) (sqrt(s * (s - sideA) * (s - sideB) * (s - sideC)));
+        }
+    }
+
+    private float calculateSideLength(Vertex pointA, Vertex pointB) {
+        return (float) Math.sqrt((Math.pow((pointA.getXCoord() - pointB.getXCoord()), 2) +
+                Math.pow((pointA.getYCoord() - pointB.getYCoord()), 2) +
+                Math.pow((pointA.getZCoord() - pointB.getZCoord()), 2)));
+    }
+
+    // the layers are: triangle, vertices in a triangle, coordinates of the vertices
+    public List<List<List<Float>>> getOrderedVertexCoordinates() {
+        List<List<Vertex>> sortedTriangles = new ArrayList<>(this.getTriangles());
+        sortedTriangles.sort(Comparator.comparing((l1) -> l1.get(0).getId()));
+
+        List<List<List<Float>>> sortedCoordinates = new ArrayList<>();
+
+        for (List<Vertex> triangle : sortedTriangles) {
+            List<List<Float>> triangleCoordinates = new ArrayList<>();
+            for (Vertex vertex : triangle) {
+                triangleCoordinates.add(vertex.getCoordinates());
+            }
+            sortedCoordinates.add(triangleCoordinates);
+        }
+
+        return sortedCoordinates;
+    }
+}
