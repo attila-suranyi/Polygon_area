@@ -1,4 +1,4 @@
-package com.atis.polygon_area.polygon;
+package com.atis.polygon_area.geometry;
 
 import lombok.Data;
 import org.paukov.combinatorics3.Generator;
@@ -16,7 +16,7 @@ public abstract class Polygon {
     private List<Vertex> vertices = new ArrayList<>();
     private HashSet<List<Vertex>> triangles = new HashSet<>();
 
-    private void generatePossibleTriangleCombinations(Vertex vertex) {
+    protected void generatePossibleTriangleCombinations(Vertex vertex) {
         List<Vertex> adjVertices = vertex.getAdjVertices();
         List<List<Vertex>> possibleTriangleCombinations = new ArrayList();
 
@@ -45,7 +45,7 @@ public abstract class Polygon {
         this.triangles.add(triangle);
     }
 
-    private void calculatePolygonArea() {
+    protected void calculatePolygonArea() {
         for (List<Vertex> triangle : this.triangles) {
 
             float sideA = this.calculateSideLength(triangle.get(0), triangle.get(1));

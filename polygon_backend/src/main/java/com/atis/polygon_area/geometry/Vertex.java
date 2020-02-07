@@ -1,11 +1,13 @@
-package com.atis.polygon_area.polygon;
+package com.atis.polygon_area.geometry;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 public class Vertex {
     public int id;
     private float xCoord;
@@ -13,10 +15,11 @@ public class Vertex {
     private float zCoord;
     private List<Vertex> adjVertices = new ArrayList<>();
 
-    public Vertex(float xCoord, float yCoord, float zCoord) {
+    public Vertex(float xCoord, float yCoord, float zCoord, int id) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.zCoord = zCoord;
+        this.id = id;
     }
 
     public List<Float> getCoordinates() {
