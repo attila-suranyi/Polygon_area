@@ -11,8 +11,6 @@ public class PolygonAreaApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PolygonAreaApplication.class, args);
-        Cube t = new Cube();
-        System.out.println(t.getArea());
     }
 
 }
