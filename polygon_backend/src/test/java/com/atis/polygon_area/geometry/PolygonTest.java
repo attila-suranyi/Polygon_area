@@ -2,10 +2,6 @@ package com.atis.polygon_area.geometry;
 
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class PolygonTest {
@@ -18,7 +14,7 @@ class PolygonTest {
 
     @Test
     void pyramidArea() {
-        Pyramid p = new Pyramid();
+        Tetrahedron p = new Tetrahedron();
         assertEquals(2.01, Math.round(p.getArea() * 100.0) / 100.0);
     }
 

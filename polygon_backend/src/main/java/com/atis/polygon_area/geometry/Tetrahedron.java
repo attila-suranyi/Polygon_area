@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class Pyramid extends Polygon {
+public class Tetrahedron extends Polygon {
 
-    public Pyramid() {
+    public Tetrahedron() {
         int vertexId = 1;
 
         List<Vertex> vertices = new ArrayList<>();

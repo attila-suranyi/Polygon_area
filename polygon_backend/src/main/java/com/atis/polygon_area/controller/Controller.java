@@ -1,7 +1,7 @@
 package com.atis.polygon_area.controller;
 
 import com.atis.polygon_area.geometry.Cube;
-import com.atis.polygon_area.geometry.Pyramid;
+import com.atis.polygon_area.geometry.Tetrahedron;
 import com.atis.polygon_area.geometry.Triangle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ public class Controller {
     private Triangle triangle;
 
     @Autowired
-    private Pyramid pyramid;
+    private Tetrahedron tetrahedron;
 
     @Autowired
     private Cube cube;
@@ -32,11 +32,11 @@ public class Controller {
         return ResponseEntity.ok(model);
     }
 
-    @GetMapping("/pyramid")
+    @GetMapping("/tetrahedron")
     public ResponseEntity getPyramidGeometry() {
         Map<Object, Object> model = new HashMap<>();
-        model.put("area", pyramid.getArea());
-        model.put("vertexCoordinates", pyramid.getOrderedVertexCoordinates());
+        model.put("area", tetrahedron.getArea());
+        model.put("vertexCoordinates", tetrahedron.getOrderedVertexCoordinates());
 
         return ResponseEntity.ok(model);
     }
