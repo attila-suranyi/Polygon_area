@@ -1,7 +1,9 @@
 package com.atis.polygon_area.geometry;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,8 @@ public class Vertex {
     private float xCoord;
     private float yCoord;
     private float zCoord;
+
+    @EqualsAndHashCode.Exclude
     private List<Vertex> adjVertices = new ArrayList<>();
 
     public Vertex(float xCoord, float yCoord, float zCoord, int id) {
