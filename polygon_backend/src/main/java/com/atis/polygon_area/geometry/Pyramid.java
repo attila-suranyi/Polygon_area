@@ -31,8 +31,8 @@ public class Pyramid extends Polygon {
         vertices.get(3).addAdjVertex(vertices.get(1));
         vertices.get(3).addAdjVertex(vertices.get(2));
 
-        for (int i = 0; i < vertices.size(); i++) {
-            this.generatePossibleTriangleCombinations(vertices.get(i));
+        for (Vertex vertex : vertices) {
+            this.generatePossibleTriangleCombinations(vertex);
         }
         this.calculatePolygonArea();
     }
