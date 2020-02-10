@@ -1,8 +1,11 @@
 package com.atis.polygon_area.geometry;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class Cube extends Polygon {
 
     public Cube() {
