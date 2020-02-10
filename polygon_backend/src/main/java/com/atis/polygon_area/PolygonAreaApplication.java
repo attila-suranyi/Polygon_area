@@ -1,5 +1,6 @@
 package com.atis.polygon_area;
 
+import com.atis.polygon_area.geometry.Pyramid;
 import com.atis.polygon_area.geometry.Triangle;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,7 +10,7 @@ public class PolygonAreaApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PolygonAreaApplication.class, args);
-        Triangle t = new Triangle();
+        Pyramid t = new Pyramid();
         System.out.println(t.getArea());
     }
 
