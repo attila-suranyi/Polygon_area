@@ -8,7 +8,7 @@ export default class Polygon extends Component {
   render() {
     return (
         <div className="Polygon">
-            <p>{this.state.shapeType}</p>
+            <p>{this.props.shapeType}</p>
         </div>
     );
   }
