@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Axios from "axios";
+import Graphics from "./Graphics";
 
 export default class Polygon extends Component {
   state = {
@@ -25,7 +26,14 @@ export default class Polygon extends Component {
     return (
       <div className="Polygon">
         <p>{this.props.shapeType}</p>
-        {this.state.area ? <p>{this.state.area}</p> : <p>Fetching...</p>}
+        {this.state.area ? (
+          <>
+            <p>{this.state.area}</p>
+            <Graphics geometry={this.state.geometry}/>
+          </>
+        ) : (
+          <p>Fetching...</p>
+        )}
       </div>
     );
   }
