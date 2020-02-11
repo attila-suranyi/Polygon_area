@@ -5,12 +5,16 @@ export default class Indexpage extends Component {
   render() {
     return (
       <div className="Indexpage">
-        <h2>Polygon</h2>
+        <h1>Polygon</h1>
         <Link to="/triangle" style={{ color: "#000" }}>
           Triangle
+        </Link><br></br>
+        <Link to="/tetrahedron" style={{ color: "#000" }}>
+          Tetrahedron
+        </Link><br></br>
+        <Link to="/cube" style={{ color: "#000" }}>
+          Cube
         </Link>
-        <p>Tetrahedron</p>
-        <p>Cube</p>
       </div>
     );
   }
