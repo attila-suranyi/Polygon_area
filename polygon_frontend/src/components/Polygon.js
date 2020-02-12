@@ -1,32 +1,34 @@
-import React, { Component } from "react";
+import React, {Component, useState, useEffect} from "react";
 import Axios from "axios";
 
-export default class Polygon extends Component {
-  state = {
-    backendIp: "http://localhost:8080",
-    area: null,
-    geometry: [],
+const Polygon = (props) => {
+    const backendIp = "http://localhost:8080";
 
-    fetchPolygonData: () => {
-      Axios.get(`${this.state.backendIp}/${this.props.shapeType}`).then(res =>
-        this.setState({
-          area: res.data.area,
-          geometry: res.data.vertexCoordinates
-        })
-      );
-    }
-  };
+    const [area, setArea] = useState(null);
+    const [geometry, setGeometry] = useState([]);
 
-  componentDidMount() {
-    this.state.fetchPolygonData();
-  }
+    const fetchPolygonData = () => {
+        Axios.get(`${backendIp}/${props.shapeType}`)
+            .then( resp =>
+                handleResp(resp.data)
+            )
+    };
 
-  render() {
+    useEffect(() => {
+        fetchPolygonData();
+    }, []);
+
+    const handleResp = resp => {
+        setArea(resp.area);
+        setGeometry(resp.vertexCoordinates);
+    };
+
     return (
-      <div className="Polygon">
-        <p>{this.props.shapeType}</p>
-        {this.state.area ? <p>{this.state.area}</p> : <p>Fetching...</p>}
-      </div>
+        <div className="Polygon">
+            <p>{props.shapeType}</p>
+            {area ? <p>{area}</p> : <p>Fetching...</p>}
+        </div>
     );
-  }
-}
+};
+
+export default Polygon;

@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
-import Indexpage from "./components/Indexpage";
+import IndexPage from "./components/IndexPage";
 import Polygon from "./components/Polygon";
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <Router>
         <Route exact path="/">
-          <Indexpage />
+          <IndexPage />
         </Route>
         <Route path="/triangle">
           <Polygon shapeType="triangle" />
