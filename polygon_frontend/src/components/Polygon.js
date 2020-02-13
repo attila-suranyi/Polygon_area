@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { Canvas, extend } from "react-three-fiber";
+import {Canvas, extend } from "react-three-fiber";
 import { useSpring, a } from "react-spring/three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Controls from "./OrbitControls";
 import Plane from "./Plane";
+import * as THREE from "three";
 
 import "./polygonStyle.css";
-
-const THREE = require('three');
 
 const Polygon = () => {
     extend({ OrbitControls });
@@ -39,17 +38,16 @@ const Polygon = () => {
               onPointerOut={ () => setHovered(false) }
               onClick={ () => setActive(!active)}
               scale={ springProps.scale }
+              castShadow={true}
         >
             <Controls />
 
-            <ambientLight
-                castShadow={true}
-                intensity={0.5}
-            />
+            <ambientLight />
             <spotLight
-                position={[5, 20, 10]}
+                position={[0, 5, 10]}
                 penumbra={true}
                 intensity={0.5}
+                castShadow={true}
             />
             <boxBufferGeometry
                 attach="geometry"
@@ -65,9 +63,16 @@ const Polygon = () => {
 };
 
 export default () => (
-    <Canvas>
+    <Canvas
+        camera={{ position: [0,0,5] }}
+        onCreated={({ gl }) => {
+            gl.shadowMap.enabled = true;
+            gl.shadowMap.type = THREE.PCFSoftShadowMap;
+        }}
+    >
         <Polygon />
         <Plane />
+        <fog attach="fog" args={["darkred", 5, 100 ]} />
     </Canvas>
 )
 
