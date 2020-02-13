@@ -2,16 +2,11 @@ package com.atis.polygon_area.geometry;
 
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
 public class Cube extends Polygon {
 
     public Cube() {
         int vertexId = 1;
-
-        List<Vertex> vertices = new ArrayList<>();
 
         vertices.add(new Vertex(0, 0, 0, vertexId++));  //0
         vertices.add(new Vertex(1, 0, 0, vertexId++));  //1
