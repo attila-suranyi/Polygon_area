@@ -20,8 +20,8 @@ const Polygon = () => {
 
     const blue = "#005ce6";
     const lightblue = "#1a75ff";
-    const defaultScale = [2, 2, 2];
-    const enlargedScale = [2.5, 2.5, 2.5];
+    const defaultScale = [3, 3, 3];
+    const enlargedScale = [4.5, 4.5, 4.5];
 
     const [hovered, setHovered] = useState(false);
     const [active, setActive] = useState(false);
