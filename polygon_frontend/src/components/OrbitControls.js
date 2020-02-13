@@ -20,7 +20,7 @@ const Controls = () => {
             minDistance={3}
             maxDistance={10}
             minPolarAngle={(Math.PI / 3) - 0.5}
-            maxPolarAngle={(Math.PI / 3) + 1.5}
+            maxPolarAngle={(Math.PI / 3) + 1.05}
             zoomSpeed={0.7}
         />
     )
