@@ -69,6 +69,7 @@ export default () => (
             gl.shadowMap.enabled = true;
             gl.shadowMap.type = THREE.PCFSoftShadowMap;
         }}
+        alpha={true}
     >
         <Polygon />
         <Plane />
