@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const IndexPage = ()=> {
+const Header = ()=> {
     return (
         <div className="index-page">
             <h1>Polygon</h1>
@@ -9,4 +9,4 @@ const IndexPage = ()=> {
     );
 };
 
-export default IndexPage;
+export default Header;

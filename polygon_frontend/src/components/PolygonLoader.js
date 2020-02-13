@@ -1,8 +1,8 @@
 import React, {useRef, useState, useEffect} from "react";
-import 
 import Axios from "axios";
+import Polygon from "./Polygon";
 
-const Polygon = (props) => {
+const PolygonLoader = (props) => {
     const [area, setArea] = useState(null);
     const [geometry, setGeometry] = useState([]);
 
@@ -25,8 +25,11 @@ const Polygon = (props) => {
         <div className="Polygon">
             <p>{props.shapeType}</p>
             {area ? <p>{area}</p> : <p>Fetching...</p>}
+
+            <Polygon />
+
         </div>
-    );
+    )
 };
 
-export default Polygon;
+export default PolygonLoader;
