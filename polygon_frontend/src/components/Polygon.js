@@ -1,32 +1,12 @@
-import React, { useState, useRef } from "react";
-import { Canvas, useFrame, extend, useThree, useUpdate, useRender } from "react-three-fiber";
-import ReactDOM from 'react-dom';
+import React, { useState } from "react";
+import { Canvas, extend } from "react-three-fiber";
 import { useSpring, a } from "react-spring/three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import Controls from "./OrbitControls";
 
 import "./polygonStyle.css";
 
 const THREE = require('three');
-
-const Controls = () => {
-    const orbitRef = useRef();
-    const { camera, gl } = useThree();
-
-    useFrame( () => {
-        orbitRef.current.update();
-    });
-
-    return (
-        <orbitControls
-            ref={orbitRef}
-            args={ [camera, gl.domElement] }
-            autoRotate={true}
-            autoRotateSpeed={3}
-            enableDamping={true}
-            dampingFactor={0.03}
-        />
-    )
-};
 
 const Polygon = () => {
     extend({ OrbitControls });
@@ -66,7 +46,7 @@ const Polygon = () => {
                 args={[1,1,1]}
             />
 
-            <a.meshBasicMaterial
+            <a.meshPhysicalMaterial
                 attach="material"
                 color={ springProps.color }
             />
