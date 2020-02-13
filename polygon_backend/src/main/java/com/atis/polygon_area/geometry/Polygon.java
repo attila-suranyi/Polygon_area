@@ -2,19 +2,32 @@ package com.atis.polygon_area.geometry;
 
 import lombok.Data;
 import org.paukov.combinatorics3.Generator;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-
+import java.util.*;
 import static java.lang.Math.sqrt;
 
 @Data
-public abstract class Polygon {
+public class Polygon {
     private float area = 0;
-    private List<Vertex> vertices = new ArrayList<>();
-    private HashSet<List<Vertex>> triangles = new HashSet<>();
+
+    private Set<List<Vertex>> faces = new HashSet<>();
+    private Set<List<Vertex>> triangles = new HashSet<>();
+    protected List<Vertex> vertices = new ArrayList<>();
+
+
+    public void dividePolygonFaceToTriangles() {
+        for (List<Vertex> face : this.faces) {
+
+            // the number of necessary new edges is: the number of vertices of the face - 3
+            for (int i=0; i < face.size() - 3; i++) {
+                face.get(0).addAdjVertex(face.get( 2 + i ));
+                face.get( 2 + i ).addAdjVertex(face.get(0));
+            }
+
+            // all the possible triangles can be generated from Vertex0 of the face,
+            // because all the new edges were generated from it
+            this.generatePossibleTriangleCombinations(face.get(0));
+        }
+    }
 
     protected void generatePossibleTriangleCombinations(Vertex vertex) {
         List<Vertex> adjVertices = vertex.getAdjVertices();
