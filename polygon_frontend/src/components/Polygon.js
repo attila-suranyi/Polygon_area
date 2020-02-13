@@ -3,6 +3,7 @@ import { Canvas, extend } from "react-three-fiber";
 import { useSpring, a } from "react-spring/three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Controls from "./OrbitControls";
+import Plane from "./Plane";
 
 import "./polygonStyle.css";
 
@@ -41,6 +42,15 @@ const Polygon = () => {
         >
             <Controls />
 
+            <ambientLight
+                castShadow={true}
+                intensity={0.5}
+            />
+            <spotLight
+                position={[5, 20, 10]}
+                penumbra={true}
+                intensity={0.5}
+            />
             <boxBufferGeometry
                 attach="geometry"
                 args={[1,1,1]}
@@ -57,6 +67,7 @@ const Polygon = () => {
 export default () => (
     <Canvas>
         <Polygon />
+        <Plane />
     </Canvas>
 )
 
