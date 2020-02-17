@@ -5,6 +5,7 @@ import org.paukov.combinatorics3.Generator;
 import java.util.*;
 import static java.lang.Math.sqrt;
 
+//TODO move vertexId field here
 @Data
 public class Polygon {
     private float area = 0;
@@ -12,6 +13,39 @@ public class Polygon {
     private Set<List<Vertex>> faces = new HashSet<>();
     private Set<List<Vertex>> triangles = new HashSet<>();
     protected List<Vertex> vertices = new ArrayList<>();
+
+
+    public static boolean isPlaneAFace(List<Vertex> plane, Polygon polygon) throws Exception {
+        if (plane.size() < 3) {
+            throw new Exception("Plane must consist minimum of three points.");
+        }
+
+        boolean pointsAbove = false;
+        boolean pointsBelow = false;
+
+        Vector normalVector = Vector.normalVector(plane.get(0), plane.get(1), plane.get(2));
+
+        for (Vertex vertex : polygon.getVertices()) {
+            if (!plane.contains(vertex)) {
+                double x = pointPositionRelativeToPlain(normalVector, vertex, plane.get(0));
+                if (x > 0) {
+                    pointsAbove = true;
+                }
+                if (x < 0) {
+                    pointsBelow = true;
+                }
+            }
+            if (pointsAbove && pointsBelow) {
+                return false;
+            }
+        }
+
+        return (pointsAbove || pointsBelow);
+    }
+
+    private static double pointPositionRelativeToPlain(Vector normalVector, Vertex pointOnPlane, Vertex point) {
+        return Vector.dot(normalVector, Vector.subtract(point, pointOnPlane));
+    }
 
 
     public void dividePolygonFaceToTriangles() {
