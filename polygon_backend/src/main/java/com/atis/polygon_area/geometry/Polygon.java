@@ -25,11 +25,11 @@ public class Polygon {
      * @param polygon the polygon
      * @return boolean, is it a face?
      */
+    //TODO this method does too much
     public static boolean isPlaneAFace(List<Vertex> plane, Polygon polygon) throws Exception {
         if (plane.size() < 3) {
             throw new Exception("Plane must consist minimum of three points.");
         }
-
         boolean pointsAbove = false;
         boolean pointsBelow = false;
 
@@ -37,18 +37,22 @@ public class Polygon {
 
         for (Vertex vertex : polygon.getVertices()) {
             if (!plane.contains(vertex)) {
-                boolean pointAbovePlane = isPointAbovePlane(normalVector, vertex, plane.get(0));
-                if (pointAbovePlane) {
+                double pointAbovePlane = pointDistanceFromPlane(normalVector, vertex, plane.get(0));
+
+                if (pointAbovePlane > 0) {
                     pointsAbove = true;
                 }
-                if (!pointAbovePlane) {
+                else if (pointAbovePlane < 0) {
                     pointsBelow = true;
+                } else {
+                    plane.add(vertex);
                 }
             }
             if (pointsAbove && pointsBelow) {
                 return false;
             }
         }
+        polygon.addFace(plane);
         return (pointsAbove || pointsBelow);
     }
 
@@ -60,8 +64,8 @@ public class Polygon {
      * @param point point in space
      * @return boolean, is point above the plane?
      */
-    private static boolean isPointAbovePlane(Vector normalVector, Vertex pointOnPlane, Vertex point) {
-        return Vector.dot(normalVector, Vector.subtract(point, pointOnPlane)) > 0;
+    private static double pointDistanceFromPlane(Vector normalVector, Vertex pointOnPlane, Vertex point) {
+        return Vector.dot(normalVector, Vector.subtract(point, pointOnPlane));
     }
 
 
@@ -107,6 +111,11 @@ public class Polygon {
     private void addTriangle(List<Vertex> triangle) {
         triangle.sort(Comparator.comparing(Vertex::getId));
         this.triangles.add(triangle);
+    }
+
+    private void addFace(List<Vertex> face) {
+        face.sort(Comparator.comparing(Vertex::getId));
+        this.faces.add(face);
     }
 
     protected void calculatePolygonArea() {
