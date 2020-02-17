@@ -5,6 +5,7 @@ import org.paukov.combinatorics3.Generator;
 import java.util.*;
 import static java.lang.Math.sqrt;
 
+
 //TODO move vertexId field here
 @Data
 public class Polygon {
@@ -15,6 +16,15 @@ public class Polygon {
     protected List<Vertex> vertices = new ArrayList<>();
 
 
+    /**
+     * Static method that tells you whether the given plane is
+     * the outer most plane in a polygon.
+     * If there are points on both sides of the given plane,
+     * then the plane is not a face of the polygon.
+     * @param plane the plane we want to examine if it is a face
+     * @param polygon the polygon
+     * @return boolean, is it a face?
+     */
     public static boolean isPlaneAFace(List<Vertex> plane, Polygon polygon) throws Exception {
         if (plane.size() < 3) {
             throw new Exception("Plane must consist minimum of three points.");
@@ -27,11 +37,11 @@ public class Polygon {
 
         for (Vertex vertex : polygon.getVertices()) {
             if (!plane.contains(vertex)) {
-                double x = pointPositionRelativeToPlain(normalVector, vertex, plane.get(0));
-                if (x > 0) {
+                boolean pointAbovePlane = isPointAbovePlane(normalVector, vertex, plane.get(0));
+                if (pointAbovePlane) {
                     pointsAbove = true;
                 }
-                if (x < 0) {
+                if (!pointAbovePlane) {
                     pointsBelow = true;
                 }
             }
@@ -39,12 +49,19 @@ public class Polygon {
                 return false;
             }
         }
-
         return (pointsAbove || pointsBelow);
     }
 
-    private static double pointPositionRelativeToPlain(Vector normalVector, Vertex pointOnPlane, Vertex point) {
-        return Vector.dot(normalVector, Vector.subtract(point, pointOnPlane));
+    /**
+     * Static method that tells you whether the given point is above a plane,
+     * using the normal vector of the plane.
+     * @param normalVector of the plane
+     * @param pointOnPlane a point on the plane
+     * @param point point in space
+     * @return boolean, is point above the plane?
+     */
+    private static boolean isPointAbovePlane(Vector normalVector, Vertex pointOnPlane, Vertex point) {
+        return Vector.dot(normalVector, Vector.subtract(point, pointOnPlane)) > 0;
     }
 
 

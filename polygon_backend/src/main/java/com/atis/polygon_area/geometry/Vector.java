@@ -17,13 +17,6 @@ public class Vector {
         this.Z = v.getZ();
     }
 
-    /**
-     * Static function to create a new vector as the difference between
-     * two points.
-     * @param v1 the first point
-     * @param v2 the second point
-     * @return the new difference vector
-     */
     public static Vector subtract(Vertex v1, Vertex v2) {
         return new Vector (v1.getX() - v2.getX(), v1.getY() - v2.getY(), v1.getZ() - v2.getZ());
     }
@@ -52,6 +45,13 @@ public class Vector {
         return (v1.X * v2.X) + (v1.Y * v2.Y) + (v1.Z * v2.Z);
     }
 
+    /**
+     * Static method that calculates the normal vector from three points
+     * @param v1 first point
+     * @param v2 second point
+     * @param v3 third point
+     * @return the normal vector
+     */
     public static Vector normalVector(Vertex v1, Vertex v2, Vertex v3) {
         Vector v1v2 = Vector.subtract(v2, v1);
         Vector v1v3 = Vector.subtract(v3, v1);
