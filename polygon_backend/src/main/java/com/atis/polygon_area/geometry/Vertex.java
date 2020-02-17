@@ -12,26 +12,32 @@ import java.util.List;
 @AllArgsConstructor
 public class Vertex {
     public int id;
-    private float xCoord;
-    private float yCoord;
-    private float zCoord;
+    private float X;
+    private float Y;
+    private float Z;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Vertex> adjVertices = new ArrayList<>();
 
-    public Vertex(float xCoord, float yCoord, float zCoord, int id) {
-        this.xCoord = xCoord;
-        this.yCoord = yCoord;
-        this.zCoord = zCoord;
+    public Vertex(float X, float Y, float Z, int id) {
+        this.X = X;
+        this.Y = Y;
+        this.Z = Z;
         this.id = id;
+    }
+
+    public Vertex(float X, float Y, float Z) {
+        this.X = X;
+        this.Y = Y;
+        this.Z = Z;
     }
 
     public List<Float> getCoordinates() {
         List<Float> coordinates = new ArrayList<>();
-        coordinates.add(this.xCoord);
-        coordinates.add(this.yCoord);
-        coordinates.add(this.zCoord);
+        coordinates.add(this.X);
+        coordinates.add(this.Y);
+        coordinates.add(this.Z);
 
         return coordinates;
     }

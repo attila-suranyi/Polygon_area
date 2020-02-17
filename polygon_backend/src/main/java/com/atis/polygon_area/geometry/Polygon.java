@@ -72,9 +72,9 @@ public class Polygon {
     }
 
     private float calculateSideLength(Vertex pointA, Vertex pointB) {
-        return (float) Math.sqrt((Math.pow((pointA.getXCoord() - pointB.getXCoord()), 2) +
-                Math.pow((pointA.getYCoord() - pointB.getYCoord()), 2) +
-                Math.pow((pointA.getZCoord() - pointB.getZCoord()), 2)));
+        return (float) Math.sqrt((Math.pow((pointA.getX() - pointB.getX()), 2) +
+                Math.pow((pointA.getY() - pointB.getY()), 2) +
+                Math.pow((pointA.getZ() - pointB.getZ()), 2)));
     }
 
     // the layers are: triangle, vertices in a triangle, coordinates of the vertices
