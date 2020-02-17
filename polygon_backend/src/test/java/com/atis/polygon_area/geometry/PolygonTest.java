@@ -78,6 +78,7 @@ class PolygonTest {
         assertEquals(3, vertex2.getAdjVertices().size());
     }
 
+    //TODO make it a random polygon
     @Test
     void hexagonDividedIntoFourTriangles() {
         Polygon p = new Polygon();
@@ -125,5 +126,33 @@ class PolygonTest {
 
         p.dividePolygonFaceToTriangles();
         assertEquals(4, p.getTriangles().size());
+    }
+
+    @Test
+    void cubeSpaceDiagonalNotAFace() throws Exception {
+        Polygon cube = new Polygon();
+
+        int vertexId = 1;
+
+        List<Vertex> vertices = new ArrayList<>();
+        vertices.add(new Vertex(0, 0, 0, vertexId++));  //0
+        vertices.add(new Vertex(1, 0, 0, vertexId++));  //1
+        vertices.add(new Vertex(1, 1, 0, vertexId++));  //2
+        vertices.add(new Vertex(0, 1, 0, vertexId++));  //3
+
+        vertices.add(new Vertex(0, 1, 1, vertexId++));  //4
+        vertices.add(new Vertex(0, 0, 1, vertexId++));  //5
+        vertices.add(new Vertex(1, 0, 1, vertexId++));  //6
+        vertices.add(new Vertex(1, 1, 1, vertexId));  //7
+
+        cube.setVertices(vertices);
+
+        List<Vertex> spaceDiagonal = new ArrayList<>();
+        spaceDiagonal.add(vertices.get(0));
+        spaceDiagonal.add(vertices.get(1));
+        spaceDiagonal.add(vertices.get(4));
+        spaceDiagonal.add(vertices.get(7));
+
+        assertFalse(Polygon.isPlaneAFace(spaceDiagonal, cube));
     }
 }
