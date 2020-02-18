@@ -1,5 +1,8 @@
 package com.atis.polygon_area.geometry;
 
+import com.atis.polygon_area.shapes.Cube;
+import com.atis.polygon_area.shapes.Tetrahedron;
+import com.atis.polygon_area.shapes.Triangle;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

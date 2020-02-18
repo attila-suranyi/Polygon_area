@@ -1,8 +1,8 @@
 package com.atis.polygon_area.controller;
 
-import com.atis.polygon_area.geometry.Cube;
-import com.atis.polygon_area.geometry.Tetrahedron;
-import com.atis.polygon_area.geometry.Triangle;
+import com.atis.polygon_area.shapes.Cube;
+import com.atis.polygon_area.shapes.Tetrahedron;
+import com.atis.polygon_area.shapes.Triangle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

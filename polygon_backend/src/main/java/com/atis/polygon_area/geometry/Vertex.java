@@ -14,13 +14,6 @@ public class Vertex {
     private double Z;
 
 
-    public Vertex(double X, double Y, double Z, int id) {
-        this.X = X;
-        this.Y = Y;
-        this.Z = Z;
-        this.id = id;
-    }
-
     public Vertex(double X, double Y, double Z) {
         this.X = X;
         this.Y = Y;

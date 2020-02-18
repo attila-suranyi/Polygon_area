@@ -8,7 +8,6 @@ import java.util.*;
 import static java.lang.Math.sqrt;
 
 
-//TODO move vertexId field here
 @Data
 public class Polygon {
     private double area = 0;
@@ -26,7 +25,6 @@ public class Polygon {
         this.dividePolygonFaceToTriangles();
         this.calculatePolygonArea();
     }
-
 
     /**
      * Static method that finds the faces of a polygon by
@@ -156,7 +154,7 @@ public class Polygon {
         return sortedCoordinates;
     }
 
-    void addVertex(Vertex vertex) {
+    public void addVertex(Vertex vertex) {
         vertex.setId(this.vertexId++);
         this.vertices.add(vertex);
     }
