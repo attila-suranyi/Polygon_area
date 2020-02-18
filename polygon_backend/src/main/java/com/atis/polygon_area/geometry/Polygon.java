@@ -57,7 +57,7 @@ public class Polygon {
                     break;
                 }
             }
-            if ((pointsAbove && !pointsBelow) || (pointsBelow && !pointsAbove)) {
+            if (!(pointsAbove && pointsBelow)) {
                 this.addFace(plane);
             }
         }
@@ -116,30 +116,6 @@ public class Polygon {
         }
     }
 
-    /*void generatePossibleTriangleCombinations(Vertex vertex) {
-        List<Vertex> adjVertices = vertex.getAdjVertices();
-        List<List<Vertex>> possibleTriangleCombinations = new ArrayList<>();
-
-        // generates the possible pair combinations of the adjacent vertices
-        Generator.combination(adjVertices)
-                .simple(2)
-                .stream()
-                .forEach(possibleTriangleCombinations::add);
-
-        // adds the starting vertex to the end of the list
-        for (List<Vertex> triangle: possibleTriangleCombinations) {
-            triangle.add(vertex);
-            if (this.isTriangleValid(triangle)) {
-                this.addTriangle(triangle);
-            }
-        }
-    }
-
-    // examines if the other two vertices are adjacent to each other, not just to the starting vertex
-    private boolean isTriangleValid(List<Vertex> triangle) {
-        return triangle.get(0).getAdjVertices().contains(triangle.get(1)) && triangle.get(0).getAdjVertices().contains(triangle.get(2));
-    }*/
-
     private void addTriangle(List<Vertex> triangle) {
         triangle.sort(Comparator.comparing(Vertex::getId));
         this.triangles.add(triangle);
@@ -170,14 +146,14 @@ public class Polygon {
     }
 
     // the layers are: triangle, vertices in a triangle, coordinates of the vertices
-    public List<List<List<Float>>> getOrderedVertexCoordinates() {
+    public List<List<List<Double>>> getOrderedVertexCoordinates() {
         List<List<Vertex>> sortedTriangles = new ArrayList<>(this.getTriangles());
         sortedTriangles.sort(Comparator.comparing((l1) -> l1.get(0).getId()));
 
-        List<List<List<Float>>> sortedCoordinates = new ArrayList<>();
+        List<List<List<Double>>> sortedCoordinates = new ArrayList<>();
 
         for (List<Vertex> triangle : sortedTriangles) {
-            List<List<Float>> triangleCoordinates = new ArrayList<>();
+            List<List<Double>> triangleCoordinates = new ArrayList<>();
             for (Vertex vertex : triangle) {
                 triangleCoordinates.add(vertex.getCoordinates());
             }
