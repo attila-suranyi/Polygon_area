@@ -1,7 +1,10 @@
 import React, { useRef } from "react";
 import { useFrame, useThree } from "react-three-fiber";
 
-const Controls = () => {
+/**
+ * Defines camera controls and behavior
+ */
+const CameraControls = () => {
     const orbitRef = useRef();
     const { camera, gl } = useThree();
 
@@ -26,4 +29,4 @@ const Controls = () => {
     )
 };
 
-export default Controls;
+export default CameraControls;
