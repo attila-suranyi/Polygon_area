@@ -3,13 +3,15 @@ package com.atis.polygon_area.geometry;
 import lombok.Data;
 import org.paukov.combinatorics3.Generator;
 import java.util.*;
+import java.util.stream.Collectors;
+
 import static java.lang.Math.sqrt;
 
 
 //TODO move vertexId field here
 @Data
 public class Polygon {
-    private float area = 0;
+    private double area = 0;
 
     private Set<List<Vertex>> faces = new HashSet<>();
     private Set<List<Vertex>> triangles = new HashSet<>();
@@ -21,54 +23,70 @@ public class Polygon {
      * the outer most plane in a polygon.
      * If there are points on both sides of the given plane,
      * then the plane is not a face of the polygon.
-     * @param plane the plane we want to examine if it is a face
-     * @param polygon the polygon
-     * @return boolean, is it a face?
+     *
      */
     //TODO this method does too much
-    public static boolean isPlaneAFace(List<Vertex> plane, Polygon polygon) throws Exception {
-        if (plane.size() < 3) {
-            throw new Exception("Plane must consist minimum of three points.");
-        }
-        boolean pointsAbove = false;
-        boolean pointsBelow = false;
+    public void findFaces() {
+        List<List<Vertex>> planes = this.generatePlanes();
 
-        Vector normalVector = Vector.normalVector(plane.get(0), plane.get(1), plane.get(2));
+        for (List<Vertex> plane : planes) {
 
-        for (Vertex vertex : polygon.getVertices()) {
-            if (!plane.contains(vertex)) {
-                double pointAbovePlane = pointDistanceFromPlane(normalVector, vertex, plane.get(0));
+            boolean pointsAbove = false;
+            boolean pointsBelow = false;
 
-                if (pointAbovePlane > 0) {
-                    pointsAbove = true;
+            Vector normalVector = Vector.normalVector(plane.get(0), plane.get(1), plane.get(2));
+
+            for (Vertex vertex : this.getVertices()) {
+                if (!plane.contains(vertex)) {
+                    double pointAbovePlane = pointDistanceFromPlane(normalVector, vertex, plane.get(0));
+
+                    if (pointAbovePlane > 0) {
+                        pointsAbove = true;
+                    } else if (pointAbovePlane < 0) {
+                        pointsBelow = true;
+                    } else {
+                        plane.add(vertex);
+                    }
                 }
-                else if (pointAbovePlane < 0) {
-                    pointsBelow = true;
-                } else {
-                    plane.add(vertex);
+                if (pointsAbove && pointsBelow) {
+                    break;
                 }
             }
-            if (pointsAbove && pointsBelow) {
-                return false;
+            if ((pointsAbove && !pointsBelow) || (pointsBelow && !pointsAbove)) {
+                this.addFace(plane);
             }
         }
-        polygon.addFace(plane);
-        return (pointsAbove || pointsBelow);
+    }
+
+    protected List<List<Vertex>> generatePlanes() {
+        List<List<Vertex>> planes = new ArrayList<>();
+
+        Generator.combination(this.vertices)
+                .simple(3)
+                .stream()
+                .forEach(planes::add);
+
+        return planes;
     }
 
     /**
-     * Static method that tells you whether the given point is above a plane,
+     * Static method that calculates the distance between the plane and a point,
      * using the normal vector of the plane.
+     * The sign of the distance (negative or positive) indicates the relative
+     * position of the point.
+     * If it is positive it is above, in case of negative it is below the plane.
+     * If it is 0, then it is on the plane
      * @param normalVector of the plane
      * @param pointOnPlane a point on the plane
      * @param point point in space
-     * @return boolean, is point above the plane?
+     * @return distance between the point and the plane
      */
     private static double pointDistanceFromPlane(Vector normalVector, Vertex pointOnPlane, Vertex point) {
         return Vector.dot(normalVector, Vector.subtract(point, pointOnPlane));
     }
 
 
+    //TODO the triangles are accessible here already
     public void dividePolygonFaceToTriangles() {
         for (List<Vertex> face : this.faces) {
 
@@ -121,18 +139,18 @@ public class Polygon {
     protected void calculatePolygonArea() {
         for (List<Vertex> triangle : this.triangles) {
 
-            float sideA = this.calculateSideLength(triangle.get(0), triangle.get(1));
-            float sideB = this.calculateSideLength(triangle.get(0), triangle.get(2));
-            float sideC = this.calculateSideLength(triangle.get(1), triangle.get(2));
+            double sideA = this.calculateSideLength(triangle.get(0), triangle.get(1));
+            double sideB = this.calculateSideLength(triangle.get(0), triangle.get(2));
+            double sideC = this.calculateSideLength(triangle.get(1), triangle.get(2));
 
             //Heron's formula
-            float s = (sideA + sideB + sideC) / 2;
+            double s = (sideA + sideB + sideC) / 2;
             this.area += (float) (sqrt(s * (s - sideA) * (s - sideB) * (s - sideC)));
         }
     }
 
-    private float calculateSideLength(Vertex pointA, Vertex pointB) {
-        return (float) Math.sqrt((Math.pow((pointA.getX() - pointB.getX()), 2) +
+    private double calculateSideLength(Vertex pointA, Vertex pointB) {
+        return Math.sqrt((Math.pow((pointA.getX() - pointB.getX()), 2) +
                 Math.pow((pointA.getY() - pointB.getY()), 2) +
                 Math.pow((pointA.getZ() - pointB.getZ()), 2)));
     }
