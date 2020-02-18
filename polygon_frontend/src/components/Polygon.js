@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {extend } from "react-three-fiber";
+import {extend, useFrame} from "react-three-fiber";
 import { useSpring, a } from "react-spring/three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import * as THREE from "three";
@@ -18,10 +18,11 @@ const Polygon = (props) => {
 
     const [hovered, setHovered] = useState(false);
     const [active, setActive] = useState(false);
+    const [wirefFrame, setWireFrame] = useState(false);
 
     const springProps = useSpring({
         scale: active ? enlargedScale : defaultScale,
-        color: hovered ? lightblue : blue
+        color: hovered ? lightblue : blue,
     });
 
     const customGeo = buildGeo(props.geo);
@@ -30,7 +31,7 @@ const Polygon = (props) => {
         <a.mesh
               onPointerOver={ () => setHovered(true) }
               onPointerOut={ () => setHovered(false) }
-              onClick={ () => setActive(!active)}
+              onClick={ () => { setActive(!active); setWireFrame(!wirefFrame) } }
               scale={ springProps.scale }
               castShadow={true}
               geometry={customGeo}
@@ -40,13 +41,14 @@ const Polygon = (props) => {
             <spotLight
                 position={[0, 5, 10]}
                 penumbra={true}
-                intensity={0.5}
+                intensity={0.7}
                 castShadow={true}
             />
 
             <a.meshPhysicalMaterial
                 attach="material"
                 color={ springProps.color }
+                wireframe={ wirefFrame }
             />
         </a.mesh>
     );
@@ -56,17 +58,9 @@ export default Polygon;
 
 //TODO use data from context
 const buildGeo = (geoData) => {
-    // let geometry = new THREE.BufferGeometry();
-    // const myVertices = new Float32Array([
-    //     -10, 10, 0,
-    //     -10, -10, 0,
-    //     10, 10, 0
-    // ]);
-    // customGeo.setAttribute('position', new THREE.BufferAttribute(myVertices, 3));
-
     let geometry = new THREE.Geometry();
 
-    // create vertices with Vector3
+    // create vertices with Vector3 objects
     geometry.vertices.push(
         new THREE.Vector3(1, 1, 1),
         new THREE.Vector3(1, 1, -1),
@@ -94,8 +88,13 @@ const buildGeo = (geoData) => {
         new THREE.Face3(3, 6, 4)
     );
 
+    //TODO iterate through geoData instead
+
     geometry.normalize();
     geometry.computeFlatVertexNormals();
 
-    return geometry;
+    let bufferedGeo = new THREE.BufferGeometry().fromGeometry(geometry);
+    return bufferedGeo;
+
+    // return geometry;
 };

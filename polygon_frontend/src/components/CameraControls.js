@@ -21,10 +21,10 @@ const CameraControls = () => {
             enableDamping={true}
             dampingFactor={0.03}
             minDistance={3}
-            maxDistance={100}
+            maxDistance={1200}
             minPolarAngle={(Math.PI / 3) - 0.5}
             maxPolarAngle={(Math.PI / 3) + 1.05}
-            zoomSpeed={0.7}
+            zoomSpeed={3}
         />
     )
 };
