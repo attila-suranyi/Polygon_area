@@ -129,6 +129,30 @@ class PolygonTest {
     }
 
     @Test
+    void cubeHasSixFaces() {
+        Polygon cube = new Polygon();
+
+        int vertexId = 1;
+
+        List<Vertex> vertices = new ArrayList<>();
+        vertices.add(new Vertex(0, 0, 0, vertexId++));  //1
+        vertices.add(new Vertex(1, 0, 0, vertexId++));  //2
+        vertices.add(new Vertex(1, 1, 0, vertexId++));  //3
+        vertices.add(new Vertex(0, 1, 0, vertexId++));  //4
+
+        vertices.add(new Vertex(0, 1, 1, vertexId++));  //5
+        vertices.add(new Vertex(0, 0, 1, vertexId++));  //6
+        vertices.add(new Vertex(1, 0, 1, vertexId++));  //7
+        vertices.add(new Vertex(1, 1, 1, vertexId));  //8
+
+        cube.setVertices(vertices);
+
+        cube.findFaces();
+
+        assertEquals(6, cube.getFaces().size());
+    }
+
+    /*@Test
     void cubeSpaceDiagonalNotAFace() throws Exception {
         Polygon cube = new Polygon();
 
@@ -211,6 +235,6 @@ class PolygonTest {
         Polygon.isPlaneAFace(frontPlane, cube);
 
         assertEquals(4, cube.getFaces().iterator().next().size());
-    }
+    }*/
 
 }
