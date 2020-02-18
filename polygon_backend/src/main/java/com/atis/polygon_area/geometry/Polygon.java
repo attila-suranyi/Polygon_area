@@ -18,13 +18,20 @@ public class Polygon {
     protected List<Vertex> vertices = new ArrayList<>();
 
 
+    public void calculatePolygonGeometry() {
+        this.findFaces();
+        this.dividePolygonFaceToTriangles();
+        this.calculatePolygonArea();
+    }
+
+
     /**
      * Static method that finds the faces of a polygon by
      * determining whether points are lying both sides of a plane.
      * If there are points on both sides of the given plane,
      * then the plane is not a face of the polygon.
      */
-    public void findFaces() {
+    void findFaces() {
         List<List<Vertex>> planes = this.generatePlanes();
 
         for (List<Vertex> plane : planes) {
@@ -89,28 +96,27 @@ public class Polygon {
 
     void dividePolygonFaceToTriangles() {
         for (List<Vertex> face : this.faces) {
-            List<Vertex> triangle = new ArrayList<>();
 
             // the number of necessary new edges is: the number of vertices of the face - 3
             for (int i=0; i < face.size() - 3; i++) {
+                List<Vertex> triangle = new ArrayList<>();
                 triangle.add(face.get(0));
                 triangle.add(face.get( (2 + i) - 1));
                 triangle.add(face.get(2 + i));
                 this.addTriangle(triangle);
-                triangle.clear();
             }
 
             // with the last new edge two new triangles were generated
             // the second and last triangle is added here
-            triangle.add(face.get(0));
-            triangle.add(face.get(face.size() - 1));
-            triangle.add(face.get(face.size() - 2));
-            this.addTriangle(triangle);
-            triangle.clear();
+            List<Vertex> lastTriangle = new ArrayList<>();
+            lastTriangle.add(face.get(0));
+            lastTriangle.add(face.get(face.size() - 1));
+            lastTriangle.add(face.get(face.size() - 2));
+            this.addTriangle(lastTriangle);
         }
     }
 
-    void generatePossibleTriangleCombinations(Vertex vertex) {
+    /*void generatePossibleTriangleCombinations(Vertex vertex) {
         List<Vertex> adjVertices = vertex.getAdjVertices();
         List<List<Vertex>> possibleTriangleCombinations = new ArrayList<>();
 
@@ -132,7 +138,7 @@ public class Polygon {
     // examines if the other two vertices are adjacent to each other, not just to the starting vertex
     private boolean isTriangleValid(List<Vertex> triangle) {
         return triangle.get(0).getAdjVertices().contains(triangle.get(1)) && triangle.get(0).getAdjVertices().contains(triangle.get(2));
-    }
+    }*/
 
     private void addTriangle(List<Vertex> triangle) {
         triangle.sort(Comparator.comparing(Vertex::getId));
@@ -144,7 +150,7 @@ public class Polygon {
         this.faces.add(face);
     }
 
-    void calculatePolygonArea() {
+    private void calculatePolygonArea() {
         for (List<Vertex> triangle : this.triangles) {
 
             double sideA = this.calculateSideLength(triangle.get(0), triangle.get(1));
@@ -153,7 +159,7 @@ public class Polygon {
 
             //Heron's formula
             double s = (sideA + sideB + sideC) / 2;
-            this.area += (float) (sqrt(s * (s - sideA) * (s - sideB) * (s - sideC)));
+            this.area += (sqrt(s * (s - sideA) * (s - sideB) * (s - sideC)));
         }
     }
 
