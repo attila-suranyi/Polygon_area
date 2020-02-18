@@ -87,20 +87,26 @@ public class Polygon {
         return Vector.dot(normalVector, Vector.subtract(point, pointOnPlane));
     }
 
-
-    //TODO the triangles are accessible here already
     void dividePolygonFaceToTriangles() {
         for (List<Vertex> face : this.faces) {
+            List<Vertex> triangle = new ArrayList<>();
 
             // the number of necessary new edges is: the number of vertices of the face - 3
             for (int i=0; i < face.size() - 3; i++) {
-                face.get(0).addAdjVertex(face.get( 2 + i ));
-                face.get( 2 + i ).addAdjVertex(face.get(0));
+                triangle.add(face.get(0));
+                triangle.add(face.get( (2 + i) - 1));
+                triangle.add(face.get(2 + i));
+                this.addTriangle(triangle);
+                triangle.clear();
             }
 
-            // all the possible triangles can be generated from Vertex0 of the face,
-            // because all the new edges were generated from it
-            this.generatePossibleTriangleCombinations(face.get(0));
+            // with the last new edge two new triangles were generated
+            // the second and last triangle is added here
+            triangle.add(face.get(0));
+            triangle.add(face.get(face.size() - 1));
+            triangle.add(face.get(face.size() - 2));
+            this.addTriangle(triangle);
+            triangle.clear();
         }
     }
 
