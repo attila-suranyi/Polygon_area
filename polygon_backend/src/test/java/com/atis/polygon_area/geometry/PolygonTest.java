@@ -1,7 +1,6 @@
 package com.atis.polygon_area.geometry;
 
 import org.junit.jupiter.api.Test;
-import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PolygonTest {
@@ -30,54 +29,23 @@ class PolygonTest {
     @Test
     void hexagonDividedIntoFourTriangles() {
         Polygon p = new Polygon();
-        int vertexId = 0;
 
-        List<Vertex> vertices = new ArrayList<>();
+        p.addVertex(new Vertex(1d, 0, 0));
+        p.addVertex(new Vertex(2d, 0, 0));
+        p.addVertex(new Vertex(3d, 1, 0));
+        p.addVertex(new Vertex(2d, 2, 0));
+        p.addVertex(new Vertex(1d, 2, 0));
+        p.addVertex(new Vertex(0d, 1, 0));
 
-        Vertex vertex0 = new Vertex(1d, 0, 0, vertexId++);
-        Vertex vertex1 = new Vertex(2d, 0, 0, vertexId++);
-        Vertex vertex2 = new Vertex(3d, 1, 0, vertexId++);
-        Vertex vertex3 = new Vertex(2d, 2, 0, vertexId++);
-        Vertex vertex4 = new Vertex(1d, 2, 0, vertexId++);
-        Vertex vertex5 = new Vertex(0d, 1, 0, vertexId);
-
-        vertices.add(vertex0);
-        vertices.add(vertex1);
-        vertices.add(vertex2);
-        vertices.add(vertex3);
-        vertices.add(vertex4);
-        vertices.add(vertex5);
-
-        p.setVertices(vertices);
-
-        Set<List<Vertex>> faces = new HashSet<>();
-        faces.add(vertices);
-        p.setFaces(faces);
-
-        p.dividePolygonFaceToTriangles();
+        p.calculatePolygonGeometry();
         assertEquals(4, p.getTriangles().size());
     }
 
     @Test
     void cubeHasSixFaces() {
-        Polygon cube = new Polygon();
+        Polygon cube = new Cube();
 
-        int vertexId = 1;
-
-        List<Vertex> vertices = new ArrayList<>();
-        vertices.add(new Vertex(0d, 0, 0, vertexId++));  //1
-        vertices.add(new Vertex(1d, 0, 0, vertexId++));  //2
-        vertices.add(new Vertex(1d, 1, 0, vertexId++));  //3
-        vertices.add(new Vertex(0d, 1, 0, vertexId++));  //4
-
-        vertices.add(new Vertex(0d, 1, 1, vertexId++));  //5
-        vertices.add(new Vertex(0d, 0, 1, vertexId++));  //6
-        vertices.add(new Vertex(1d, 0, 1, vertexId++));  //7
-        vertices.add(new Vertex(1d, 1, 1, vertexId));  //8
-
-        cube.setVertices(vertices);
-
-        cube.findFaces();
+        cube.calculatePolygonGeometry();
 
         assertEquals(6, cube.getFaces().size());
     }

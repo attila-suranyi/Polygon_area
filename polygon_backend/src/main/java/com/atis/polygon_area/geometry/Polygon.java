@@ -1,10 +1,10 @@
 package com.atis.polygon_area.geometry;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 import org.paukov.combinatorics3.Generator;
 import java.util.*;
-import java.util.stream.Collectors;
-
 import static java.lang.Math.sqrt;
 
 
@@ -15,7 +15,10 @@ public class Polygon {
 
     private Set<List<Vertex>> faces = new HashSet<>();
     private Set<List<Vertex>> triangles = new HashSet<>();
-    protected List<Vertex> vertices = new ArrayList<>();
+
+    private int vertexId = 0;
+    @Setter(AccessLevel.PRIVATE)
+    private List<Vertex> vertices = new ArrayList<>();
 
 
     public void calculatePolygonGeometry() {
@@ -116,16 +119,6 @@ public class Polygon {
         }
     }
 
-    private void addTriangle(List<Vertex> triangle) {
-        triangle.sort(Comparator.comparing(Vertex::getId));
-        this.triangles.add(triangle);
-    }
-
-    private void addFace(List<Vertex> face) {
-        face.sort(Comparator.comparing(Vertex::getId));
-        this.faces.add(face);
-    }
-
     private void calculatePolygonArea() {
         for (List<Vertex> triangle : this.triangles) {
 
@@ -161,5 +154,20 @@ public class Polygon {
         }
 
         return sortedCoordinates;
+    }
+
+    void addVertex(Vertex vertex) {
+        vertex.setId(this.vertexId++);
+        this.vertices.add(vertex);
+    }
+
+    private void addTriangle(List<Vertex> triangle) {
+        triangle.sort(Comparator.comparing(Vertex::getId));
+        this.triangles.add(triangle);
+    }
+
+    private void addFace(List<Vertex> face) {
+        face.sort(Comparator.comparing(Vertex::getId));
+        this.faces.add(face);
     }
 }

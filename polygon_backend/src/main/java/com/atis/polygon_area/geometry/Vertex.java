@@ -2,9 +2,6 @@ package com.atis.polygon_area.geometry;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +13,6 @@ public class Vertex {
     private double Y;
     private double Z;
 
-    /*@EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private List<Vertex> adjVertices = new ArrayList<>();*/
 
     public Vertex(double X, double Y, double Z, int id) {
         this.X = X;
@@ -41,8 +35,4 @@ public class Vertex {
 
         return coordinates;
     }
-
-    /*public void addAdjVertex(Vertex vertex) {
-        this.adjVertices.add(vertex);
-    }*/
 }
