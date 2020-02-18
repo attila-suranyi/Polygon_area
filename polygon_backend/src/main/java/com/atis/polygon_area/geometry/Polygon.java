@@ -19,13 +19,11 @@ public class Polygon {
 
 
     /**
-     * Static method that tells you whether the given plane is
-     * the outer most plane in a polygon.
+     * Static method that finds the faces of a polygon by
+     * determining whether points are lying both sides of a plane.
      * If there are points on both sides of the given plane,
      * then the plane is not a face of the polygon.
-     *
      */
-    //TODO this method does too much
     public void findFaces() {
         List<List<Vertex>> planes = this.generatePlanes();
 
@@ -58,7 +56,11 @@ public class Polygon {
         }
     }
 
-    protected List<List<Vertex>> generatePlanes() {
+    /**
+     * Generates possible combinations of three vertices
+     * @return List of the possible triplets
+     */
+    private List<List<Vertex>> generatePlanes() {
         List<List<Vertex>> planes = new ArrayList<>();
 
         Generator.combination(this.vertices)
@@ -87,7 +89,7 @@ public class Polygon {
 
 
     //TODO the triangles are accessible here already
-    public void dividePolygonFaceToTriangles() {
+    void dividePolygonFaceToTriangles() {
         for (List<Vertex> face : this.faces) {
 
             // the number of necessary new edges is: the number of vertices of the face - 3
@@ -102,9 +104,9 @@ public class Polygon {
         }
     }
 
-    protected void generatePossibleTriangleCombinations(Vertex vertex) {
+    void generatePossibleTriangleCombinations(Vertex vertex) {
         List<Vertex> adjVertices = vertex.getAdjVertices();
-        List<List<Vertex>> possibleTriangleCombinations = new ArrayList();
+        List<List<Vertex>> possibleTriangleCombinations = new ArrayList<>();
 
         // generates the possible pair combinations of the adjacent vertices
         Generator.combination(adjVertices)
@@ -136,7 +138,7 @@ public class Polygon {
         this.faces.add(face);
     }
 
-    protected void calculatePolygonArea() {
+    void calculatePolygonArea() {
         for (List<Vertex> triangle : this.triangles) {
 
             double sideA = this.calculateSideLength(triangle.get(0), triangle.get(1));
