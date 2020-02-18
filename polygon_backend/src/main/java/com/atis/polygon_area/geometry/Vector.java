@@ -7,9 +7,9 @@ import lombok.Data;
 @AllArgsConstructor
 
 public class Vector {
-    private float X;
-    private float Y;
-    private float Z;
+    private double X;
+    private double Y;
+    private double Z;
 
     public Vector(Vertex v) {
         this.X = v.getX();

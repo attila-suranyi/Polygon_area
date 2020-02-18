@@ -34,30 +34,12 @@ class PolygonTest {
 
         List<Vertex> vertices = new ArrayList<>();
 
-        Vertex vertex0 = new Vertex(1, 0, 0, vertexId++);
-        Vertex vertex1 = new Vertex(2, 0, 0, vertexId++);
-        Vertex vertex2 = new Vertex(3, 1, 0, vertexId++);
-        Vertex vertex3 = new Vertex(2, 2, 0, vertexId++);
-        Vertex vertex4 = new Vertex(1, 2, 0, vertexId++);
-        Vertex vertex5 = new Vertex(0, 1, 0, vertexId);
-
-        vertex0.addAdjVertex(vertex1);
-        vertex0.addAdjVertex(vertex5);
-
-        vertex1.addAdjVertex(vertex0);
-        vertex1.addAdjVertex(vertex2);
-
-        vertex2.addAdjVertex(vertex1);
-        vertex2.addAdjVertex(vertex3);
-
-        vertex3.addAdjVertex(vertex2);
-        vertex3.addAdjVertex(vertex4);
-
-        vertex4.addAdjVertex(vertex3);
-        vertex4.addAdjVertex(vertex5);
-
-        vertex5.addAdjVertex(vertex4);
-        vertex5.addAdjVertex(vertex0);
+        Vertex vertex0 = new Vertex(1d, 0, 0, vertexId++);
+        Vertex vertex1 = new Vertex(2d, 0, 0, vertexId++);
+        Vertex vertex2 = new Vertex(3d, 1, 0, vertexId++);
+        Vertex vertex3 = new Vertex(2d, 2, 0, vertexId++);
+        Vertex vertex4 = new Vertex(1d, 2, 0, vertexId++);
+        Vertex vertex5 = new Vertex(0d, 1, 0, vertexId);
 
         vertices.add(vertex0);
         vertices.add(vertex1);
@@ -83,15 +65,15 @@ class PolygonTest {
         int vertexId = 1;
 
         List<Vertex> vertices = new ArrayList<>();
-        vertices.add(new Vertex(0, 0, 0, vertexId++));  //1
-        vertices.add(new Vertex(1, 0, 0, vertexId++));  //2
-        vertices.add(new Vertex(1, 1, 0, vertexId++));  //3
-        vertices.add(new Vertex(0, 1, 0, vertexId++));  //4
+        vertices.add(new Vertex(0d, 0, 0, vertexId++));  //1
+        vertices.add(new Vertex(1d, 0, 0, vertexId++));  //2
+        vertices.add(new Vertex(1d, 1, 0, vertexId++));  //3
+        vertices.add(new Vertex(0d, 1, 0, vertexId++));  //4
 
-        vertices.add(new Vertex(0, 1, 1, vertexId++));  //5
-        vertices.add(new Vertex(0, 0, 1, vertexId++));  //6
-        vertices.add(new Vertex(1, 0, 1, vertexId++));  //7
-        vertices.add(new Vertex(1, 1, 1, vertexId));  //8
+        vertices.add(new Vertex(0d, 1, 1, vertexId++));  //5
+        vertices.add(new Vertex(0d, 0, 1, vertexId++));  //6
+        vertices.add(new Vertex(1d, 0, 1, vertexId++));  //7
+        vertices.add(new Vertex(1d, 1, 1, vertexId));  //8
 
         cube.setVertices(vertices);
 
