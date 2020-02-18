@@ -33,11 +33,12 @@ const PolygonLoader = (props) => {
     }, []);
 
     return (
-        <div className="Polygon">
+        <div className="scene-container" >
             <p>{props.shapeType}</p>
             {area ? <p>{area}</p> : <p>Fetching...</p>}
 
-            <Scene />
+            {/*//TODO use context instead of props*/}
+            <Scene geo={geometry} />
 
         </div>
     )

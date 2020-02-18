@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import {a} from "react-spring/three";
 
 /**
  * Basic horizontal plane with physical mesh
