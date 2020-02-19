@@ -1,5 +1,6 @@
-import React, {useRef} from "react";
+import React from "react";
 import * as THREE from "three";
+
 import right from "./textures/bluecloud/bluecloud_rt.jpg";
 import left from "./textures/bluecloud/bluecloud_lf.jpg";
 import top from "./textures/bluecloud/bluecloud_up.jpg";
@@ -8,8 +9,6 @@ import front from "./textures/bluecloud/bluecloud_ft.jpg";
 import back from "./textures/bluecloud/bluecloud_bk.jpg";
 
 const Skybox = () => {
-
-    const skyboxRef = useRef();
 
     let geo = new THREE.BoxGeometry(1000, 1000, 1000);
 
@@ -24,16 +23,17 @@ const Skybox = () => {
         back
     ]);
 
-    let cubeMap = new THREE.MeshBasicMaterial({ envMap: cubeTexture, side: THREE.DoubleSide} );
+    let cubeMap = new THREE.MeshBasicMaterial({
+        envMap: cubeTexture,
+        side: THREE.DoubleSide,
+    });
 
     return (
         <mesh
             geometry={geo}
             material={cubeMap}
-            ref={skyboxRef}
         />
     );
-
 };
 
 export default Skybox;

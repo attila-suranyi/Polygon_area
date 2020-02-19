@@ -13,7 +13,7 @@ const Plane = () => {
 
             <meshPhysicalMaterial
                 attach="material"
-                color="red"
+                color={"#ffcd9c"}
             />
         </mesh>
     )

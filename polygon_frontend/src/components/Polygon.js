@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {extend} from "react-three-fiber";
+import {extend, useFrame} from "react-three-fiber";
 import {a, useSpring} from "react-spring/three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import * as THREE from "three";
@@ -10,8 +10,8 @@ import * as THREE from "three";
 const Polygon = (props) => {
     extend({ OrbitControls });
 
-    const blue = "#005ce6";
-    const lightblue = "#1a75ff";
+    const blue = "#86ace6";
+    const lightblue = "#41bee6";
     const defaultScale = [3, 3, 3];
     const enlargedScale = [4.5, 4.5, 4.5];
 
@@ -25,6 +25,14 @@ const Polygon = (props) => {
     });
 
     const customGeo = buildGeo(props.geo);
+
+    let cubeCamera = new THREE.CubeCamera( 1, 100000, 128 );
+
+    useFrame(({ gl, scene }) => {
+        cubeCamera.visible = false;
+        cubeCamera.update(gl, scene);
+        cubeCamera.visible = true;
+    });
 
     return (
         <a.mesh
@@ -44,10 +52,11 @@ const Polygon = (props) => {
                 castShadow={true}
             />
 
-            <a.meshPhysicalMaterial
+            <a.meshLambertMaterial
                 attach="material"
                 color={ springProps.color }
                 wireframe={ framesOnly }
+                envMap={cubeCamera.renderTarget.texture}
             />
         </a.mesh>
     );
