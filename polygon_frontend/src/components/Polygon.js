@@ -24,6 +24,7 @@ const Polygon = (props) => {
         color: hovered ? lightblue : blue,
     });
 
+    // const customGeo = buildGeoTest(props.geo);
     const customGeo = buildGeo(props.geo);
 
     let cubeCamera = new THREE.CubeCamera( 1, 100000, 128 );
@@ -57,6 +58,7 @@ const Polygon = (props) => {
                 color={ springProps.color }
                 wireframe={ framesOnly }
                 envMap={cubeCamera.renderTarget.texture}
+                side={THREE.DoubleSide}
             />
         </a.mesh>
     );
@@ -66,7 +68,7 @@ export default Polygon;
 
 //TODO use data from context
 //TODO export geometry building logic to new component
-const buildGeo = (geoData) => {
+const buildGeoTest = (geoData) => {
     let geometry = new THREE.Geometry();
 
     // create vertices with Vector3 objects
@@ -97,7 +99,110 @@ const buildGeo = (geoData) => {
         new THREE.Face3(3, 6, 4)
     );
 
-    //TODO iterate through geoData instead
+    geometry.normalize();
+    geometry.computeFlatVertexNormals();
+
+    return new THREE.BufferGeometry().fromGeometry(geometry);
+
+    // return geometry;
+};
+
+const buildGeo = (geoData) => {
+    const testData = {
+        "area": 2.0086019589572386,
+        "triangles": [
+            [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    1,
+                    0,
+                    0
+                ],
+                [
+                    0.5,
+                    0.8659999966621399,
+                    0
+                ]
+            ],
+            [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0.5,
+                    0.8659999966621399,
+                    0
+                ],
+                [
+                    0.5,
+                    0.5,
+                    1
+                ]
+            ],
+            [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    1,
+                    0,
+                    0
+                ],
+                [
+                    0.5,
+                    0.5,
+                    1
+                ]
+            ],
+            [
+                [
+                    1,
+                    0,
+                    0
+                ],
+                [
+                    0.5,
+                    0.8659999966621399,
+                    0
+                ],
+                [
+                    0.5,
+                    0.5,
+                    1
+                ]
+            ]
+        ]
+    };
+    let geometry = new THREE.Geometry();
+    console.log(testData);
+
+    let i = 0;
+    for (let triangle of testData.triangles) {
+
+        console.log("triangle:");
+        console.log(triangle);
+
+        for (let vertex of triangle) {
+            console.log("vertex:");
+            console.log(vertex);
+
+            let newVertex = new THREE.Vector3(vertex[0], vertex[1], vertex[2]);
+            geometry.vertices.push(newVertex)
+        }
+
+        let newFace = new THREE.Face3(i, i+1, i+2);
+        geometry.faces.push(newFace);
+
+        i += 3;
+    }
 
     geometry.normalize();
     geometry.computeFlatVertexNormals();
