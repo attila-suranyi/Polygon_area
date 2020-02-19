@@ -1,37 +1,36 @@
-import React from "react";
+import React, {useRef} from "react";
 import * as THREE from "three";
+import right from "./textures/bluecloud/bluecloud_rt.jpg";
+import left from "./textures/bluecloud/bluecloud_lf.jpg";
+import top from "./textures/bluecloud/bluecloud_up.jpg";
+import bottom from "./textures/bluecloud/bluecloud_dn.jpg";
+import front from "./textures/bluecloud/bluecloud_ft.jpg";
+import back from "./textures/bluecloud/bluecloud_bk.jpg";
 
 const Skybox = () => {
 
-    let geo = new THREE.BoxGeometry(500, 500, 500);
+    const skyboxRef = useRef();
 
-    let right = "https://cdn.discordapp.com/attachments/599307537447124992/679399005196910623/bluecloud_rt.jpg";
-    let left = "https://lh3.googleusercontent.com/proxy/xq29mC-lO-5vEdjzycqYEnx_eCltEgool06Z2tF_yC1gKRIzr43jDbNLv62bd8gB-f4rn24GQFm6k93uhOs1FyorOR619EpKPJ5OgxHgk5pU2Oo04DFJUV4kbDFcZn8R_XH3Qf4ZQ43IHVxp30C3ke_LEtMk";
-    let top = "https://threejsfundamentals.org/threejs/resources/images/wall.jpg";
-    let bottom = "bluecloud_dn.jpg";
-    let front = "bluecloud_ft.jpg";
-    let back = "bluecloud_bk.jpg";
+    let geo = new THREE.BoxGeometry(1000, 1000, 1000);
 
     let loader = new THREE.CubeTextureLoader();
 
     let cubeTexture = loader.load([
-        "https://cdn.discordapp.com/attachments/599307537447124992/679399005196910623/bluecloud_rt.jpg",
+        right,
         left,
-        "https://threejsfundamentals.org/threejs/resources/images/wall.jpg",
+        top,
         bottom,
         front,
         back
     ]);
 
-    cubeTexture.needsUpdate = true;
-
-    let cubeMap = new THREE.MeshBasicMaterial({ map: cubeTexture, side: THREE.BackSide});
-    // maybe use useState to set this in loader.load's callback?
+    let cubeMap = new THREE.MeshBasicMaterial({ envMap: cubeTexture, side: THREE.DoubleSide} );
 
     return (
         <mesh
             geometry={geo}
             material={cubeMap}
+            ref={skyboxRef}
         />
     );
 

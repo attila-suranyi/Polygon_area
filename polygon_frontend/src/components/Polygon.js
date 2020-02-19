@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import {extend, useFrame} from "react-three-fiber";
-import { useSpring, a } from "react-spring/three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import React, {useState} from "react";
+import {extend} from "react-three-fiber";
+import {a, useSpring} from "react-spring/three";
+import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import * as THREE from "three";
-
 
 /**
  * Builds a polygon mesh from Vector3 data
@@ -18,7 +17,7 @@ const Polygon = (props) => {
 
     const [hovered, setHovered] = useState(false);
     const [active, setActive] = useState(false);
-    const [wirefFrame, setWireFrame] = useState(false);
+    const [framesOnly, setFramesOnly] = useState(false);
 
     const springProps = useSpring({
         scale: active ? enlargedScale : defaultScale,
@@ -31,7 +30,7 @@ const Polygon = (props) => {
         <a.mesh
               onPointerOver={ () => setHovered(true) }
               onPointerOut={ () => setHovered(false) }
-              onClick={ () => { setActive(!active); setWireFrame(!wirefFrame) } }
+              onClick={ () => { setActive(!active); setFramesOnly(!framesOnly) } }
               scale={ springProps.scale }
               castShadow={true}
               geometry={customGeo}
@@ -48,7 +47,7 @@ const Polygon = (props) => {
             <a.meshPhysicalMaterial
                 attach="material"
                 color={ springProps.color }
-                wireframe={ wirefFrame }
+                wireframe={ framesOnly }
             />
         </a.mesh>
     );
@@ -57,6 +56,7 @@ const Polygon = (props) => {
 export default Polygon;
 
 //TODO use data from context
+//TODO export geometry building logic to new component
 const buildGeo = (geoData) => {
     let geometry = new THREE.Geometry();
 
@@ -72,7 +72,7 @@ const buildGeo = (geoData) => {
         new THREE.Vector3(-1, -1, 1));
 
     // faces are made with the index
-    // values of from the vertices array
+    // values of the vertices array
     geometry.faces.push(
         new THREE.Face3(0, 2, 1),
         new THREE.Face3(2, 3, 1),
@@ -93,8 +93,7 @@ const buildGeo = (geoData) => {
     geometry.normalize();
     geometry.computeFlatVertexNormals();
 
-    let bufferedGeo = new THREE.BufferGeometry().fromGeometry(geometry);
-    return bufferedGeo;
+    return new THREE.BufferGeometry().fromGeometry(geometry);
 
     // return geometry;
 };

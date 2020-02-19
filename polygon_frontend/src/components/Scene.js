@@ -22,11 +22,11 @@ const Scene = (props) => {
             alpha={true}
         >
 
-            {/*<Skybox />*/}
+            <Skybox />
 
             <Polygon geo={props.geo}/>
-            <Plane />
-            <fog attach="fog" args={["darkred", 5, 100 ]} />
+            {/*<Plane />*/}
+            {/*<fog attach="fog" args={["darkred", 5, 100 ]} />*/}
 
             <CameraControls />
         </Canvas>

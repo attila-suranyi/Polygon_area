@@ -5,16 +5,16 @@ import { useFrame, useThree } from "react-three-fiber";
  * Defines camera controls and behavior
  */
 const CameraControls = () => {
-    const orbitRef = useRef();
+    const cameraRef = useRef();
     const { camera, gl } = useThree();
 
     useFrame( () => {
-        orbitRef.current.update();
+        cameraRef.current.update();
     });
 
     return (
         <orbitControls
-            ref={orbitRef}
+            ref={cameraRef}
             args={ [camera, gl.domElement] }
             autoRotate={true}
             autoRotateSpeed={3}
