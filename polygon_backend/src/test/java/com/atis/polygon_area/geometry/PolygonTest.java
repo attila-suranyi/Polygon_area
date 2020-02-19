@@ -11,21 +11,18 @@ class PolygonTest {
     @Test
     void triangleArea() {
         Triangle t = new Triangle();
-        t.calculatePolygonGeometry();
         assertEquals(0.43, Math.round(t.getArea() * 100.0) / 100.0);
     }
 
     @Test
     void pyramidArea() {
         Tetrahedron p = new Tetrahedron();
-        p.calculatePolygonGeometry();
         assertEquals(2.01, Math.round(p.getArea() * 100.0) / 100.0);
     }
 
     @Test
     void cubeArea() {
         Cube c = new Cube();
-        c.calculatePolygonGeometry();
         assertEquals(6.00, Math.round(c.getArea() * 100.0) / 100.0);
     }
 
