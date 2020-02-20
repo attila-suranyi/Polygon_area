@@ -24,6 +24,7 @@ const PolygonLoader = (props) => {
      * @param resp The response data fetched from backend
      */
     const handleResp = (resp) => {
+        console.log(resp);
         setArea(resp.area);
         setGeometry(resp.triangles);
     };
@@ -34,14 +35,16 @@ const PolygonLoader = (props) => {
 
     return (
         <div className="scene-container" >
-            <p>{props.shapeType}</p>
-            {area ? <p>{area}</p> : <p>Fetching...</p>}
 
             {/*//TODO use context instead of props*/}
-            { geometry && area ?
-                <Scene geo={geometry} /> :
-                <p>Fetching data...</p>
-            }
+            {/*{ geometry && area ?*/}
+            {/*    <div>*/}
+            {/*        <p>{props.shapeType} area: {area}</p>*/}
+            {/*        <Scene geo={geometry} />*/}
+            {/*    </div> :*/}
+            {/*    <p>Fetching {props.shapeType} data...</p>*/}
+            {/*}*/}
+            <Scene geo={geometry} />
 
         </div>
     )

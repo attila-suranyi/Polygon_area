@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {extend, useFrame} from "react-three-fiber";
 import {a, useSpring} from "react-spring/three";
-import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import * as THREE from "three";
 
 /**
@@ -18,7 +18,6 @@ const Polygon = (props) => {
     const [hovered, setHovered] = useState(false);
     const [active, setActive] = useState(false);
     const [framesOnly, setFramesOnly] = useState(false);
-    const [geo, setGeo] = useState(null);
 
     const springProps = useSpring({
         scale: active ? enlargedScale : defaultScale,
@@ -40,7 +39,12 @@ const Polygon = (props) => {
         <a.mesh
               onPointerOver={ () => setHovered(true) }
               onPointerOut={ () => setHovered(false) }
-              onClick={ () => { setActive(!active); setFramesOnly(!framesOnly) } }
+
+              onClick={ () => {
+                  setActive(!active);
+                  setFramesOnly(!framesOnly)
+              }}
+
               scale={ springProps.scale }
               castShadow={true}
               geometry={customGeo}
@@ -104,89 +108,88 @@ const buildGeoTest = (geoData) => {
     geometry.computeFlatVertexNormals();
 
     return new THREE.BufferGeometry().fromGeometry(geometry);
-
-    // return geometry;
 };
 
-const buildGeo = (geoData) => {
-    // const testData = {
-    //     "area": 2.0086019589572386,
-    //     "triangles": [
-    //         [
-    //             [
-    //                 0,
-    //                 0,
-    //                 0
-    //             ],
-    //             [
-    //                 1,
-    //                 0,
-    //                 0
-    //             ],
-    //             [
-    //                 0.5,
-    //                 0.8659999966621399,
-    //                 0
-    //             ]
-    //         ],
-    //         [
-    //             [
-    //                 0,
-    //                 0,
-    //                 0
-    //             ],
-    //             [
-    //                 0.5,
-    //                 0.8659999966621399,
-    //                 0
-    //             ],
-    //             [
-    //                 0.5,
-    //                 0.5,
-    //                 1
-    //             ]
-    //         ],
-    //         [
-    //             [
-    //                 0,
-    //                 0,
-    //                 0
-    //             ],
-    //             [
-    //                 1,
-    //                 0,
-    //                 0
-    //             ],
-    //             [
-    //                 0.5,
-    //                 0.5,
-    //                 1
-    //             ]
-    //         ],
-    //         [
-    //             [
-    //                 1,
-    //                 0,
-    //                 0
-    //             ],
-    //             [
-    //                 0.5,
-    //                 0.8659999966621399,
-    //                 0
-    //             ],
-    //             [
-    //                 0.5,
-    //                 0.5,
-    //                 1
-    //             ]
-    //         ]
-    //     ]
-    // };
+const buildGeo = (triangleData) => {
+    const testData = {
+        "area": 2.0086019589572386,
+        "triangles": [
+            [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    1,
+                    0,
+                    0
+                ],
+                [
+                    0.5,
+                    0.8659999966621399,
+                    0
+                ]
+            ],
+            [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    0.5,
+                    0.8659999966621399,
+                    0
+                ],
+                [
+                    0.5,
+                    0.5,
+                    1
+                ]
+            ],
+            [
+                [
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    1,
+                    0,
+                    0
+                ],
+                [
+                    0.5,
+                    0.5,
+                    1
+                ]
+            ],
+            [
+                [
+                    1,
+                    0,
+                    0
+                ],
+                [
+                    0.5,
+                    0.8659999966621399,
+                    0
+                ],
+                [
+                    0.5,
+                    0.5,
+                    1
+                ]
+            ]
+        ]
+    };
 
     let i = 0;
     let geometry = new THREE.Geometry();
 
-    for (let triangle of geoData.triangles) {
+    for (let triangle of testData.triangles) {
+    // for (let triangle of triangleData) {
 
         for (let vertex of triangle) {
             geometry.vertices.push(new THREE.Vector3(vertex[0], vertex[1], vertex[2]))
@@ -201,6 +204,4 @@ const buildGeo = (geoData) => {
     geometry.computeFlatVertexNormals();
 
     return new THREE.BufferGeometry().fromGeometry(geometry);
-
-    // return geometry;
 };

@@ -6,7 +6,8 @@ import PolygonLoader from "./components/PolygonLoader";
 import Navbar from "./components/Navbar";
 
 function App() {
-    const backendIp = "http://localhost:8080";
+    // const backendIp = "http://localhost:8080";
+    const backendIp = "10.44.255.255:8080";
 
     return (
         <div className="App">
