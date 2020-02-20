@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-export default class Graphics extends Component {
-  render() {
+const Graphics = () => {
     return <div></div>;
-  }
-}
+};
+
+export default Graphics;
