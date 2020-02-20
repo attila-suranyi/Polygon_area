@@ -16,15 +16,15 @@ function App() {
                 <Navbar/>
 
                 <Route path="/triangle">
-                    <PolygonLoader shapeType="Triangle" backendIp={backendIp}/>
+                    <PolygonLoader shapeType="triangle" backendIp={backendIp}/>
                 </Route>
 
                 <Route path="/tetrahedron">
-                    <PolygonLoader shapeType="Tetrahedron" backendIp={backendIp}/>
+                    <PolygonLoader shapeType="tetrahedron" backendIp={backendIp}/>
                 </Route>
 
                 <Route path="/cube">
-                    <PolygonLoader shapeType="Cube" backendIp={backendIp}/>
+                    <PolygonLoader shapeType="cube" backendIp={backendIp}/>
                 </Route>
 
             </Router>
