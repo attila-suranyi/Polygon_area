@@ -26,7 +26,7 @@ const Scene = (props) => {
 
             <Polygon geo={props.geo}/>
             <Plane />
-            {/*<fog attach="fog" args={["lightgrey", 5, 100 ]} />*/}
+            {/*<fog attach="fog" args={["lightgrey", 0, 900 ]} />*/}
 
             <CameraControls />
         </Canvas>

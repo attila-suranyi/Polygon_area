@@ -37,6 +37,8 @@ const PolygonLoader = (props) => {
         <div className="scene-container" >
 
             {/*//TODO use context instead of props*/}
+
+        {/*use this when the server is up!*/}
             {/*{ geometry && area ?*/}
             {/*    <div>*/}
             {/*        <p>{props.shapeType} area: {area}</p>*/}
@@ -44,6 +46,7 @@ const PolygonLoader = (props) => {
             {/*    </div> :*/}
             {/*    <p>Fetching {props.shapeType} data...</p>*/}
             {/*}*/}
+
             <Scene geo={geometry} />
 
         </div>

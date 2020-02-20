@@ -24,7 +24,6 @@ const Polygon = (props) => {
         color: hovered ? lightblue : blue,
     });
 
-    // const customGeo = buildGeoTest(props.geo);
     let customGeo = buildGeo(props.geo);
 
     let cubeCamera = new THREE.CubeCamera(1, 100000, 128 );
@@ -71,44 +70,7 @@ const Polygon = (props) => {
 
 export default Polygon;
 
-//TODO use data from context
-//TODO export geometry building logic to new component
-const buildGeoTest = (geoData) => {
-    let geometry = new THREE.Geometry();
-
-    // create vertices with Vector3 objects
-    geometry.vertices.push(
-        new THREE.Vector3(1, 1, 1),
-        new THREE.Vector3(1, 1, -1),
-        new THREE.Vector3(1, -1, 1),
-        new THREE.Vector3(1, -1, -1),
-        new THREE.Vector3(-1, 1, -1),
-        new THREE.Vector3(-1, 1, 1),
-        new THREE.Vector3(-1, -1, -1),
-        new THREE.Vector3(-1, -1, 1));
-
-    // faces are made with the index
-    // values of the vertices array
-    geometry.faces.push(
-        new THREE.Face3(0, 2, 1),
-        new THREE.Face3(2, 3, 1),
-        new THREE.Face3(4, 6, 5),
-        new THREE.Face3(6, 7, 5),
-        new THREE.Face3(4, 5, 1),
-        new THREE.Face3(5, 0, 1),
-        new THREE.Face3(7, 6, 2),
-        new THREE.Face3(6, 3, 2),
-        new THREE.Face3(5, 7, 0),
-        new THREE.Face3(7, 2, 0),
-        new THREE.Face3(1, 3, 4),
-        new THREE.Face3(3, 6, 4)
-    );
-
-    geometry.normalize();
-    geometry.computeFlatVertexNormals();
-
-    return new THREE.BufferGeometry().fromGeometry(geometry);
-};
+//TODO maybe use data from context ?
 
 const buildGeo = (triangleData) => {
     const testData = {
