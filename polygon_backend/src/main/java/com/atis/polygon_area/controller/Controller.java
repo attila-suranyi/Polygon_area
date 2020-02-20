@@ -29,7 +29,7 @@ public class Controller {
     public ResponseEntity getTriangleGeometry() {
         Map<Object, Object> model = new HashMap<>();
         model.put("area", triangle.getArea());
-        model.put("vertexCoordinates", triangle.getOrderedVertexCoordinates());
+        model.put("triangles", triangle.getOrderedTriangleCoordinates());
 
         return ResponseEntity.ok(model);
     }
@@ -38,7 +38,7 @@ public class Controller {
     public ResponseEntity getPyramidGeometry() {
         Map<Object, Object> model = new HashMap<>();
         model.put("area", tetrahedron.getArea());
-        model.put("vertexCoordinates", tetrahedron.getOrderedVertexCoordinates());
+        model.put("triangles", tetrahedron.getOrderedTriangleCoordinates());
 
         return ResponseEntity.ok(model);
     }
@@ -47,7 +47,7 @@ public class Controller {
     public ResponseEntity getCubeGeometry() {
         Map<Object, Object> model = new HashMap<>();
         model.put("area", cube.getArea());
-        model.put("vertexCoordinates", cube.getOrderedVertexCoordinates());
+        model.put("triangles", cube.getOrderedTriangleCoordinates());
 
         return ResponseEntity.ok(model);
     }

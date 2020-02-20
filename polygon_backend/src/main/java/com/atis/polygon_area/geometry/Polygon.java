@@ -137,7 +137,7 @@ public class Polygon {
     }
 
     // the layers are: triangle, vertices in a triangle, coordinates of the vertices
-    public List<List<List<Double>>> getOrderedVertexCoordinates() {
+    public List<List<List<Double>>> getOrderedTriangleCoordinates() {
         List<List<Vertex>> sortedTriangles = new ArrayList<>(this.getTriangles());
         sortedTriangles.sort(Comparator.comparing((l1) -> l1.get(0).getId()));
 
