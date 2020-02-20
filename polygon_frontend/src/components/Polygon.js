@@ -18,6 +18,7 @@ const Polygon = (props) => {
     const [hovered, setHovered] = useState(false);
     const [active, setActive] = useState(false);
     const [framesOnly, setFramesOnly] = useState(false);
+    const [geo, setGeo] = useState(null);
 
     const springProps = useSpring({
         scale: active ? enlargedScale : defaultScale,
@@ -25,9 +26,9 @@ const Polygon = (props) => {
     });
 
     // const customGeo = buildGeoTest(props.geo);
-    const customGeo = buildGeo(props.geo);
+    let customGeo = buildGeo(props.geo);
 
-    let cubeCamera = new THREE.CubeCamera( 1, 100000, 128 );
+    let cubeCamera = new THREE.CubeCamera(1, 100000, 128 );
 
     useFrame(({ gl, scene }) => {
         cubeCamera.visible = false;
@@ -108,98 +109,90 @@ const buildGeoTest = (geoData) => {
 };
 
 const buildGeo = (geoData) => {
-    const testData = {
-        "area": 2.0086019589572386,
-        "triangles": [
-            [
-                [
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    1,
-                    0,
-                    0
-                ],
-                [
-                    0.5,
-                    0.8659999966621399,
-                    0
-                ]
-            ],
-            [
-                [
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0.5,
-                    0.8659999966621399,
-                    0
-                ],
-                [
-                    0.5,
-                    0.5,
-                    1
-                ]
-            ],
-            [
-                [
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    1,
-                    0,
-                    0
-                ],
-                [
-                    0.5,
-                    0.5,
-                    1
-                ]
-            ],
-            [
-                [
-                    1,
-                    0,
-                    0
-                ],
-                [
-                    0.5,
-                    0.8659999966621399,
-                    0
-                ],
-                [
-                    0.5,
-                    0.5,
-                    1
-                ]
-            ]
-        ]
-    };
-    let geometry = new THREE.Geometry();
-    console.log(testData);
+    // const testData = {
+    //     "area": 2.0086019589572386,
+    //     "triangles": [
+    //         [
+    //             [
+    //                 0,
+    //                 0,
+    //                 0
+    //             ],
+    //             [
+    //                 1,
+    //                 0,
+    //                 0
+    //             ],
+    //             [
+    //                 0.5,
+    //                 0.8659999966621399,
+    //                 0
+    //             ]
+    //         ],
+    //         [
+    //             [
+    //                 0,
+    //                 0,
+    //                 0
+    //             ],
+    //             [
+    //                 0.5,
+    //                 0.8659999966621399,
+    //                 0
+    //             ],
+    //             [
+    //                 0.5,
+    //                 0.5,
+    //                 1
+    //             ]
+    //         ],
+    //         [
+    //             [
+    //                 0,
+    //                 0,
+    //                 0
+    //             ],
+    //             [
+    //                 1,
+    //                 0,
+    //                 0
+    //             ],
+    //             [
+    //                 0.5,
+    //                 0.5,
+    //                 1
+    //             ]
+    //         ],
+    //         [
+    //             [
+    //                 1,
+    //                 0,
+    //                 0
+    //             ],
+    //             [
+    //                 0.5,
+    //                 0.8659999966621399,
+    //                 0
+    //             ],
+    //             [
+    //                 0.5,
+    //                 0.5,
+    //                 1
+    //             ]
+    //         ]
+    //     ]
+    // };
 
     let i = 0;
-    for (let triangle of testData.triangles) {
+    let geometry = new THREE.Geometry();
 
-        console.log("triangle:");
-        console.log(triangle);
+    for (let triangle of geoData.triangles) {
 
         for (let vertex of triangle) {
-            console.log("vertex:");
-            console.log(vertex);
-
-            let newVertex = new THREE.Vector3(vertex[0], vertex[1], vertex[2]);
-            geometry.vertices.push(newVertex)
+            geometry.vertices.push(new THREE.Vector3(vertex[0], vertex[1], vertex[2]))
         }
 
-        let newFace = new THREE.Face3(i, i+1, i+2);
-        geometry.faces.push(newFace);
+        geometry.faces.push(new THREE.Face3(i, i+1, i+2));
 
         i += 3;
     }

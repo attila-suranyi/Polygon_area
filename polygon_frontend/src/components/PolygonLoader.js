@@ -8,7 +8,7 @@ import Scene from "./Scene";
  */
 const PolygonLoader = (props) => {
     const [area, setArea] = useState(null);
-    const [geometry, setGeometry] = useState([]);
+    const [geometry, setGeometry] = useState(null);
 
     /**
      * Fetches and handles shape data from backend
@@ -25,7 +25,7 @@ const PolygonLoader = (props) => {
      */
     const handleResp = (resp) => {
         setArea(resp.area);
-        setGeometry(resp.vertexCoordinates);
+        setGeometry(resp.triangles);
     };
 
     useEffect(() => {
@@ -38,7 +38,10 @@ const PolygonLoader = (props) => {
             {area ? <p>{area}</p> : <p>Fetching...</p>}
 
             {/*//TODO use context instead of props*/}
-            <Scene geo={geometry} />
+            { geometry && area ?
+                <Scene geo={geometry} /> :
+                <p>Fetching data...</p>
+            }
 
         </div>
     )
