@@ -1,25 +1,39 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import styled, { ThemeProvider } from "styled-components";
+import Header from "./Header";
+import Nav from "./styled_components/Nav"
+import StyledLink from "./styled_components/StyledLink";
+
+const mainTheme = {
+    name: "Main theme",
+    primary: "#58ee51",
+    secondary: "#78eed3"
+};
 
 const Navbar = (props) => {
-    const black = {
-        color: "#000"
-    };
 
     return (
-        <div className="navbar">
-            <Link to={"/"} style={black}> Home </Link>
-            <br/>
-            <br/>
+        <ThemeProvider theme={mainTheme}>
+            <Header />
 
-            <Link to="/triangle" style={black}> Triangle </Link>
-            <br/>
+            <Nav primary >
 
-            <Link to="/tetrahedron" style={black}> Tetrahedron </Link>
-            <br/>
+                <StyledLink to="/"> Home </StyledLink>
+                <br/>
+                <br/>
 
-            <Link to="/cube" style={black}> Cube </Link>
-        </div>
+                <StyledLink to="/triangle"> Triangle </StyledLink>
+
+                <br/>
+
+                <StyledLink to="/tetrahedron"> Tetrahedron </StyledLink>
+
+                <br/>
+                <StyledLink to="/cube"> Cube </StyledLink>
+
+            </Nav>
+        </ThemeProvider>
     );
 };
 
