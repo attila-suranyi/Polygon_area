@@ -1,3 +1,7 @@
+/**
+ * A stub for testing purposes
+ * @returns {{area: number, triangles: number[][][]}} array of triangles
+ */
 const TestGeo = () => {
     return {
         "area": 2.0086019589572386,

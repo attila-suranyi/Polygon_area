@@ -4,9 +4,10 @@ import Plane from "./Plane";
 import * as THREE from "three";
 import "./sceneStyle.css";
 
-import Polygon from "./Polygon";
+import PolygonLoader from "./PolygonLoader";
 import CameraControls from "./CameraControls";
 import Skybox from "./Skybox";
+import {a} from "react-spring/three";
 
 /**
  * Renders a scene with basic plane, polygon and other effects
@@ -22,12 +23,21 @@ const Scene = (props) => {
             }}
             alpha={true}
         >
+            <ambientLight />
+            <spotLight
+                position={[0, 10, 10]}
+                penumbra={true}
+                intensity={0.3}
+                castShadow={true}
+            />
 
             <Skybox />
 
-            <Polygon geo={props.geo}/>
+            <PolygonLoader geo={props.geo}/>
+
             <Plane />
-            {/*<fog attach="fog" args={["lightgrey", 0, 900 ]} />*/}
+
+            {/*<fog attach="fog" args={["lightgrey", 0, 700 ]} />*/}
 
             <CameraControls />
         </Canvas>

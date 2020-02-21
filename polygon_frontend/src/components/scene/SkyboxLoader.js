@@ -35,6 +35,9 @@ import back from "../textures/bluecloud/bk.jpg";
 // import front from "./textures/garage2-cm/front.png"
 // import back from "./textures/garage2-cm/back.png"
 
+/**
+ * Loads Skybox textures from files
+ */
 class SkyboxLoader extends Component {
     getSkybox = () => {
         return [right, left, bottom, top, front, back]

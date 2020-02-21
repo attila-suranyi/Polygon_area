@@ -1,61 +1,64 @@
-import React, {useRef, useState, useEffect} from "react";
-import Axios from "axios";
-import Scene from "./Scene";
+import React, {useEffect, useState} from "react";
+import {extend, useFrame} from "react-three-fiber";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import * as THREE from "three";
+import TestGeo from "./TestGeo";
+import Polygon from "./Polygon";
 
 /**
- * Requests shape vertex data from backend and builds a Polygon component from it
- * @param props the backend ip and the shape type
+ * Builds a polygon's reflections and geometry from Vector3 data
  */
 const PolygonLoader = (props) => {
-    const [area, setArea] = useState(null);
-    const [geometry, setGeometry] = useState(null);
+    extend({ OrbitControls });
 
-    /**
-     * Fetches and handles shape data from backend
-     */
-    const fetchPolygonData = () => {
-        Axios.get(`${props.backendIp}/${props.shapeType}`)
-            .then( resp => handleResp(resp.data)
-        )
-    };
+    //TODO maybe use data from context ?
+    let customGeo = buildGeo(props.geo);
 
-    /**
-     * Sets the vertex coordinates
-     * @param resp The response data fetched from backend
-     */
-    const handleResp = (resp) => {
-        console.log(resp);
-        setArea(resp.area);
-        setGeometry(resp.triangles);
-    };
+    let cubeCamera = new THREE.CubeCamera(1, 100000, 128 );
 
-    const scrollToBottom = () => {
-        window.scrollTo(0,document.body.scrollHeight);
-    };
-
-    useEffect(() => {
-        fetchPolygonData();
-        scrollToBottom();
-    }, []);
+     // re-renders reflections every frame
+    useFrame(({ gl, scene }) => {
+        cubeCamera.visible = false;
+        cubeCamera.update(gl, scene);
+        cubeCamera.visible = true;
+    });
 
     return (
-        <div className="scene-container" >
-
-            {/*//TODO use context instead of props*/}
-
-        {/*use this when the server is up!*/}
-            {/*{ geometry && area ?*/}
-            {/*    <div>*/}
-            {/*        <p>{props.shapeType} area: {area}</p>*/}
-            {/*        <Scene geo={geometry} />*/}
-            {/*    </div> :*/}
-            {/*    <p>Fetching {props.shapeType} data...</p>*/}
-            {/*}*/}
-
-            <Scene geo={geometry} />
-
-        </div>
-    )
+        <Polygon
+            geo={customGeo}
+            reflection={cubeCamera.renderTarget.texture}
+        />
+    );
 };
 
 export default PolygonLoader;
+
+/**
+ *
+ * @param trianglesData array with vertex coordinates
+ * @returns {BufferGeometry} geometry built from faces and their vertices
+ */
+const buildGeo = (trianglesData) => {
+    const testData = TestGeo();
+
+    let i = 0;
+    let geometry = new THREE.Geometry();
+
+    // will use data from parameter instead
+    // for (let triangle of trianglesData) {
+    for (let triangle of testData.triangles) {
+
+        for (let vertex of triangle) {
+            geometry.vertices.push(new THREE.Vector3(vertex[0], vertex[1], vertex[2]))
+        }
+
+        geometry.faces.push(new THREE.Face3(i, i+1, i+2));
+
+        i += 3;
+    }
+
+    geometry.normalize();
+    geometry.computeFlatVertexNormals();
+
+    return new THREE.BufferGeometry().fromGeometry(geometry);
+};

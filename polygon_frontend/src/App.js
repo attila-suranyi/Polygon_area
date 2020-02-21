@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import {BrowserRouter as Router, Route, Redirect} from "react-router-dom";
-import PolygonLoader from "./components/scene/PolygonLoader";
+import GeometryLoader from "./components/scene/GeometryLoader";
 import Navbar from "./components/menu/Navbar";
 import { ThemeProvider } from "styled-components";
 import Theme from "./components/styled_components/themes/Theme"
@@ -18,15 +18,15 @@ function App() {
                     <Navbar/>
 
                     <Route path="/triangle">
-                        <PolygonLoader shapeType="triangle" backendIp={backendIp}/>
+                        <GeometryLoader shapeType="triangle" backendIp={backendIp}/>
                     </Route>
 
                     <Route path="/tetrahedron">
-                        <PolygonLoader shapeType="tetrahedron" backendIp={backendIp}/>
+                        <GeometryLoader shapeType="tetrahedron" backendIp={backendIp}/>
                     </Route>
 
                     <Route path="/cube">
-                        <PolygonLoader shapeType="cube" backendIp={backendIp}/>
+                        <GeometryLoader shapeType="cube" backendIp={backendIp}/>
                     </Route>
 
                 </Router>

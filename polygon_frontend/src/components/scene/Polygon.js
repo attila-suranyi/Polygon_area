@@ -1,15 +1,11 @@
-import React, {useEffect, useState} from "react";
-import {extend, useFrame} from "react-three-fiber";
 import {a, useSpring} from "react-spring/three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import * as THREE from "three";
-import TestGeo from "./TestGeo";
+import React, {useState} from "react";
 
 /**
- * Builds a polygon mesh from Vector3 data
+ * A colored 3D polygon mesh with shadows
  */
 const Polygon = (props) => {
-    extend({ OrbitControls });
 
     const blue = "#86ace6";
     const lightblue = "#41bee6";
@@ -18,80 +14,36 @@ const Polygon = (props) => {
 
     const [hovered, setHovered] = useState(false);
     const [active, setActive] = useState(false);
-    const [framesOnly, setFramesOnly] = useState(false);
+    const [edgesOnly, setEdgesOnly] = useState(false);
 
     const springProps = useSpring({
         scale: active ? enlargedScale : defaultScale,
         color: hovered ? lightblue : blue,
     });
 
-    let customGeo = buildGeo(props.geo);
-
-    let cubeCamera = new THREE.CubeCamera(1, 100000, 128 );
-
-    useFrame(({ gl, scene }) => {
-        cubeCamera.visible = false;
-        cubeCamera.update(gl, scene);
-        cubeCamera.visible = true;
-    });
-
     return (
         <a.mesh
-              onPointerOver={ () => setHovered(true) }
-              onPointerOut={ () => setHovered(false) }
+            onPointerOver={ () => setHovered(true) }
+            onPointerOut={ () => setHovered(false) }
 
-              onClick={ () => {
-                  setActive(!active);
-                  setFramesOnly(!framesOnly)
-              }}
+            onClick={ () => {
+                setActive(!active);
+                setEdgesOnly(!edgesOnly)
+            }}
 
-              scale={ springProps.scale }
-              castShadow={true}
-              geometry={customGeo}
+            scale={ springProps.scale }
+            castShadow={true}
+            geometry={ props.geo }
         >
-
-            <ambientLight />
-            <spotLight
-                position={[0, 5, 10]}
-                penumbra={true}
-                intensity={0.7}
-                castShadow={true}
-            />
-
             <a.meshLambertMaterial
                 attach="material"
                 color={ springProps.color }
-                wireframe={ framesOnly }
-                envMap={cubeCamera.renderTarget.texture}
-                side={THREE.DoubleSide}
+                wireframe={ edgesOnly }
+                envMap={ props.reflection }
+                side={ THREE.DoubleSide }
             />
         </a.mesh>
-    );
+    )
 };
 
 export default Polygon;
-
-//TODO maybe use data from context ?
-const buildGeo = (triangleData) => {
-    const testData = TestGeo();
-
-    let i = 0;
-    let geometry = new THREE.Geometry();
-
-    for (let triangle of testData.triangles) {
-    // for (let triangle of triangleData) {
-
-        for (let vertex of triangle) {
-            geometry.vertices.push(new THREE.Vector3(vertex[0], vertex[1], vertex[2]))
-        }
-
-        geometry.faces.push(new THREE.Face3(i, i+1, i+2));
-
-        i += 3;
-    }
-
-    geometry.normalize();
-    geometry.computeFlatVertexNormals();
-
-    return new THREE.BufferGeometry().fromGeometry(geometry);
-};

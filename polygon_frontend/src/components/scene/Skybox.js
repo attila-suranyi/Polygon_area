@@ -2,6 +2,9 @@ import React from "react";
 import * as THREE from "three";
 import SkyboxLoader from "./SkyboxLoader";
 
+/**
+ * Loads textures and builds a Skybox componentaround the scene
+ */
 const Skybox = () => {
 
     let geo = new THREE.BoxGeometry(1000, 1000, 1000);

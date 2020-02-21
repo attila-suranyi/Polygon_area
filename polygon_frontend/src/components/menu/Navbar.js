@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import Header from "./Header";
 import Nav from "../styled_components/Nav"
 import StyledLink from "../styled_components/StyledLink";
@@ -10,7 +10,7 @@ const Navbar = (props) => {
         <div>
             <Header />
 
-            <Nav primary >
+            <Nav>
                 <StyledLink to="/triangle">
                     <Button> Triangle </Button>
                 </StyledLink>
