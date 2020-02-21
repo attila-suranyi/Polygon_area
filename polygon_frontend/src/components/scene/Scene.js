@@ -7,7 +7,7 @@ import PolygonLoader from "./polygon/PolygonLoader";
 
 import CameraControls from "./camera/CameraControls";
 import Skybox from "./skybox/Skybox";
-import Plane from "./Plane";
+import Plane from "./plane/Plane";
 
 /**
  * Renders a scene with basic plane, polygon and other effects

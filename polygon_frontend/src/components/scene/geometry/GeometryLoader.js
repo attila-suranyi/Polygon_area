@@ -27,7 +27,7 @@ const GeometryLoader = (props) => {
         console.log(resp);
         setArea(resp.area);
         setGeometry(resp.triangles);
-        //TODO use GeometryBuilder here instead
+        //TODO use GeometryBuilder and scroll down here instead
     };
 
     /**

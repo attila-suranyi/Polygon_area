@@ -12,6 +12,6 @@ html {
 }
 
 body {
-    background: url(../img/skybox.jpg) no-repeat;
+    background: url(./img/background.jpg) no-repeat;
     background-size: cover;
 }
