@@ -6,7 +6,7 @@ const StyledLink = styled(Link)`
     color: ${props => props.theme.primary};
     transition: 0.2s;
     &:hover{
-      color: ${props => props.theme.secondary};
+      color: ${props => props.theme.ternary};
     }
 `;
 

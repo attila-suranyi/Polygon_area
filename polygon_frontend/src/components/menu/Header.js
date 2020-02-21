@@ -1,7 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import StyledLink from "../styled_components/StyledLink";
-import Nav from "../styled_components/Nav";
 
 const Header = () => {
     return (

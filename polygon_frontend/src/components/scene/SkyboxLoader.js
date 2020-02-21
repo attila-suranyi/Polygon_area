@@ -1,18 +1,18 @@
 import React, {Component} from "react";
 
-import right from "../textures/bluecloud/bluecloud_rt.jpg";
-import left from "../textures/bluecloud/bluecloud_lf.jpg";
-import top from "../textures/bluecloud/bluecloud_up.jpg";
-import bottom from "../textures/bluecloud/bluecloud_dn.jpg";
-import front from "../textures/bluecloud/bluecloud_ft.jpg";
-import back from "../textures/bluecloud/bluecloud_bk.jpg";
+import right from "../textures/bluecloud/rt.jpg";
+import left from "../textures/bluecloud/lf.jpg";
+import top from "../textures/bluecloud/up.jpg";
+import bottom from "../textures/bluecloud/dn.jpg";
+import front from "../textures/bluecloud/ft.jpg";
+import back from "../textures/bluecloud/bk.jpg";
 
-// import right from "./textures/browncloud/browncloud_rt.jpg";
-// import left from "./textures/browncloud/browncloud_lf.jpg";
-// import bottom from "./textures/browncloud/browncloud_up.jpg";
-// import top from "./textures/browncloud/browncloud_dn.jpg";
-// import front from "./textures/browncloud/browncloud_ft.jpg";
-// import back from "./textures/browncloud/browncloud_bk.jpg";
+// import right from "./textures/browncloud/rt.jpg";
+// import left from "./textures/browncloud/lf.jpg";
+// import bottom from "./textures/browncloud/up.jpg";
+// import top from "./textures/browncloud/dn.jpg";
+// import front from "./textures/browncloud/ft.jpg";
+// import back from "./textures/browncloud/bk.jpg";
 
 // import right from "./textures/cubemap/px.png";
 // import left from "./textures/cubemap/nx.png";

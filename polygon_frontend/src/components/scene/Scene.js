@@ -2,8 +2,8 @@ import React from "react";
 import { Canvas } from "react-three-fiber";
 import Plane from "./Plane";
 import * as THREE from "three";
-
 import "./sceneStyle.css";
+
 import Polygon from "./Polygon";
 import CameraControls from "./CameraControls";
 import Skybox from "./Skybox";
@@ -22,7 +22,7 @@ const Scene = (props) => {
             alpha={true}
         >
 
-            {/*<Skybox />*/}
+            <Skybox />
 
             <Polygon geo={props.geo}/>
             <Plane />

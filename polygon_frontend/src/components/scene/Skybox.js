@@ -1,6 +1,6 @@
 import React from "react";
 import * as THREE from "three";
-import SkyboxLoader from "./SkyboxLoader"
+import SkyboxLoader from "./SkyboxLoader";
 
 const Skybox = () => {
 

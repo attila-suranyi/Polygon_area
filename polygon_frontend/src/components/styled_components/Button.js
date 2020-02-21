@@ -5,14 +5,16 @@ const Button = styled.button`
     width: 10em;
     background: none;
     border-radius: 5px;
-    border: 5px solid ${props => props.theme.primary};
+    border: 4px solid ${props => props.theme.primary};
     color: ${props => props.theme.primary};
     margin: 0.25em 1em;
     padding: 0.25em 1em;
     transition: 0.2s;
     &:hover{
-      background: ${props => props.theme.secondary};
-      font-size: 1.2rem;
+      background: ${props => props.theme.ternary};
+      color: ${props => props.theme.secondary};
+      border: none;
+      font-size: 1rem;
       cursor: pointer;
     }
 `;
