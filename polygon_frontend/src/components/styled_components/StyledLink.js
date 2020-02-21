@@ -3,10 +3,10 @@ import {Link} from "react-router-dom";
 
 const StyledLink = styled(Link)`
     text-decoration: none;
-    color: #d7ddff;
+    color: ${props => props.theme.primary};
     transition: 0.2s;
     &:hover{
-      color: #ccc;
+      color: ${props => props.theme.secondary};
     }
 `;
 

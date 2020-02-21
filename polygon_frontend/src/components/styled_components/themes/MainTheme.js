@@ -1,7 +1,8 @@
 const MainTheme = {
     name: "Main theme",
-    primary: "#58ee51",
-    secondary: "#78eed3"
+    primary: "#d7ddff",
+    secondary: "#94a0e6",
+    // ternary: "#fff4d7"
 };
 
 export default MainTheme;

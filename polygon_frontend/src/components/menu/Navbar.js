@@ -4,6 +4,7 @@ import Header from "./Header";
 import Nav from "../styled_components/Nav"
 import StyledLink from "../styled_components/StyledLink";
 import MainTheme from "../styled_components/themes/MainTheme";
+import Button from "../styled_components/Button";
 
 const Navbar = (props) => {
 
@@ -12,20 +13,17 @@ const Navbar = (props) => {
             <Header />
 
             <Nav primary >
+                <StyledLink to="/triangle">
+                    <Button> Triangle </Button>
+                </StyledLink>
 
-                <StyledLink to="/"> Home </StyledLink>
-                <br/>
-                <br/>
+                <StyledLink to="/tetrahedron">
+                    <Button> Tetrahedron </Button>
+                </StyledLink>
 
-                <StyledLink to="/triangle"> Triangle </StyledLink>
-
-                <br/>
-
-                <StyledLink to="/tetrahedron"> Tetrahedron </StyledLink>
-
-                <br/>
-                <StyledLink to="/cube"> Cube </StyledLink>
-
+                <StyledLink to="/cube">
+                    <Button> Cube </Button>
+                </StyledLink>
             </Nav>
         </ThemeProvider>
     );

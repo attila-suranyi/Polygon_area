@@ -22,7 +22,7 @@ const Scene = (props) => {
             alpha={true}
         >
 
-            <Skybox />
+            {/*<Skybox />*/}
 
             <Polygon geo={props.geo}/>
             <Plane />
