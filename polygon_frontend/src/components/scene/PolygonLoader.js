@@ -29,8 +29,13 @@ const PolygonLoader = (props) => {
         setGeometry(resp.triangles);
     };
 
+    const scrollToBottom = () => {
+        window.scrollTo(0,document.body.scrollHeight);
+    };
+
     useEffect(() => {
         fetchPolygonData();
+        scrollToBottom();
     }, []);
 
     return (

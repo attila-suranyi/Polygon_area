@@ -3,7 +3,7 @@ import "./App.css";
 import {BrowserRouter as Router, Route, Redirect} from "react-router-dom";
 import PolygonLoader from "./components/scene/PolygonLoader";
 import Navbar from "./components/menu/Navbar";
-import {ThemeProvider} from "styled-components";
+import { ThemeProvider } from "styled-components";
 import Theme from "./components/styled_components/themes/Theme"
 
 

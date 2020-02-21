@@ -1,9 +1,7 @@
-import React from "react";
-import { ThemeProvider } from "styled-components";
+import React, {useEffect} from "react";
 import Header from "./Header";
 import Nav from "../styled_components/Nav"
 import StyledLink from "../styled_components/StyledLink";
-import Theme from "../styled_components/themes/Theme";
 import Button from "../styled_components/Button";
 
 const Navbar = (props) => {
