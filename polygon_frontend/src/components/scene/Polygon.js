@@ -3,6 +3,7 @@ import {extend, useFrame} from "react-three-fiber";
 import {a, useSpring} from "react-spring/three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import * as THREE from "three";
+import TestGeo from "./TestGeo";
 
 /**
  * Builds a polygon mesh from Vector3 data
@@ -71,81 +72,8 @@ const Polygon = (props) => {
 export default Polygon;
 
 //TODO maybe use data from context ?
-
 const buildGeo = (triangleData) => {
-    const testData = {
-        "area": 2.0086019589572386,
-        "triangles": [
-            [
-                [
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    1,
-                    0,
-                    0
-                ],
-                [
-                    0.5,
-                    0.8659999966621399,
-                    0
-                ]
-            ],
-            [
-                [
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    0.5,
-                    0.8659999966621399,
-                    0
-                ],
-                [
-                    0.5,
-                    0.5,
-                    1
-                ]
-            ],
-            [
-                [
-                    0,
-                    0,
-                    0
-                ],
-                [
-                    1,
-                    0,
-                    0
-                ],
-                [
-                    0.5,
-                    0.5,
-                    1
-                ]
-            ],
-            [
-                [
-                    1,
-                    0,
-                    0
-                ],
-                [
-                    0.5,
-                    0.8659999966621399,
-                    0
-                ],
-                [
-                    0.5,
-                    0.5,
-                    1
-                ]
-            ]
-        ]
-    };
+    const testData = TestGeo();
 
     let i = 0;
     let geometry = new THREE.Geometry();
