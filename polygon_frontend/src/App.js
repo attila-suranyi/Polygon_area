@@ -1,9 +1,8 @@
 import React from "react";
 import "./App.css";
 import {BrowserRouter as Router, Route, Redirect} from "react-router-dom";
-import Header from "./components/Header";
-import PolygonLoader from "./components/PolygonLoader";
-import Navbar from "./components/Navbar";
+import PolygonLoader from "./components/scene/PolygonLoader";
+import Navbar from "./components/menu/Navbar";
 
 function App() {
     // const backendIp = "http://localhost:8080";
@@ -12,7 +11,7 @@ function App() {
     return (
         <div className="App">
             <Router>
-                <Navbar/>
+                <Navbar />
 
                 <Route path="/triangle">
                     <PolygonLoader shapeType="triangle" backendIp={backendIp}/>

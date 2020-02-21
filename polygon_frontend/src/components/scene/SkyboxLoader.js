@@ -1,11 +1,11 @@
 import React, {Component} from "react";
 
-import right from "./textures/bluecloud/bluecloud_rt.jpg";
-import left from "./textures/bluecloud/bluecloud_lf.jpg";
-import top from "./textures/bluecloud/bluecloud_up.jpg";
-import bottom from "./textures/bluecloud/bluecloud_dn.jpg";
-import front from "./textures/bluecloud/bluecloud_ft.jpg";
-import back from "./textures/bluecloud/bluecloud_bk.jpg";
+import right from "../textures/bluecloud/bluecloud_rt.jpg";
+import left from "../textures/bluecloud/bluecloud_lf.jpg";
+import top from "../textures/bluecloud/bluecloud_up.jpg";
+import bottom from "../textures/bluecloud/bluecloud_dn.jpg";
+import front from "../textures/bluecloud/bluecloud_ft.jpg";
+import back from "../textures/bluecloud/bluecloud_bk.jpg";
 
 // import right from "./textures/browncloud/browncloud_rt.jpg";
 // import left from "./textures/browncloud/browncloud_lf.jpg";

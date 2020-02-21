@@ -1,20 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import styled, { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
 import Header from "./Header";
-import Nav from "./styled_components/Nav"
-import StyledLink from "./styled_components/StyledLink";
-
-const mainTheme = {
-    name: "Main theme",
-    primary: "#58ee51",
-    secondary: "#78eed3"
-};
+import Nav from "../styled_components/Nav"
+import StyledLink from "../styled_components/StyledLink";
+import MainTheme from "../styled_components/themes/MainTheme";
 
 const Navbar = (props) => {
 
     return (
-        <ThemeProvider theme={mainTheme}>
+        <ThemeProvider theme={MainTheme}>
             <Header />
 
             <Nav primary >
