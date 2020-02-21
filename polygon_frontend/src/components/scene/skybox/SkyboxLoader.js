@@ -1,11 +1,11 @@
 import React, {Component} from "react";
 
-import right from "../textures/bluecloud/rt.jpg";
-import left from "../textures/bluecloud/lf.jpg";
-import top from "../textures/bluecloud/up.jpg";
-import bottom from "../textures/bluecloud/dn.jpg";
-import front from "../textures/bluecloud/ft.jpg";
-import back from "../textures/bluecloud/bk.jpg";
+import right from "../../textures/bluecloud/rt.jpg";
+import left from "../../textures/bluecloud/lf.jpg";
+import top from "../../textures/bluecloud/up.jpg";
+import bottom from "../../textures/bluecloud/dn.jpg";
+import front from "../../textures/bluecloud/ft.jpg";
+import back from "../../textures/bluecloud/bk.jpg";
 
 // import right from "./textures/browncloud/rt.jpg";
 // import left from "./textures/browncloud/lf.jpg";
@@ -34,6 +34,8 @@ import back from "../textures/bluecloud/bk.jpg";
 // import bottom from "./textures/garage2-cm/bottom.png"
 // import front from "./textures/garage2-cm/front.png"
 // import back from "./textures/garage2-cm/back.png"
+
+//TODO move file references to Theme and figure out how to change skyboxes on the go
 
 /**
  * Loads Skybox textures from files

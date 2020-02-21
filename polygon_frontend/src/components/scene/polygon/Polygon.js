@@ -4,6 +4,8 @@ import React, {useState} from "react";
 
 /**
  * A colored 3D polygon mesh with shadows
+ * @param props geometry and reflections
+ * @returns {*} A colored 3D polygon mesh with shadows
  */
 const Polygon = (props) => {
 

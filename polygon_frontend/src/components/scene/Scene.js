@@ -1,13 +1,13 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { Canvas } from "react-three-fiber";
-import Plane from "./Plane";
 import * as THREE from "three";
 import "./sceneStyle.css";
 
-import PolygonLoader from "./PolygonLoader";
-import CameraControls from "./CameraControls";
-import Skybox from "./Skybox";
-import {a} from "react-spring/three";
+import PolygonLoader from "./polygon/PolygonLoader";
+
+import CameraControls from "./camera/CameraControls";
+import Skybox from "./skybox/Skybox";
+import Plane from "./Plane";
 
 /**
  * Renders a scene with basic plane, polygon and other effects
@@ -43,7 +43,5 @@ const Scene = (props) => {
         </Canvas>
     )
 };
-
-
 
 export default Scene;

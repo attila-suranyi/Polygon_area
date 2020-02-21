@@ -1,6 +1,6 @@
-import React, {useRef, useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import Axios from "axios";
-import Scene from "./Scene";
+import Scene from "../Scene";
 
 /**
  * Requests shape vertex data from backend and builds a PolygonLoader component from it
@@ -27,8 +27,12 @@ const GeometryLoader = (props) => {
         console.log(resp);
         setArea(resp.area);
         setGeometry(resp.triangles);
+        //TODO use GeometryBuilder here instead
     };
 
+    /**
+     *  Scrolls down to bottom to focus on the canvas
+     */
     const scrollToBottom = () => {
         window.scrollTo(0,document.body.scrollHeight);
     };

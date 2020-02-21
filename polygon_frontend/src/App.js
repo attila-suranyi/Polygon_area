@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
-import {BrowserRouter as Router, Route, Redirect} from "react-router-dom";
-import GeometryLoader from "./components/scene/GeometryLoader";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import GeometryLoader from "./components/scene/geometry/GeometryLoader";
 import Navbar from "./components/menu/Navbar";
 import { ThemeProvider } from "styled-components";
 import Theme from "./components/styled_components/themes/Theme"
