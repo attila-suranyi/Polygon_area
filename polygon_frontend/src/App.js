@@ -1,22 +1,38 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
-import Indexpage from "./components/Indexpage";
-import Polygon from "./components/Polygon";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import GeometryLoader from "./components/scene/geometry/GeometryLoader";
+import Navbar from "./components/menu/Navbar";
+import { ThemeProvider } from "styled-components";
+import Theme from "./components/styled_components/themes/Theme"
+
 
 function App() {
-  return (
-    <div className="App">
-      <Router>
-        <Route exact path="/">
-          <Indexpage />
-        </Route>
-        <Route path="/triangle">
-          <Polygon shapeType="triangle" />
-        </Route>
-      </Router>
-    </div>
-  );
+    // const backendIp = "http://localhost:8080";
+    const backendIp = "10.44.255.255:8080";
+
+    return (
+        <div className="App">
+            <ThemeProvider theme={Theme.main}>
+                <Router>
+                    <Navbar/>
+
+                    <Route path="/triangle">
+                        <GeometryLoader shapeType="triangle" backendIp={backendIp}/>
+                    </Route>
+
+                    <Route path="/tetrahedron">
+                        <GeometryLoader shapeType="tetrahedron" backendIp={backendIp}/>
+                    </Route>
+
+                    <Route path="/cube">
+                        <GeometryLoader shapeType="cube" backendIp={backendIp}/>
+                    </Route>
+
+                </Router>
+            </ThemeProvider>
+        </div>
+    );
 }
 
 export default App;
