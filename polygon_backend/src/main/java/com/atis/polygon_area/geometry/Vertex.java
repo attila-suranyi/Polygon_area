@@ -1,10 +1,7 @@
 package com.atis.polygon_area.geometry;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,30 +9,23 @@ import java.util.List;
 @AllArgsConstructor
 public class Vertex {
     public int id;
-    private float xCoord;
-    private float yCoord;
-    private float zCoord;
+    private double X;
+    private double Y;
+    private double Z;
 
-    @EqualsAndHashCode.Exclude
-    private List<Vertex> adjVertices = new ArrayList<>();
 
-    public Vertex(float xCoord, float yCoord, float zCoord, int id) {
-        this.xCoord = xCoord;
-        this.yCoord = yCoord;
-        this.zCoord = zCoord;
-        this.id = id;
+    public Vertex(double X, double Y, double Z) {
+        this.X = X;
+        this.Y = Y;
+        this.Z = Z;
     }
 
-    public List<Float> getCoordinates() {
-        List<Float> coordinates = new ArrayList<>();
-        coordinates.add(this.xCoord);
-        coordinates.add(this.yCoord);
-        coordinates.add(this.zCoord);
+    public List<Double> getCoordinates() {
+        List<Double> coordinates = new ArrayList<>();
+        coordinates.add(this.X);
+        coordinates.add(this.Y);
+        coordinates.add(this.Z);
 
         return coordinates;
-    }
-
-    public void addAdjVertex(Vertex vertex) {
-        this.adjVertices.add(vertex);
     }
 }

@@ -1,8 +1,8 @@
 package com.atis.polygon_area.controller;
 
-import com.atis.polygon_area.geometry.Cube;
-import com.atis.polygon_area.geometry.Tetrahedron;
-import com.atis.polygon_area.geometry.Triangle;
+import com.atis.polygon_area.shapes.Cube;
+import com.atis.polygon_area.shapes.Tetrahedron;
+import com.atis.polygon_area.shapes.Triangle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,7 +29,7 @@ public class Controller {
     public ResponseEntity getTriangleGeometry() {
         Map<Object, Object> model = new HashMap<>();
         model.put("area", triangle.getArea());
-        model.put("triangles", triangle.getOrderedVertexCoordinates());
+        model.put("triangles", triangle.getOrderedTriangleCoordinates());
 
         return ResponseEntity.ok(model);
     }
@@ -38,7 +38,7 @@ public class Controller {
     public ResponseEntity getPyramidGeometry() {
         Map<Object, Object> model = new HashMap<>();
         model.put("area", tetrahedron.getArea());
-        model.put("triangles", tetrahedron.getOrderedVertexCoordinates());
+        model.put("triangles", tetrahedron.getOrderedTriangleCoordinates());
 
         return ResponseEntity.ok(model);
     }
@@ -47,7 +47,7 @@ public class Controller {
     public ResponseEntity getCubeGeometry() {
         Map<Object, Object> model = new HashMap<>();
         model.put("area", cube.getArea());
-        model.put("triangles", cube.getOrderedVertexCoordinates());
+        model.put("triangles", cube.getOrderedTriangleCoordinates());
 
         return ResponseEntity.ok(model);
     }
