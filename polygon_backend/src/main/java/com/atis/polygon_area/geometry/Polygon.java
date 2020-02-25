@@ -168,4 +168,74 @@ public class Polygon {
         face.sort(Comparator.comparing(Vertex::getId));
         this.faces.add(face);
     }
+
+    private void triangulatePolygon() {
+
+        List<Vertex> points = this.vertices;
+
+        boolean clockwise = isClockwise(points);
+        int index = 0;
+
+        while (points.size() > 2) {
+
+            Vertex p1 = points.get((index + 0) % points.size());
+            Vertex p2 = points.get((index + 1) % points.size());
+            Vertex p3 = points.get((index + 2) % points.size());
+
+            //Vector v1 = new Vector(p2.getX() - p1.getX(), p2.y - p1.y);
+            Vector v1 = Vector.subtract(p2, p1);
+            //Vector v2 = new Vector(p3.getX() - p1.getX(), p3.y - p1.y);
+            Vector v2 = Vector.subtract(p3, p1);
+            //double cross = v1.cross(v2);
+            Vector crossProductVector = Vector.cross(v1, v2);
+
+            double cross = crossProductVector.getX() - crossProductVector.getY() + crossProductVector.getZ();
+
+            List<Vertex> triangle = new ArrayList<>();
+            triangle.add(p1);
+            triangle.add(p2);
+            triangle.add(p3);
+
+            //System.out.println("cross = " + cross);
+            if (!clockwise && cross >= 0 && validTriangle(triangle, p1, p2, p3, points)) {
+                points.remove(p2);
+                triangles.add(triangle);
+            }
+            else if (clockwise && cross <= 0 && validTriangle(triangle, p1, p2, p3, points)) {
+                points.remove(p2);
+                triangles.add(triangle);
+            }
+            else {
+                index++;
+            }
+        }
+        if (points.size() < 3) {
+            points.clear();
+        }
+    }
+
+    public boolean validTriangle(List<Vertex> triangle, Vertex p1, Vertex p2, Vertex p3, List<Vertex> points) {
+        for (Vertex p : points) {
+            if (p != p1 && p != p2 && p != p3 && triangle.contains(p)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    //TODO this only works with planes in 2D, I have to rotate the plane from 3D
+
+    // very interesting
+    // https://stackoverflow.com/questions/1165647/how-to-determine-if-a-list-of-polygon-points-are-in-clockwise-order
+    // https://en.wikipedia.org/wiki/Shoelace_formula ?
+    public boolean isClockwise(List<Vertex> points) {
+        int sum = 0;
+        for (int i = 0; i < points.size(); i++) {
+            Vertex p1 = points.get(i);
+            Vertex p2 = points.get((i + 1) % points.size());
+            sum += (p2.getX() - p1.getX()) * (p2.getY() + p1.getY());
+        }
+        return sum >= 0;
+    }
 }
