@@ -19,10 +19,6 @@ const Navbar = (props) => {
                     <Button> Tetrahedron </Button>
                 </StyledLink>
 
-                <StyledLink to="/cube">
-                    <Button> Cube </Button>
-                </StyledLink>
-
                 <StyledLink to="/icosahedron">
                     <Button> Icosahedron </Button>
                 </StyledLink>

@@ -25,10 +25,6 @@ function App() {
                         <GeometryLoader shapeType="tetrahedron" backendIp={backendIp}/>
                     </Route>
 
-                    <Route path="/cube">
-                        <GeometryLoader shapeType="cube" backendIp={backendIp}/>
-                    </Route>
-
                     <Route path="/icosahedron">
                         <GeometryLoader shapeType="icosahedron" backendIp={backendIp}/>
                     </Route>

@@ -1,6 +1,5 @@
 package com.atis.polygon_area.geometry;
 
-import com.atis.polygon_area.shapes.Cube;
 import com.atis.polygon_area.shapes.Icosahedron;
 import com.atis.polygon_area.shapes.Tetrahedron;
 import com.atis.polygon_area.shapes.Triangle;
@@ -19,36 +18,6 @@ class PolygonTest {
     void pyramidArea() {
         Tetrahedron p = new Tetrahedron();
         assertEquals(2.01, Math.round(p.getArea() * 100.0) / 100.0);
-    }
-
-    @Test
-    void cubeArea() {
-        Cube c = new Cube();
-        assertEquals(6.00, Math.round(c.getArea() * 100.0) / 100.0);
-    }
-
-    @Test
-    void hexagonDividedIntoFourTriangles() {
-        Polygon p = new Polygon();
-
-        p.addVertex(new Vertex(1d, 0, 0));
-        p.addVertex(new Vertex(2d, 0, 0));
-        p.addVertex(new Vertex(3d, 1, 0));
-        p.addVertex(new Vertex(2d, 2, 0));
-        p.addVertex(new Vertex(1d, 2, 0));
-        p.addVertex(new Vertex(0d, 1, 0));
-
-        p.calculatePolygonGeometry();
-        assertEquals(4, p.getTriangles().size());
-    }
-
-    @Test
-    void cubeHasSixFaces() {
-        Polygon cube = new Cube();
-
-        cube.calculatePolygonGeometry();
-
-        assertEquals(6, cube.getFaces().size());
     }
 
     @Test

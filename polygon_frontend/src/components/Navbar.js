@@ -18,9 +18,6 @@ const Navbar = (props) => {
             <Link to="/tetrahedron" style={black}> Tetrahedron </Link>
             <br/>
 
-            <Link to="/cube" style={black}> Cube </Link>
-            <br/>
-
             <Link to="/icosahedron" style={black}> Icosahedron </Link>
         </div>
     );

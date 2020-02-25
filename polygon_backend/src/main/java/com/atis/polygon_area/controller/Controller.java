@@ -1,6 +1,5 @@
 package com.atis.polygon_area.controller;
 
-import com.atis.polygon_area.shapes.Cube;
 import com.atis.polygon_area.shapes.Icosahedron;
 import com.atis.polygon_area.shapes.Tetrahedron;
 import com.atis.polygon_area.shapes.Triangle;
@@ -24,9 +23,6 @@ public class Controller {
     private Tetrahedron tetrahedron;
 
     @Autowired
-    private Cube cube;
-
-    @Autowired
     private Icosahedron icosahedron;
 
     @GetMapping("/triangle")
@@ -43,15 +39,6 @@ public class Controller {
         Map<Object, Object> model = new HashMap<>();
         model.put("area", tetrahedron.getArea());
         model.put("triangles", tetrahedron.getOrderedTriangleCoordinates());
-
-        return ResponseEntity.ok(model);
-    }
-
-    @GetMapping("/cube")
-    public ResponseEntity getCubeGeometry() {
-        Map<Object, Object> model = new HashMap<>();
-        model.put("area", cube.getArea());
-        model.put("triangles", cube.getOrderedTriangleCoordinates());
 
         return ResponseEntity.ok(model);
     }

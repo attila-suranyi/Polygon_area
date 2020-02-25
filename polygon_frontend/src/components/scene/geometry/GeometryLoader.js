@@ -48,13 +48,13 @@ const GeometryLoader = (props) => {
             {/*//TODO use context instead of props*/}
 
         {/*use this when the server is up!*/}
-        {/*    { geometry && area ?*/}
-        {/*        <div>*/}
-        {/*            <p>{props.shapeType} area: {area.toFixed(2)} units</p>*/}
-        {/*            <Scene geo={geometry} />*/}
-        {/*        </div> :*/}
-        {/*        <p>Fetching {props.shapeType} data...</p>*/}
-        {/*    }*/}
+            { geometry && area ?
+                <div>
+                    <p>{props.shapeType} area: {area.toFixed(2)} units</p>
+                    <Scene geo={geometry} />
+                </div> :
+                <p>Fetching {props.shapeType} data...</p>
+            }
 
             <Scene geo={geometry} />
 
