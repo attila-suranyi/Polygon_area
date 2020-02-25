@@ -1,6 +1,7 @@
 package com.atis.polygon_area.geometry;
 
 import com.atis.polygon_area.shapes.Cube;
+import com.atis.polygon_area.shapes.Icosahedron;
 import com.atis.polygon_area.shapes.Tetrahedron;
 import com.atis.polygon_area.shapes.Triangle;
 import org.junit.jupiter.api.Test;
@@ -48,5 +49,11 @@ class PolygonTest {
         cube.calculatePolygonGeometry();
 
         assertEquals(6, cube.getFaces().size());
+    }
+
+    @Test
+    void icosahedronHasTwentyFaces() {
+        Icosahedron icosahedron = new Icosahedron();
+        assertEquals(20, icosahedron.getFaces().size());
     }
 }
