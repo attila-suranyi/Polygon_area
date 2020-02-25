@@ -14,8 +14,8 @@ const GeometryBuilder = (trianglesData) => {
 
     // will use data from parameter instead
 
-    // for (let triangle of trianglesData) {
-    for (let triangle of testData.triangles) {
+    for (let triangle of trianglesData) {
+    //for (let triangle of testData.triangles) {
 
         for (let vertex of triangle) {
             geometry.vertices.push(new THREE.Vector3(vertex[0], vertex[1], vertex[2]))
