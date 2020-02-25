@@ -19,6 +19,9 @@ const Navbar = (props) => {
             <br/>
 
             <Link to="/cube" style={black}> Cube </Link>
+            <br/>
+
+            <Link to="/dodecahedron" style={black}> Dodecahedron </Link>
         </div>
     );
 };

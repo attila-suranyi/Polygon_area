@@ -1,6 +1,7 @@
 package com.atis.polygon_area.controller;
 
 import com.atis.polygon_area.shapes.Cube;
+import com.atis.polygon_area.shapes.Dodecahedron;
 import com.atis.polygon_area.shapes.Tetrahedron;
 import com.atis.polygon_area.shapes.Triangle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class Controller {
     @Autowired
     private Cube cube;
 
+    @Autowired
+    private Dodecahedron dodecahedron;
+
     @GetMapping("/triangle")
     public ResponseEntity getTriangleGeometry() {
         Map<Object, Object> model = new HashMap<>();
@@ -48,6 +52,15 @@ public class Controller {
         Map<Object, Object> model = new HashMap<>();
         model.put("area", cube.getArea());
         model.put("triangles", cube.getOrderedTriangleCoordinates());
+
+        return ResponseEntity.ok(model);
+    }
+
+    @GetMapping("/dodecahedron")
+    public ResponseEntity getDodecahedronGeometry() {
+        Map<Object, Object> model = new HashMap<>();
+        model.put("area", dodecahedron.getArea());
+        model.put("triangles", dodecahedron.getOrderedTriangleCoordinates());
 
         return ResponseEntity.ok(model);
     }

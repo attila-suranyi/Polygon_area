@@ -27,6 +27,10 @@ function App() {
                     <PolygonLoader shapeType="cube" backendIp={backendIp}/>
                 </Route>
 
+                <Route path="/dodecahedron">
+                    <PolygonLoader shapeType="dodecahedron" backendIp={backendIp}/>
+                </Route>
+
             </Router>
         </div>
     );
