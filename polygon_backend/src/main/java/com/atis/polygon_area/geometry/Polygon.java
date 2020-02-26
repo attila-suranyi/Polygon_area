@@ -4,10 +4,13 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
 import org.paukov.combinatorics3.Generator;
+import org.springframework.stereotype.Service;
+
 import java.util.*;
 import static java.lang.Math.sqrt;
 
 @Data
+@Service
 public class Polygon {
     private double area = 0;
 
@@ -119,7 +122,7 @@ public class Polygon {
 
 
     // the layers are: triangle, vertices in a triangle, coordinates of the vertices
-    public List<List<List<Double>>> getOrderedTriangleCoordinates() {
+    private List<List<List<Double>>> getOrderedTriangleCoordinates() {
         List<List<Vertex>> sortedTriangles = new ArrayList<>(this.faces);
         sortedTriangles.sort(Comparator.comparing((l1) -> l1.get(0).getId()));
 
@@ -134,6 +137,14 @@ public class Polygon {
         }
 
         return sortedCoordinates;
+    }
+
+    public HashMap<String, Object> getPolygonGeometry() {
+        HashMap<String, Object> polygonGeometry = new HashMap<>();
+        polygonGeometry.put("area", this.area);
+        polygonGeometry.put("triangles", this.getOrderedTriangleCoordinates());
+
+        return polygonGeometry;
     }
 
     protected void addVertex(Vertex vertex) {

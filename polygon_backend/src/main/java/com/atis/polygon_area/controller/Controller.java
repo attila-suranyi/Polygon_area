@@ -1,8 +1,10 @@
 package com.atis.polygon_area.controller;
 
+import com.atis.polygon_area.geometry.GeometryCalculable;
 import com.atis.polygon_area.shapes.Icosahedron;
 import com.atis.polygon_area.shapes.Tetrahedron;
 import com.atis.polygon_area.shapes.Triangle;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +16,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin
+@RequiredArgsConstructor
 public class Controller {
 
     @Autowired
@@ -25,29 +28,24 @@ public class Controller {
     @Autowired
     private Icosahedron icosahedron;
 
+
     @GetMapping("/triangle")
     public ResponseEntity getTriangleGeometry() {
-        Map<Object, Object> model = new HashMap<>();
-        model.put("area", triangle.getArea());
-        model.put("triangles", triangle.getOrderedTriangleCoordinates());
+        Map<String, Object> model = triangle.getPolygonGeometry();
 
         return ResponseEntity.ok(model);
     }
 
     @GetMapping("/tetrahedron")
     public ResponseEntity getPyramidGeometry() {
-        Map<Object, Object> model = new HashMap<>();
-        model.put("area", tetrahedron.getArea());
-        model.put("triangles", tetrahedron.getOrderedTriangleCoordinates());
+        Map<String, Object> model = tetrahedron.getPolygonGeometry();
 
         return ResponseEntity.ok(model);
     }
 
     @GetMapping("/icosahedron")
     public ResponseEntity getDodecahedronGeometry() {
-        Map<Object, Object> model = new HashMap<>();
-        model.put("area", icosahedron.getArea());
-        model.put("triangles", icosahedron.getOrderedTriangleCoordinates());
+        Map<String, Object> model = icosahedron.getPolygonGeometry();
 
         return ResponseEntity.ok(model);
     }
