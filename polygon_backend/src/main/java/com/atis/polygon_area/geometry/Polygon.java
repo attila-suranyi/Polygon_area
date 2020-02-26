@@ -7,20 +7,18 @@ import org.paukov.combinatorics3.Generator;
 import java.util.*;
 import static java.lang.Math.sqrt;
 
-//TODO eliminate faces vs triangles, they are the same now
 @Data
 public class Polygon {
     private double area = 0;
 
     private Set<List<Vertex>> faces = new HashSet<>();
-    private Set<List<Vertex>> triangles = new HashSet<>();
 
     private int vertexId = 0;
     @Setter(AccessLevel.PRIVATE)
     private List<Vertex> vertices = new ArrayList<>();
 
 
-    public void calculatePolygonGeometry() {
+    public void calculatePolygonGeometry() throws Exception {
         this.findFaces();
         this.calculatePolygonArea();
     }
@@ -31,7 +29,7 @@ public class Polygon {
      * If there are points on both sides of the given plane,
      * then the plane is not a face of the polygon.
      */
-    void findFaces() {
+    void findFaces() throws Exception {
         List<List<Vertex>> planes = this.generatePlanes();
 
         for (List<Vertex> plane : planes) {
@@ -58,7 +56,7 @@ public class Polygon {
                 }
             }
             if (!(pointsAbove && pointsBelow)) {
-                this.addFace(plane);
+                this.addTriangle(plane);
             }
         }
     }
@@ -94,8 +92,13 @@ public class Polygon {
         return Vector.dot(normalVector, Vector.subtract(point, pointOnPlane));
     }
 
+
+    /**
+     * Calculates the area of the polygon iterating through the found
+     * triangles, using Heron's formula
+     */
     private void calculatePolygonArea() {
-        for (List<Vertex> triangle : this.triangles) {
+        for (List<Vertex> triangle : this.faces) {
 
             double sideA = this.calculateSideLength(triangle.get(0), triangle.get(1));
             double sideB = this.calculateSideLength(triangle.get(0), triangle.get(2));
@@ -113,9 +116,10 @@ public class Polygon {
                 Math.pow((pointA.getZ() - pointB.getZ()), 2)));
     }
 
+
     // the layers are: triangle, vertices in a triangle, coordinates of the vertices
     public List<List<List<Double>>> getOrderedTriangleCoordinates() {
-        List<List<Vertex>> sortedTriangles = new ArrayList<>(this.getTriangles());
+        List<List<Vertex>> sortedTriangles = new ArrayList<>(this.faces);
         sortedTriangles.sort(Comparator.comparing((l1) -> l1.get(0).getId()));
 
         List<List<List<Double>>> sortedCoordinates = new ArrayList<>();
@@ -131,18 +135,16 @@ public class Polygon {
         return sortedCoordinates;
     }
 
-    public void addVertex(Vertex vertex) {
+    protected void addVertex(Vertex vertex) {
         vertex.setId(this.vertexId++);
         this.vertices.add(vertex);
     }
 
-    private void addTriangle(List<Vertex> triangle) {
+    private void addTriangle(List<Vertex> triangle) throws Exception {
+        if (triangle.size() > 3) {
+            throw new Exception("Not a triangle");
+        }
         triangle.sort(Comparator.comparing(Vertex::getId));
-        this.triangles.add(triangle);
-    }
-
-    private void addFace(List<Vertex> face) {
-        face.sort(Comparator.comparing(Vertex::getId));
-        this.faces.add(face);
+        this.faces.add(triangle);
     }
 }

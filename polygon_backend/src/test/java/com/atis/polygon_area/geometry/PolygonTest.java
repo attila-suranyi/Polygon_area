@@ -9,19 +9,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class PolygonTest {
 
     @Test
-    void triangleArea() {
+    void triangleArea() throws Exception {
         Triangle t = new Triangle();
         assertEquals(0.43, Math.round(t.getArea() * 100.0) / 100.0);
     }
 
     @Test
-    void pyramidArea() {
+    void pyramidArea() throws Exception {
         Tetrahedron p = new Tetrahedron();
         assertEquals(2.01, Math.round(p.getArea() * 100.0) / 100.0);
     }
 
     @Test
-    void icosahedronHasTwentyFaces() {
+    void icosahedronHasTwentyFaces() throws Exception {
         Icosahedron icosahedron = new Icosahedron();
         assertEquals(20, icosahedron.getFaces().size());
     }
