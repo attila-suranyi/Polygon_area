@@ -11,6 +11,7 @@ import static java.lang.Math.sqrt;
 public class Polygon {
     private double area = 0;
 
+    @Setter(AccessLevel.PRIVATE)
     private Set<List<Vertex>> faces = new HashSet<>();
 
     private int vertexId = 0;
@@ -29,7 +30,7 @@ public class Polygon {
      * If there are points on both sides of the given plane,
      * then the plane is not a face of the polygon.
      */
-    void findFaces() throws Exception {
+    private void findFaces() throws Exception {
         List<List<Vertex>> planes = this.generatePlanes();
 
         for (List<Vertex> plane : planes) {
