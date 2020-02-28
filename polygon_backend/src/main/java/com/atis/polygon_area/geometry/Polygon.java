@@ -7,22 +7,20 @@ import org.paukov.combinatorics3.Generator;
 import java.util.*;
 import static java.lang.Math.sqrt;
 
-
 @Data
 public class Polygon {
     private double area = 0;
 
+    @Setter(AccessLevel.PRIVATE)
     private Set<List<Vertex>> faces = new HashSet<>();
-    private Set<List<Vertex>> triangles = new HashSet<>();
 
     private int vertexId = 0;
     @Setter(AccessLevel.PRIVATE)
     private List<Vertex> vertices = new ArrayList<>();
 
 
-    public void calculatePolygonGeometry() {
+    public void calculatePolygonGeometry() throws Exception {
         this.findFaces();
-        this.dividePolygonFaceToTriangles();
         this.calculatePolygonArea();
     }
 
@@ -32,7 +30,7 @@ public class Polygon {
      * If there are points on both sides of the given plane,
      * then the plane is not a face of the polygon.
      */
-    void findFaces() {
+    private void findFaces() throws Exception {
         List<List<Vertex>> planes = this.generatePlanes();
 
         for (List<Vertex> plane : planes) {
@@ -59,7 +57,7 @@ public class Polygon {
                 }
             }
             if (!(pointsAbove && pointsBelow)) {
-                this.addFace(plane);
+                this.addTriangle(plane);
             }
         }
     }
@@ -95,30 +93,13 @@ public class Polygon {
         return Vector.dot(normalVector, Vector.subtract(point, pointOnPlane));
     }
 
-    void dividePolygonFaceToTriangles() {
-        for (List<Vertex> face : this.faces) {
 
-            // the number of necessary new edges is: the number of vertices of the face - 3
-            for (int i=0; i < face.size() - 3; i++) {
-                List<Vertex> triangle = new ArrayList<>();
-                triangle.add(face.get(0));
-                triangle.add(face.get( (2 + i) - 1));
-                triangle.add(face.get(2 + i));
-                this.addTriangle(triangle);
-            }
-
-            // with the last new edge two new triangles were generated
-            // the second and last triangle is added here
-            List<Vertex> lastTriangle = new ArrayList<>();
-            lastTriangle.add(face.get(0));
-            lastTriangle.add(face.get(face.size() - 1));
-            lastTriangle.add(face.get(face.size() - 2));
-            this.addTriangle(lastTriangle);
-        }
-    }
-
+    /**
+     * Calculates the area of the polygon iterating through the found
+     * triangles, using Heron's formula
+     */
     private void calculatePolygonArea() {
-        for (List<Vertex> triangle : this.triangles) {
+        for (List<Vertex> triangle : this.faces) {
 
             double sideA = this.calculateSideLength(triangle.get(0), triangle.get(1));
             double sideB = this.calculateSideLength(triangle.get(0), triangle.get(2));
@@ -136,9 +117,10 @@ public class Polygon {
                 Math.pow((pointA.getZ() - pointB.getZ()), 2)));
     }
 
+
     // the layers are: triangle, vertices in a triangle, coordinates of the vertices
     public List<List<List<Double>>> getOrderedTriangleCoordinates() {
-        List<List<Vertex>> sortedTriangles = new ArrayList<>(this.getTriangles());
+        List<List<Vertex>> sortedTriangles = new ArrayList<>(this.faces);
         sortedTriangles.sort(Comparator.comparing((l1) -> l1.get(0).getId()));
 
         List<List<List<Double>>> sortedCoordinates = new ArrayList<>();
@@ -154,18 +136,16 @@ public class Polygon {
         return sortedCoordinates;
     }
 
-    public void addVertex(Vertex vertex) {
+    protected void addVertex(Vertex vertex) {
         vertex.setId(this.vertexId++);
         this.vertices.add(vertex);
     }
 
-    private void addTriangle(List<Vertex> triangle) {
+    private void addTriangle(List<Vertex> triangle) throws Exception {
+        if (triangle.size() > 3) {
+            throw new Exception("Not a triangle");
+        }
         triangle.sort(Comparator.comparing(Vertex::getId));
-        this.triangles.add(triangle);
-    }
-
-    private void addFace(List<Vertex> face) {
-        face.sort(Comparator.comparing(Vertex::getId));
-        this.faces.add(face);
+        this.faces.add(triangle);
     }
 }

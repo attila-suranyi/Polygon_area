@@ -1,52 +1,81 @@
 package com.atis.polygon_area.geometry;
 
-import com.atis.polygon_area.shapes.Cube;
+import com.atis.polygon_area.shapes.Icosahedron;
 import com.atis.polygon_area.shapes.Tetrahedron;
 import com.atis.polygon_area.shapes.Triangle;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.lang.reflect.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 class PolygonTest {
 
     @Test
-    void triangleArea() {
+    void triangleArea() throws Exception {
         Triangle t = new Triangle();
         assertEquals(0.43, Math.round(t.getArea() * 100.0) / 100.0);
     }
 
     @Test
-    void pyramidArea() {
+    void pyramidArea() throws Exception {
         Tetrahedron p = new Tetrahedron();
         assertEquals(2.01, Math.round(p.getArea() * 100.0) / 100.0);
     }
 
     @Test
-    void cubeArea() {
-        Cube c = new Cube();
-        assertEquals(6.00, Math.round(c.getArea() * 100.0) / 100.0);
+    void icosahedronHasTwentyFaces() throws Exception {
+        Icosahedron icosahedron = new Icosahedron();
+        assertEquals(20, icosahedron.getFaces().size());
     }
 
     @Test
-    void hexagonDividedIntoFourTriangles() {
+    void vertexNotOnTheSurfaceWontBeAddedToFace() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Polygon p = new Polygon();
 
+        p.addVertex(new Vertex(0d, 0, 0));
         p.addVertex(new Vertex(1d, 0, 0));
-        p.addVertex(new Vertex(2d, 0, 0));
-        p.addVertex(new Vertex(3d, 1, 0));
-        p.addVertex(new Vertex(2d, 2, 0));
-        p.addVertex(new Vertex(1d, 2, 0));
-        p.addVertex(new Vertex(0d, 1, 0));
+        p.addVertex(new Vertex(0.5f, 0.866f, 0));
+        p.addVertex(new Vertex(0.5f, 0.5f, 1));
 
-        p.calculatePolygonGeometry();
-        assertEquals(4, p.getTriangles().size());
+        Vertex vertexNotOnTheSurface = new Vertex(0.5, 0.5, 0.5);
+        p.addVertex(vertexNotOnTheSurface);
+
+        Method findFaces = Polygon.class.getDeclaredMethod("findFaces", null);
+        findFaces.setAccessible(true);
+        findFaces.invoke(p);
+
+        Set<Vertex> verticesOnSurface = new HashSet<>();
+
+        for (List<Vertex> face : p.getFaces()) {
+            verticesOnSurface.addAll(face);
+        }
+
+        assertFalse(verticesOnSurface.contains(vertexNotOnTheSurface));
     }
 
     @Test
-    void cubeHasSixFaces() {
-        Polygon cube = new Cube();
+    void vertexOnTheSurfaceAddedToFace() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        Polygon p = new Polygon();
 
-        cube.calculatePolygonGeometry();
+        Vertex vertexOnSurface = new Vertex(0d, 0, 0);
 
-        assertEquals(6, cube.getFaces().size());
+        p.addVertex(vertexOnSurface);
+        p.addVertex(new Vertex(1d, 0, 0));
+        p.addVertex(new Vertex(0.5f, 0.866f, 0));
+        p.addVertex(new Vertex(0.5f, 0.5f, 1));
+
+        Method findFaces = Polygon.class.getDeclaredMethod("findFaces", null);
+        findFaces.setAccessible(true);
+        findFaces.invoke(p);
+
+        Set<Vertex> verticesOnSurface = new HashSet<>();
+
+        for (List<Vertex> face : p.getFaces()) {
+            verticesOnSurface.addAll(face);
+        }
+
+        assertTrue(verticesOnSurface.contains(vertexOnSurface));
     }
 }
