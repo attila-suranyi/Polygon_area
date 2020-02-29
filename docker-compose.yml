@@ -4,3 +4,7 @@ services:
     build: polygon_backend/
     ports:
       - 8080:8080
+  polygon-frontend:
+    build: polygon_frontend/
+    ports:
+      - 3000:3000
