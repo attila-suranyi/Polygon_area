@@ -8,3 +8,5 @@ services:
     build: polygon_frontend/
     ports:
       - 3000:3000
+    depends_on:
+      - polygon-backend
