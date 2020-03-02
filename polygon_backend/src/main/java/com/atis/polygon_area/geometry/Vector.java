@@ -58,4 +58,10 @@ public class Vector {
 
         return Vector.cross(v1v2, v1v3);
     }
+
+    public static Vector normalise(Vector v1) {
+        double dotProduct = Vector.dot(v1, v1);
+        double magnitude = Math.sqrt(dotProduct);
+        return new Vector(v1.getX() / magnitude, v1.getY() / magnitude, v1.getZ() / magnitude);
+    }
 }
