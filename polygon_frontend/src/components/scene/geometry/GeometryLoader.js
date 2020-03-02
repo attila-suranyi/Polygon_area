@@ -56,7 +56,7 @@ const GeometryLoader = (props) => {
                 <p>Fetching {props.shapeType} data...</p>
             }
 
-            <Scene geo={geometry} />
+            {/* <Scene geo={geometry} /> */}
 
         </div>
     )
