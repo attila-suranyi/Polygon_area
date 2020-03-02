@@ -1,9 +1,6 @@
 package com.atis.polygon_area.controller;
 
 import com.atis.polygon_area.geometry.GeometryCalculable;
-import com.atis.polygon_area.shapes.Icosahedron;
-import com.atis.polygon_area.shapes.Tetrahedron;
-import com.atis.polygon_area.shapes.Triangle;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,7 +9,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
