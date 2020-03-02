@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.atis.polygon_area.PolygonAreaApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.054 s - in com.atis.polygon_area.PolygonAreaApplicationTests
