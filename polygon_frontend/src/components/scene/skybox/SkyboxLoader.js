@@ -4,8 +4,10 @@ import right from "../textures/bluecloud/rt.jpg";
 import left from "../textures/bluecloud/lf.jpg";
 import top from "../textures/bluecloud/up.jpg";
 import bottom from "../textures/bluecloud/dn.jpg";
-import front from "../textures/bluecloud/ft.jpg";
-import back from "../textures/bluecloud/bk.jpg";
+
+//TODO use require to load different skyboxes conditionally
+let front = require("../textures/bluecloud/ft.jpg");
+let back = require("../textures/bluecloud/bk.jpg");
 
 // import right from "../textures/browncloud/rt.jpg";
 // import left from "../textures/browncloud/lf.jpg";

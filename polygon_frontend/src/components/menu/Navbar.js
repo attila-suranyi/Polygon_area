@@ -22,6 +22,10 @@ const Navbar = (props) => {
                 <StyledLink to="/icosahedron">
                     <Button> Icosahedron </Button>
                 </StyledLink>
+
+                <StyledLink to="/custom">
+                    <Button> Custom polygon </Button>
+                </StyledLink>
             </Nav>
         </div>
     );

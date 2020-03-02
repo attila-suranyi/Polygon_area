@@ -5,6 +5,7 @@ import GeometryLoader from "./components/scene/geometry/GeometryLoader";
 import Navbar from "./components/menu/Navbar";
 import { ThemeProvider } from "styled-components";
 import Theme from "./components/styled_components/themes/Theme";
+import UserInput from "./components/user_input/UserInput"
 
 function App() {
   const backendIp = "http://localhost:8080";
@@ -27,6 +28,11 @@ function App() {
           <Route path="/icosahedron">
             <GeometryLoader shapeType="icosahedron" backendIp={backendIp} />
           </Route>
+
+          <Route path="/custom">
+            <UserInput />
+          </Route>
+
         </Router>
       </ThemeProvider>
     </div>
