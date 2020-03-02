@@ -6,6 +6,7 @@ import com.atis.polygon_area.shapes.Tetrahedron;
 import com.atis.polygon_area.shapes.Triangle;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,13 +21,16 @@ import java.util.Map;
 public class Controller {
 
     @Autowired
-    private Triangle triangle;
+    @Qualifier("triangle")
+    private GeometryCalculable triangle;
 
     @Autowired
-    private Tetrahedron tetrahedron;
+    @Qualifier("tetrahedron")
+    private GeometryCalculable tetrahedron;
 
     @Autowired
-    private Icosahedron icosahedron;
+    @Qualifier("icosahedron")
+    private GeometryCalculable icosahedron;
 
 
     @GetMapping("/triangle")

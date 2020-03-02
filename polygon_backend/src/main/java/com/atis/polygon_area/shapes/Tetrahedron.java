@@ -5,7 +5,7 @@ import com.atis.polygon_area.geometry.Vertex;
 import com.atis.polygon_area.geometry.GeometryCalculable;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("tetrahedron")
 public class Tetrahedron extends Polygon implements GeometryCalculable {
 
     public Tetrahedron() throws Exception {

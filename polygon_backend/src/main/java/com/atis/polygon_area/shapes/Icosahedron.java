@@ -5,7 +5,7 @@ import com.atis.polygon_area.geometry.Vertex;
 import com.atis.polygon_area.geometry.GeometryCalculable;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("icosahedron")
 public class Icosahedron extends Polygon implements GeometryCalculable {
 
     public Icosahedron() throws Exception {
