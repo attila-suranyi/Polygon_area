@@ -1,10 +1,7 @@
 package com.atis.polygon_area.controller;
 
-import com.atis.polygon_area.geometry.Polygon;
-import com.atis.polygon_area.geometry.Vertex;
-import com.atis.polygon_area.shapes.Icosahedron;
-import com.atis.polygon_area.shapes.Tetrahedron;
-import com.atis.polygon_area.shapes.Triangle;
+import com.atis.polygon_area.geometry.GeometryCalculable;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +13,21 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin
+@RequiredArgsConstructor
 public class Controller {
 
     @Autowired
-    private Triangle triangle;
+    @Qualifier("triangle")
+    private GeometryCalculable triangle;
 
     @Autowired
-    private Tetrahedron tetrahedron;
+    @Qualifier("tetrahedron")
+    private GeometryCalculable tetrahedron;
 
     @Autowired
-    private Icosahedron icosahedron;
+    @Qualifier("icosahedron")
+    private GeometryCalculable icosahedron;
+
 
     @Qualifier("polygon")
     @Autowired
@@ -33,27 +35,21 @@ public class Controller {
 
     @GetMapping("/triangle")
     public ResponseEntity getTriangleGeometry() {
-        Map<Object, Object> model = new HashMap<>();
-        model.put("area", triangle.getArea());
-        model.put("triangles", triangle.getOrderedTriangleCoordinates());
+        Map<String, Object> model = triangle.getPolygonGeometry();
 
         return ResponseEntity.ok(model);
     }
 
     @GetMapping("/tetrahedron")
     public ResponseEntity getPyramidGeometry() {
-        Map<Object, Object> model = new HashMap<>();
-        model.put("area", tetrahedron.getArea());
-        model.put("triangles", tetrahedron.getOrderedTriangleCoordinates());
+        Map<String, Object> model = tetrahedron.getPolygonGeometry();
 
         return ResponseEntity.ok(model);
     }
 
     @GetMapping("/icosahedron")
     public ResponseEntity getDodecahedronGeometry() {
-        Map<Object, Object> model = new HashMap<>();
-        model.put("area", icosahedron.getArea());
-        model.put("triangles", icosahedron.getOrderedTriangleCoordinates());
+        Map<String, Object> model = icosahedron.getPolygonGeometry();
 
         return ResponseEntity.ok(model);
     }

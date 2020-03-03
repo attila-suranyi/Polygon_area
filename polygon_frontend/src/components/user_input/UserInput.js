@@ -1,6 +1,7 @@
 import React, {useEffect, useState, useRef} from "react";
 import Button from "../styled_components/Button";
 import SubmitVertexButton from "../styled_components/SubmitVertexButton";
+import Axios from "axios";
 
 const UserInput = (props) => {
 
@@ -8,7 +9,7 @@ const UserInput = (props) => {
     const yInput = useRef();
     const zInput = useRef();
 
-    const [vertex, setVertex] = useState([0, 0, 0]);
+    const [vertices, setVertices] = useState([]);
 
     const limitToBounds = (value) => {
         if (value < -100) return -100;
@@ -37,13 +38,25 @@ const UserInput = (props) => {
         let x = parseInt(xInput.current.value);
         let y = parseInt(yInput.current.value);
         let z = parseInt(zInput.current.value);
-        setVertex([x, y, z]);
+
+        let vertex = {
+            x: x ? x : 0,
+            y: y ? y : 0,
+            z: z ? z : 0
+        };
+
+        setVertices(vertices => [...vertices, vertex]);
+    };
+
+    const sendData = ()=> {
+        Axios.post("10.44.1.10:8080/custom", vertices)
+            .then( resp => console.log(resp) )
     };
 
 
     useEffect( () => {
-        console.log(vertex);
-    }, [vertex]);
+        console.log(vertices);
+    }, [vertices]);
 
     return (
         //TODO change all divs to Fragment
@@ -73,6 +86,15 @@ const UserInput = (props) => {
             <SubmitVertexButton onClick={submitVertex}>
                 Submit vertex
             </SubmitVertexButton>
+
+            <SubmitVertexButton onClick={sendData}>
+                Send data
+            </SubmitVertexButton>
+
+            {
+                vertices ? vertices.map(vertex => <p>x: {vertex.x} y: {vertex.y} z: {vertex.z}</p>)
+                    : "no vertices"
+            }
         </React.Fragment>
     )
 };
