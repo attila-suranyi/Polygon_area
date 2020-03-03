@@ -65,6 +65,47 @@ public class Polygon {
         }
     }
 
+    private void triangulateFace(List<Vertex> face) {
+
+    }
+
+    // TODO move static methods
+    public static List<Vertex> projectFace(List<Vertex> face) {
+        List<Vector> pm = projectionMatrix(face);
+        List<Vertex> projectedFace = new ArrayList<>();
+
+        for (Vertex vertex : face) {
+            projectedFace.add(projectVertex(pm, vertex));
+        }
+
+        return projectedFace;
+    }
+
+    private static List<Vector> projectionMatrix(List<Vertex> triangle) {
+        Vertex a = triangle.get(0);
+        Vertex b = triangle.get(1);
+        Vertex c = triangle.get(2);
+
+        Vector aMinusB = Vector.normalise(Vector.subtract(a, b));
+        Vector aMinusC = Vector.normalise(Vector.subtract(a, c));
+
+        Vector base1 = aMinusB;
+        Vector base2 = Vector.cross(aMinusB, aMinusC);
+        Vector base3 = Vector.cross(base1, base2);
+
+        List<Vector> matrix = new ArrayList<>();
+        matrix.add(base1);
+        matrix.add(base2);
+        matrix.add(base3);
+
+        return matrix;
+    }
+
+    private static Vertex projectVertex(List<Vector> matrix, Vertex point) {
+        Vector v = new Vector(point);
+        return new Vertex(Vector.dot(matrix.get(0), v), Vector.dot(matrix.get(1), v), Vector.dot(matrix.get(2), v));
+    }
+
     /**
      * Generates possible combinations of three vertices
      * @return List of the possible triplets
