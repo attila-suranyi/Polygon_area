@@ -4,10 +4,13 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
 import org.paukov.combinatorics3.Generator;
+import org.springframework.stereotype.Component;
+
 import java.util.*;
 import static java.lang.Math.sqrt;
 
 @Data
+@Component("polygon")
 public class Polygon {
     private double area = 0;
 
@@ -136,7 +139,7 @@ public class Polygon {
         return sortedCoordinates;
     }
 
-    protected void addVertex(Vertex vertex) {
+    public void addVertex(Vertex vertex) {
         vertex.setId(this.vertexId++);
         this.vertices.add(vertex);
     }
