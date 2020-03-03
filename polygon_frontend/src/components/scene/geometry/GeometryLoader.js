@@ -27,6 +27,7 @@ const GeometryLoader = (props) => {
         console.log(resp);
         setArea(resp.area);
         setGeometry(resp.triangles);
+        scrollToBottom();
         //TODO use GeometryBuilder and scroll down here instead
     };
 
@@ -39,7 +40,6 @@ const GeometryLoader = (props) => {
 
     useEffect(() => {
         fetchPolygonData();
-        scrollToBottom();
     }, []);
 
     return (
@@ -48,15 +48,15 @@ const GeometryLoader = (props) => {
             {/*//TODO use context instead of props*/}
 
         {/*use this when the server is up!*/}
-        {/*    { geometry && area ?*/}
-        {/*        <div>*/}
-        {/*            <p>{props.shapeType} area: {area.toFixed(2)} units</p>*/}
-        {/*            <Scene geo={geometry} />*/}
-        {/*        </div> :*/}
-        {/*        <p>Fetching {props.shapeType} data...</p>*/}
-        {/*    }*/}
+            { geometry && area ?
+                <div>
+                    <p>{props.shapeType} area: {area.toFixed(2)} units</p>
+                    <Scene geo={geometry} />
+                </div> :
+                <p>Fetching {props.shapeType} data...</p>
+            }
 
-             <Scene geo={geometry} />
+             {/*<Scene geo={geometry} />*/}
 
         </div>
     )

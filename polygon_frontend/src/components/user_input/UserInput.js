@@ -1,53 +1,70 @@
-import React, { useState } from "react";
+import React, {useEffect, useState, useRef} from "react";
 import Button from "../styled_components/Button";
 import SubmitVertexButton from "../styled_components/SubmitVertexButton";
 
 const UserInput = (props) => {
-    const [x, setX] = useState(0.0);
-    const [y, setY] = useState(0.0);
-    const [z, setZ] = useState(0.0);
+
+    const xInput = useRef();
+    const yInput = useRef();
+    const zInput = useRef();
 
     const [vertex, setVertex] = useState([0, 0, 0]);
 
-    const inputHandler = (event) => {
-        let coord = event.target.name;
-        let value = event.target.value;
+    const limitToBounds = (value) => {
+        if (value < -100) return -100;
+        if (100 < value) return 100;
+        return value;
+    };
 
-        switch(coord) {
+    const inputHandler = (event) => {
+        let target = event.target.name;
+        let value = parseInt(event.target.value);
+
+        switch(target) {
             case "x":
-                setX(value);
+                xInput.current.value = limitToBounds(value);
                 break;
             case "y":
-                setY(value);
+                yInput.current.value = limitToBounds(value);
                 break;
             case "z":
-                setZ(value);
+                zInput.current.value = limitToBounds(value);
                 break;
         }
     };
 
     const submitVertex = () => {
+        let x = parseInt(xInput.current.value);
+        let y = parseInt(yInput.current.value);
+        let z = parseInt(zInput.current.value);
         setVertex([x, y, z]);
-        console.log(vertex);
     };
+
+
+    useEffect( () => {
+        console.log(vertex);
+    }, [vertex]);
 
     return (
         //TODO change all divs to Fragment
-        <div>
+        <React.Fragment>
             <p>X</p>
             <input type="number"
                    name="x"
                    onChange={ inputHandler }
+                   ref={xInput}
             />
             <p>Y</p>
             <input type="number"
                    name="y"
                    onChange={ inputHandler }
+                   ref={yInput}
             />
             <p>Z</p>
             <input type="number"
                    name="z"
                    onChange={ inputHandler }
+                   ref={zInput}
             />
 
             <br />
@@ -56,7 +73,7 @@ const UserInput = (props) => {
             <SubmitVertexButton onClick={submitVertex}>
                 Submit vertex
             </SubmitVertexButton>
-        </div>
+        </React.Fragment>
     )
 };
 
