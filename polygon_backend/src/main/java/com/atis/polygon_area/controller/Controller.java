@@ -1,6 +1,8 @@
 package com.atis.polygon_area.controller;
 
 import com.atis.polygon_area.geometry.GeometryCalculable;
+import com.atis.polygon_area.geometry.Polygon;
+import com.atis.polygon_area.geometry.Vertex;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -56,12 +58,12 @@ public class Controller {
 
     @PostMapping
     public ResponseEntity userPolygon(@RequestBody List<Vertex> points) throws Exception {
+        System.out.println(points);
+
         points.forEach(polygon :: addVertex);
         polygon.calculatePolygonGeometry();
 
-        Map<Object, Object> model = new HashMap<>();
-        model.put("area", polygon.getArea());
-        model.put("triangles", polygon.getOrderedTriangleCoordinates());
+        Map<String, Object> model = polygon.getPolygonGeometry();
 
         return ResponseEntity.ok(model);
     }
