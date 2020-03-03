@@ -3,14 +3,19 @@ package com.atis.polygon_area.geometry;
 import com.atis.polygon_area.shapes.Icosahedron;
 import com.atis.polygon_area.shapes.Tetrahedron;
 import com.atis.polygon_area.shapes.Triangle;
+import com.atis.polygon_area.util.Util;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import java.lang.reflect.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 class PolygonTest {
+
+    @Autowired
+    private Util util;
 
     @Test
     void triangleArea() throws Exception {
@@ -77,5 +82,19 @@ class PolygonTest {
         }
 
         assertTrue(verticesOnSurface.contains(vertexOnSurface));
+    }
+
+    @Test
+    void faceProjection() {
+        List<Vertex> face = new ArrayList<>();
+
+        for (int i=0; i < 3; i++) {
+            Vertex v = new Vertex(Util.generateRandomDoubleBetween(0, 100), Util.generateRandomDoubleBetween(0, 100), Util.generateRandomDoubleBetween(0, 100));
+            face.add(v);
+        }
+
+        List<Vertex> projectedFace = Polygon.projectFace(face);
+
+        assertThat(projectedFace.get(0).getY() == projectedFace.get(1).getY() && projectedFace.get(0).getY() == projectedFace.get(2).getY());
     }
 }
