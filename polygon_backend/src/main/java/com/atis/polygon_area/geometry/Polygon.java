@@ -7,6 +7,7 @@ import org.paukov.combinatorics3.Generator;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
 import static java.lang.Math.sqrt;
 
 
@@ -70,10 +71,32 @@ public class Polygon {
 
     }
 
-    // TODO first define the sides of this plane: 1-3, 2-5, 5-4, 1-2, 4-3
-    // then chain them, so you get the proper order: 1-3-4-5-2
-    private List<Vertex> orderVertices(List<Vertex> face) {
-        return null;
+    /**
+     * Orders the vertices of the given edges of a face, so
+     * iterating through the vertices we only traverse through
+     * the edges.
+     * Example: edges of the plane: 1-3, 2-5, 5-4, 1-2, 4-3
+     * The correct order: 1-3-4-5-2
+     * @param edges of the face
+     * @return the ordered vertex sequence
+     */
+    private List<Vertex> orderVertices(List<List<Vertex>> edges) {
+        List<Vertex> orderedVertices = edges.get(0);
+
+        while (orderedVertices.size() < edges.size()) {
+            for (List<Vertex> edge : edges) {
+                if (edge.contains(orderedVertices.get(orderedVertices.size() - 1)) && !edge.contains(orderedVertices.get(orderedVertices.size() - 2))) {
+                    edge.stream()
+                            .filter(x -> !orderedVertices.get(orderedVertices.size() - 1).equals(x))
+                            .findFirst()
+                            .ifPresent(orderedVertices::add);
+                }
+                if (orderedVertices.size() == edges.size()) {
+                    break;
+                }
+            }
+        }
+        return orderedVertices;
     }
 
     // Important: face should be projected before reaching this method
@@ -109,9 +132,10 @@ public class Polygon {
     }
 
 
-    /**Determines which side of a straight line a point is located.
-     * @param line
-     * @param point
+    /**
+     * Determines which side of a straight line a point is located.
+     * @param line which is a possible edge of the face
+     * @param point a vertex of the face
      * @return the shortest distance between the line and the point,
      * the sign of the distance indicates which side the point is
      */
@@ -161,8 +185,10 @@ public class Polygon {
         return new Vertex(Vector.dot(matrix.get(0), v), Vector.dot(matrix.get(1), v), Vector.dot(matrix.get(2), v));
     }
 
-    /**Generates given number of possible vertices
-     * @param vertices the possible combinations
+    /**
+     * Generates given number of possible vertices
+     *
+     * @param vertices          the possible combinations
      * @param combinationNumber the number of vertices the combination consists
      * @return the possible combinations
      */
@@ -184,9 +210,10 @@ public class Polygon {
      * position of the point.
      * If it is positive it is above, in case of negative it is below the plane.
      * If it is 0, then it is on the plane
+     *
      * @param normalVector of the plane
      * @param pointOnPlane a point on the plane
-     * @param point point in space
+     * @param point        point in space
      * @return distance between the point and the plane
      */
     private static double pointDistanceFromPlane(Vector normalVector, Vertex pointOnPlane, Vertex point) {

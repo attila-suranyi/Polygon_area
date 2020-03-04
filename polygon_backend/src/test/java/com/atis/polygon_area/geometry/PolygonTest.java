@@ -8,10 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -141,30 +138,18 @@ class PolygonTest {
     @Test
     void correctEdgesOfSquare() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Polygon p = new Polygon();
-        List<Vertex> vertices = new ArrayList<>();
 
         Vertex vertex1 = new Vertex(0, 0, 0);
         Vertex vertex2 = new Vertex(0, 0, 1);
         Vertex vertex3 = new Vertex(1, 0, 1);
         Vertex vertex4 = new Vertex(1, 0, 0);
 
-        vertices.add(vertex1);
-        vertices.add(vertex2);
-        vertices.add(vertex3);
-        vertices.add(vertex4);
+        List<Vertex> vertices = new ArrayList<>(Arrays.asList(vertex1, vertex2, vertex3, vertex4));
 
-        List<Vertex> edge1 = new ArrayList<>();
-        edge1.add(vertex1);
-        edge1.add(vertex2);
-        List<Vertex> edge2 = new ArrayList<>();
-        edge2.add(vertex3);
-        edge2.add(vertex2);
-        List<Vertex> edge3 = new ArrayList<>();
-        edge3.add(vertex3);
-        edge3.add(vertex4);
-        List<Vertex> edge4 = new ArrayList<>();
-        edge4.add(vertex1);
-        edge4.add(vertex4);
+        List<Vertex> edge1 = new ArrayList<>(Arrays.asList(vertex1, vertex2));
+        List<Vertex> edge2 = new ArrayList<>(Arrays.asList(vertex3, vertex2));
+        List<Vertex> edge3 = new ArrayList<>(Arrays.asList(vertex3, vertex4));
+        List<Vertex> edge4 = new ArrayList<>(Arrays.asList(vertex1, vertex4));
 
         Method findEdges = Polygon.class.getDeclaredMethod("findEdges", List.class);
         findEdges.setAccessible(true);
@@ -172,5 +157,29 @@ class PolygonTest {
 
         assertEquals(edges.size(), 4);
         assertThat(edges.contains(edge1) && edges.contains(edge2) && edges.contains(edge3) && edges.contains(edge4));
+    }
+
+    @Test
+    void verticesOfPolygonAreOrdered() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Polygon p = new Polygon();
+        Vertex vertex1 = new Vertex(0, 0, 0);
+        Vertex vertex2 = new Vertex(0, 0, 1);
+        Vertex vertex3 = new Vertex(1, 0, 1);
+        Vertex vertex4 = new Vertex(1, 0, 0);
+
+        List<Vertex> edge1 = new ArrayList<>(Arrays.asList(vertex1, vertex2));
+        List<Vertex> edge2 = new ArrayList<>(Arrays.asList(vertex3, vertex2));
+        List<Vertex> edge3 = new ArrayList<>(Arrays.asList(vertex3, vertex4));
+        List<Vertex> edge4 = new ArrayList<>(Arrays.asList(vertex1, vertex4));
+
+        List<List<Vertex>> edges = Arrays.asList(edge1, edge3, edge2, edge4);
+
+        List<Vertex> correctOrder = Arrays.asList(vertex1, vertex2, vertex3, vertex4);
+
+        Method orderVertices = Polygon.class.getDeclaredMethod("orderVertices", List.class);
+        orderVertices.setAccessible(true);
+        List<Vertex> orderedVertices = (List<Vertex>) orderVertices.invoke(p, edges);
+
+        assertEquals(orderedVertices, correctOrder);
     }
 }
