@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import static java.lang.Math.sqrt;
 
+/**
+ *
+ */
 @Data
 @Service
 public class Polygon {
@@ -67,6 +70,28 @@ public class Polygon {
 
     private void triangulateFace(List<Vertex> face) {
 
+    }
+
+    // TODO first define the sides of this plane: 1-3, 2-5, 5-4, 1-2, 4-3
+    // then chain them, so you get the proper order: 1-3-4-5-2
+    private List<Vertex> orderVertices(List<Vertex> face) {
+        return null;
+    }
+
+
+    /**Determines which side of a straight line a point is located.
+     * @param line
+     * @param point
+     * @return the shortest distance between the line and the point,
+     * the sign of the distance indicates which side the point is
+     */
+    private double pointPositionToLine(List<Vertex> line, Vertex point) {
+        double x1 = line.get(0).getX();
+        double z1 = line.get(0).getZ();
+        double x2 = line.get(1).getX();
+        double z2 = line.get(1).getZ();
+
+        return (point.getX() - x1) * (z2 - z1) - (point.getZ() - z1) * (x2 - x1);
     }
 
     // TODO move static methods
