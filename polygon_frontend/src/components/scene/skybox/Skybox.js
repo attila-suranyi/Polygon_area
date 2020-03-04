@@ -1,11 +1,15 @@
 import React from "react";
 import * as THREE from "three";
 import SkyboxLoader from "./SkyboxLoader";
+import { useThree } from 'react-three-fiber'
 
 /**
  * Loads textures and builds a Skybox componentaround the scene
  */
 const Skybox = () => {
+
+    const {camera} = useThree();
+    //TODO try moving skybox with this
 
     let geo = new THREE.BoxGeometry(1000, 1000, 1000);
 

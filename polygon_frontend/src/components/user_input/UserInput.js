@@ -1,13 +1,12 @@
-import React, {useEffect, useState, useRef} from "react";
-import Button from "../styled_components/Button";
+import React, {useEffect, useState, useRef, useContext} from "react";
 import SubmitVertexButton from "../styled_components/SubmitVertexButton";
 import Axios from "axios";
 import Scene from "../scene/Scene";
+import {GeometryContext} from "../context/GeometryContext";
 
 const UserInput = (props) => {
 
-    const [geometry, setGeometry] = useState(null);
-    const [area, setArea] = useState(null);
+    const {area, setArea, geometry, setGeometry} = useContext(GeometryContext);
 
     const xInput = useRef();
     const yInput = useRef();
@@ -15,7 +14,8 @@ const UserInput = (props) => {
 
     const [vertices, setVertices] = useState([]);
 
-    const limitToBounds = (value, bound) => {
+    const limitToBounds = (value) => {
+        let bound = 100;
         if (value < -bound) return -bound;
         if (bound < value) return bound;
         return value;
@@ -27,21 +27,21 @@ const UserInput = (props) => {
 
         switch(target) {
             case "x":
-                xInput.current.value = limitToBounds(value, 100);
+                xInput.current.value = limitToBounds(value);
                 break;
             case "y":
-                yInput.current.value = limitToBounds(value, 100);
+                yInput.current.value = limitToBounds(value);
                 break;
             case "z":
-                zInput.current.value = limitToBounds(value, 100);
+                zInput.current.value = limitToBounds(value);
                 break;
         }
     };
 
     const submitVertex = () => {
-        let x = parseFloat(xInput.current.value);
-        let y = parseFloat(yInput.current.value);
-        let z = parseFloat(zInput.current.value);
+        let x = parseFloat(xInput.current.value) / 100;
+        let y = parseFloat(yInput.current.value) / 100;
+        let z = parseFloat(zInput.current.value) / 100;
 
         let vertex = {
             x: x ? x : 0.0,
@@ -57,6 +57,7 @@ const UserInput = (props) => {
             vertices: vertices
         };
 
+        //TODO use backend ip here
         Axios.post("http://localhost:8080/custom", body)
             .then( resp => handleResp(resp.data) )
     };
@@ -74,6 +75,7 @@ const UserInput = (props) => {
 
     return (
         //TODO change all divs to Fragment
+        //TODO refactor to eliminate scene code duplication
         <React.Fragment>
             <p>X</p>
             <input type="number"

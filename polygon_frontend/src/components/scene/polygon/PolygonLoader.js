@@ -5,7 +5,7 @@ import * as THREE from "three";
 
 import BuildGeometry from "../geometry/BuildGeometry";
 import Polygon from "./Polygon";
-import {GeometryContext} from "../../context/GeometryContext";
+import TestGeo from "../geometry/TestGeo";
 
 /**
  * Builds a polygon's geometry from Vector3 data, and reflections
@@ -13,15 +13,7 @@ import {GeometryContext} from "../../context/GeometryContext";
 const PolygonLoader = (props) => {
     extend({ OrbitControls });
 
-    let [area, setArea, geometry, setGeometry] = useContext(GeometryContext);
-    console.log(geometry);
-
-
-    //TODO maybe use data from context ?
-
-    // let testGeo = BuildGeometry(props.geo);
-    let customGeo = BuildGeometry(geometry);
-
+    let customGeo = BuildGeometry(props.geo);
     let cubeCamera = new THREE.CubeCamera(1, 100000, 128 );
 
      // re-renders reflections every frame
@@ -33,7 +25,7 @@ const PolygonLoader = (props) => {
 
     return (
         <Polygon
-            geo={customGeo}
+            geo={customGeo ? customGeo : BuildGeometry(TestGeo().triangles)}
             reflection={cubeCamera.renderTarget.texture}
         />
     );

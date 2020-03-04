@@ -8,10 +8,10 @@ export const GeometryProvider = (props) => {
     const [area, setArea] = useState(null);
     const [geometry, setGeometry] = useState(null);
 
-    const geoData = [area, setArea, geometry, setGeometry];
+    const geoHandler = {area, setArea, geometry, setGeometry};
 
     return (
-        <GeometryContext.Provider value={geoData} >
+        <GeometryContext.Provider value={geoHandler} >
             {props.children}
         </GeometryContext.Provider>
     )
