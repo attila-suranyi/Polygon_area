@@ -5,17 +5,18 @@ import com.atis.polygon_area.shapes.Tetrahedron;
 import com.atis.polygon_area.shapes.Triangle;
 import com.atis.polygon_area.util.Util;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import java.lang.reflect.*;
-import java.util.*;
 
 class PolygonTest {
-
-    @Autowired
-    private Util util;
 
     @Test
     void triangleArea() throws Exception {

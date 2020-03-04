@@ -37,7 +37,7 @@ public class Polygon {
      * then the plane is not a face of the polygon.
      */
     private void findFaces() throws Exception {
-        List<List<Vertex>> planes = this.generatePlanes();
+        List<List<Vertex>> planes = this.generateVertexCombinations(this.vertices, 3);
 
         for (List<Vertex> plane : planes) {
 
@@ -131,19 +131,21 @@ public class Polygon {
         return new Vertex(Vector.dot(matrix.get(0), v), Vector.dot(matrix.get(1), v), Vector.dot(matrix.get(2), v));
     }
 
-    /**
-     * Generates possible combinations of three vertices
-     * @return List of the possible triplets
+
+    /**Generates given number of possible vertices
+     * @param vertices the possible combinations
+     * @param combinationNumber the number of vertices the combination consists
+     * @return the possible combinations
      */
-    private List<List<Vertex>> generatePlanes() {
-        List<List<Vertex>> planes = new ArrayList<>();
+    private List<List<Vertex>> generateVertexCombinations(List<Vertex> vertices, int combinationNumber) {
+        List<List<Vertex>> combinations = new ArrayList<>();
 
-        Generator.combination(this.vertices)
-                .simple(3)
+        Generator.combination(vertices)
+                .simple(combinationNumber)
                 .stream()
-                .forEach(planes::add);
+                .forEach(combinations::add);
 
-        return planes;
+        return combinations;
     }
 
     /**
