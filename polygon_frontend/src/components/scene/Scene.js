@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Canvas } from "react-three-fiber";
 import * as THREE from "three";
 import "./sceneStyle.css";
@@ -8,11 +8,15 @@ import PolygonLoader from "./polygon/PolygonLoader";
 import CameraControls from "./camera/CameraControls";
 import Skybox from "./skybox/Skybox";
 import Plane from "./plane/Plane";
+import {GeometryContext} from "../context/GeometryContext";
 
 /**
  * Renders a scene with basic plane, polygon and other effects
  */
 const Scene = (props) => {
+
+    // const [area, setArea, geometry, setGeometry] = useContext(GeometryContext);
+    // console.log(geometry);
 
     return (
         <Canvas
@@ -33,7 +37,7 @@ const Scene = (props) => {
 
             <Skybox />
 
-            <PolygonLoader geo={props.geo}/>
+            <PolygonLoader />
 
             <Plane />
 

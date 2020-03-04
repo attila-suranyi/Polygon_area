@@ -6,7 +6,7 @@ import * as THREE from "three";
  * @param trianglesData array with vertex coordinates
  * @returns {BufferGeometry} geometry built from faces and their vertices
  */
-const GeometryBuilder = (trianglesData) => {
+const BuildGeometry = (trianglesData) => {
     const testData = TestGeo();
 
     let i = 0;
@@ -32,4 +32,4 @@ const GeometryBuilder = (trianglesData) => {
     return new THREE.BufferGeometry().fromGeometry(geometry);
 };
 
-export default GeometryBuilder;
+export default BuildGeometry;

@@ -1,14 +1,19 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import Axios from "axios";
 import Scene from "../Scene";
+
+import {GeometryContext, GeometryProvider} from "../../context/GeometryContext";
 
 /**
  * Requests shape vertex data from backend and builds a PolygonLoader component from it
  * @param props the backend ip and the shape type
  */
 const GeometryLoader = (props) => {
-    const [area, setArea] = useState(null);
-    const [geometry, setGeometry] = useState(null);
+
+    // const [area, setArea] = useState(null);
+    // const [geometry, setGeometry] = useState(null);
+
+    const [area, setArea, geometry, setGeometry] = useContext(GeometryContext);
 
     /**
      * Fetches and handles shape data from backend
@@ -27,6 +32,7 @@ const GeometryLoader = (props) => {
         console.log(resp);
         setArea(resp.area);
         setGeometry(resp.triangles);
+
         scrollToBottom();
         //TODO use GeometryBuilder and scroll down here instead
     };
@@ -42,6 +48,10 @@ const GeometryLoader = (props) => {
         fetchPolygonData();
     }, []);
 
+    useEffect( () => {
+        console.log(geometry);
+    }, [geometry]);
+
     return (
         <div className="scene-container" >
 
@@ -51,7 +61,7 @@ const GeometryLoader = (props) => {
             { geometry && area ?
                 <div>
                     <p>{props.shapeType} area: {area.toFixed(2)} units</p>
-                    <Scene geo={geometry} />
+                    <Scene />
                 </div> :
                 <p>Fetching {props.shapeType} data...</p>
             }
