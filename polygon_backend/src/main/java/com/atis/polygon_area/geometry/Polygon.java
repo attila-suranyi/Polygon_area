@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import static java.lang.Math.sqrt;
 
-/**
- *
- */
+
 @Data
 @Service
 public class Polygon {
@@ -85,7 +83,7 @@ public class Polygon {
      * @return the shortest distance between the line and the point,
      * the sign of the distance indicates which side the point is
      */
-    private double pointPositionToLine(List<Vertex> line, Vertex point) {
+    private double pointDistanceFromLine(List<Vertex> line, Vertex point) {
         double x1 = line.get(0).getX();
         double z1 = line.get(0).getZ();
         double x2 = line.get(1).getX();
