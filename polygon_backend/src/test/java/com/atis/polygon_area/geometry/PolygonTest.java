@@ -1,5 +1,6 @@
 package com.atis.polygon_area.geometry;
 
+import com.atis.polygon_area.shapes.Cube;
 import com.atis.polygon_area.shapes.Icosahedron;
 import com.atis.polygon_area.shapes.Tetrahedron;
 import com.atis.polygon_area.shapes.Triangle;
@@ -28,9 +29,40 @@ class PolygonTest {
     }
 
     @Test
+    void cubeHasTwelveTriangles() throws Exception {
+        Cube cube = new Cube();
+        assertEquals(12, cube.getTriangles().size());
+    }
+
+    @Test
+    void cubeArea() throws Exception {
+        Cube cube = new Cube();
+        assertEquals(24, Math.round(cube.getArea() * 100.0) / 100.0);
+    }
+
+    @Test
     void icosahedronHasTwentyFaces() throws Exception {
         Icosahedron icosahedron = new Icosahedron();
         assertEquals(20, icosahedron.getFaces().size());
+    }
+
+    @Test
+    void pointNotOnSurface() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        List<Vertex> plane = Arrays.asList(
+                new Vertex(0, 0, 10),
+                new Vertex(1, 0, 10),
+                new Vertex(2, 2, 10)
+        );
+
+        Vertex pointNotOnSurface = new Vertex(0, 0, 1);
+
+        Vector normalVector = Vector.normalVector(plane.get(0), plane.get(1), plane.get(2));
+
+        Method pointDistanceFromPlane = Polygon.class.getDeclaredMethod("pointDistanceFromPlane", Vector.class, Vertex.class, Vertex.class);
+        pointDistanceFromPlane.setAccessible(true);
+        double distance = (double) pointDistanceFromPlane.invoke(new Polygon(), normalVector, plane.get(0), pointNotOnSurface);
+
+        assertFalse(distance == 0);
     }
 
     @Test
@@ -182,4 +214,20 @@ class PolygonTest {
 
         assertEquals(orderedVertices, correctOrder);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

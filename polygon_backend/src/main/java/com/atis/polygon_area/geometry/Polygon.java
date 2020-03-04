@@ -5,9 +5,8 @@ import lombok.Data;
 import lombok.Setter;
 import org.paukov.combinatorics3.Generator;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
-
+import java.util.stream.Collectors;
 import static java.lang.Math.sqrt;
 
 
@@ -23,9 +22,13 @@ public class Polygon {
     @Setter(AccessLevel.PRIVATE)
     private List<Vertex> vertices = new ArrayList<>();
 
+    @Setter(AccessLevel.PRIVATE)
+    private Set<List<Vertex>> triangles = new HashSet<>();
+
 
     public void calculatePolygonGeometry() throws Exception {
         this.findFaces();
+        this.triangulateFaces();
         this.calculatePolygonArea();
     }
 
@@ -35,7 +38,7 @@ public class Polygon {
      * If there are points on both sides of the given plane,
      * then the plane is not a face of the polygon.
      */
-    private void findFaces() throws Exception {
+    private void findFaces() {
         List<List<Vertex>> planes = this.generateVertexCombinations(this.vertices, 3);
 
         for (List<Vertex> plane : planes) {
@@ -62,13 +65,49 @@ public class Polygon {
                 }
             }
             if (!(pointsAbove && pointsBelow)) {
-                this.addTriangle(plane);
+                addFace(plane);
             }
         }
     }
 
-    private void triangulateFace(List<Vertex> face) {
+    //TODO put faces with three vertices directly to triangles
+    private void triangulateFaces() throws Exception {
 
+        Set<List<Vertex>> projectedTriangles = new HashSet<>();
+
+        List<List<Vertex>> projectedFaces = this.faces.stream()
+                //.filter(face -> face.size() > 3)
+                .map(Polygon::projectFace)
+                .map(this::findEdges)
+                .map(this::orderVertices)
+                .collect(Collectors.toList());
+
+        for (List<Vertex> face : projectedFaces) {
+
+            // the number of necessary new edges is: the number of vertices of the face - 3
+            for (int i=0; i < face.size() - 3; i++) {
+                List<Vertex> triangle = new ArrayList<>(Arrays.asList(face.get(0), face.get( 1 + i ),face.get( 2 + i )));
+                projectedTriangles.add(triangle);
+            }
+            List<Vertex> triangle = new ArrayList<>(Arrays.asList(face.get(0), face.get(face.size() - 2), face.get(face.size() - 1)));
+            projectedTriangles.add(triangle);
+        }
+        this.projectTrianglesBackTo3D(projectedTriangles);
+    }
+
+    private void projectTrianglesBackTo3D(Set<List<Vertex>> projectedTriangles) throws Exception {
+        for (List<Vertex> projectedTriangle :projectedTriangles) {
+            List<Vertex> triangle = new ArrayList<>();
+
+            for (Vertex projectedVertex : projectedTriangle) {
+                for (Vertex vertex : this.vertices) {
+                    if (vertex.getId() == projectedVertex.getId()) {
+                        triangle.add(vertex);
+                    }
+                }
+            }
+            this.addTriangle(triangle);
+        }
     }
 
     /**
@@ -131,7 +170,6 @@ public class Polygon {
         return edges;
     }
 
-
     /**
      * Determines which side of a straight line a point is located.
      * @param line which is a possible edge of the face
@@ -156,7 +194,6 @@ public class Polygon {
         for (Vertex vertex : face) {
             projectedFace.add(projectVertex(pm, vertex));
         }
-
         return projectedFace;
     }
 
@@ -181,8 +218,9 @@ public class Polygon {
     }
 
     private static Vertex projectVertex(List<Vector> matrix, Vertex point) {
+        int vertexId = point.getId();
         Vector v = new Vector(point);
-        return new Vertex(Vector.dot(matrix.get(0), v), Vector.dot(matrix.get(1), v), Vector.dot(matrix.get(2), v));
+        return new Vertex(vertexId, Vector.dot(matrix.get(0), v), Vector.dot(matrix.get(1), v), Vector.dot(matrix.get(2), v));
     }
 
     /**
@@ -225,7 +263,7 @@ public class Polygon {
      * triangles, using Heron's formula
      */
     private void calculatePolygonArea() {
-        for (List<Vertex> triangle : this.faces) {
+        for (List<Vertex> triangle : this.triangles) {
 
             double sideA = this.calculateSideLength(triangle.get(0), triangle.get(1));
             double sideB = this.calculateSideLength(triangle.get(0), triangle.get(2));
@@ -279,6 +317,11 @@ public class Polygon {
             throw new Exception("Not a triangle");
         }
         triangle.sort(Comparator.comparing(Vertex::getId));
-        this.faces.add(triangle);
+        this.triangles.add(triangle);
+    }
+
+    private void addFace(List<Vertex> face) {
+        face.sort(Comparator.comparing(Vertex::getId));
+        this.faces.add(face);
     }
 }
