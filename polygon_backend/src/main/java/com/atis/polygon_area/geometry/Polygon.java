@@ -46,11 +46,11 @@ public class Polygon {
 
             for (Vertex vertex : this.getVertices()) {
                 if (!plane.contains(vertex)) {
-                    double pointAbovePlane = pointDistanceFromPlane(normalVector, vertex, plane.get(0));
+                    double distance = pointDistanceFromPlane(normalVector, vertex, plane.get(0));
 
-                    if (pointAbovePlane > 0) {
+                    if (distance > 0) {
                         pointsAbove = true;
-                    } else if (pointAbovePlane < 0) {
+                    } else if (distance < 0) {
                         pointsBelow = true;
                     } else {
                         plane.add(vertex);
@@ -76,6 +76,38 @@ public class Polygon {
         return null;
     }
 
+    // Important: face should be projected before reaching this method
+    private List<List<Vertex>> findEdges(List<Vertex> face) {
+        List<List<Vertex>> possibleEdges = this.generateVertexCombinations(face, 2);
+        List<List<Vertex>> edges = new ArrayList<>();
+
+        for (List<Vertex> possibleEdge : possibleEdges) {
+
+            boolean pointsOnOneSide = false;
+            boolean pointsOnOtherSide = false;
+
+            for (Vertex vertex : face) {
+                if (!possibleEdge.contains(vertex)) {
+                    double distance = pointDistanceFromLine(possibleEdge, vertex);
+
+                    if (distance > 0) {
+                        pointsOnOneSide = true;
+                    } else if (distance < 0) {
+                        pointsOnOtherSide = true;
+                    }
+                }
+
+                if (pointsOnOneSide && pointsOnOtherSide) {
+                    break;
+                }
+            }
+            if (!(pointsOnOneSide && pointsOnOtherSide)) {
+                edges.add(possibleEdge);
+            }
+        }
+        return edges;
+    }
+
 
     /**Determines which side of a straight line a point is located.
      * @param line
@@ -93,7 +125,7 @@ public class Polygon {
     }
 
     // TODO move static methods
-    public static List<Vertex> projectFace(List<Vertex> face) {
+    private static List<Vertex> projectFace(List<Vertex> face) {
         List<Vector> pm = projectionMatrix(face);
         List<Vertex> projectedFace = new ArrayList<>();
 
@@ -129,7 +161,6 @@ public class Polygon {
         return new Vertex(Vector.dot(matrix.get(0), v), Vector.dot(matrix.get(1), v), Vector.dot(matrix.get(2), v));
     }
 
-
     /**Generates given number of possible vertices
      * @param vertices the possible combinations
      * @param combinationNumber the number of vertices the combination consists
@@ -162,7 +193,6 @@ public class Polygon {
         return Vector.dot(normalVector, Vector.subtract(point, pointOnPlane));
     }
 
-
     /**
      * Calculates the area of the polygon iterating through the found
      * triangles, using Heron's formula
@@ -185,7 +215,6 @@ public class Polygon {
                 Math.pow((pointA.getY() - pointB.getY()), 2) +
                 Math.pow((pointA.getZ() - pointB.getZ()), 2)));
     }
-
 
     // the layers are: triangle, vertices in a triangle, coordinates of the vertices
     private List<List<List<Double>>> getOrderedTriangleCoordinates() {

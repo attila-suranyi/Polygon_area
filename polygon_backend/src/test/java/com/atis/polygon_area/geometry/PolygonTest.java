@@ -86,7 +86,8 @@ class PolygonTest {
     }
 
     @Test
-    void faceProjection() {
+    void faceProjection() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Polygon p = new Polygon();
         List<Vertex> face = new ArrayList<>();
 
         for (int i=0; i < 3; i++) {
@@ -94,7 +95,9 @@ class PolygonTest {
             face.add(v);
         }
 
-        List<Vertex> projectedFace = Polygon.projectFace(face);
+        Method projectFace = Polygon.class.getDeclaredMethod("projectFace", List.class);
+        projectFace.setAccessible(true);
+        List<Vertex> projectedFace = (List<Vertex>) projectFace.invoke(p, face);
 
         assertThat(projectedFace.get(0).getY() == projectedFace.get(1).getY() && projectedFace.get(0).getY() == projectedFace.get(2).getY());
     }
@@ -118,7 +121,7 @@ class PolygonTest {
     }
 
     @Test
-    void PointOnLine() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    void pointOnLine() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Polygon p = new Polygon();
         List<Vertex> line = new ArrayList<>();
         line.add(new Vertex(0, 0, 0));
@@ -133,5 +136,41 @@ class PolygonTest {
         double distance = (double) pointDistanceFromLine.invoke(p, line, point);
 
         assertEquals(distance, 0);
+    }
+
+    @Test
+    void correctEdgesOfSquare() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Polygon p = new Polygon();
+        List<Vertex> vertices = new ArrayList<>();
+
+        Vertex vertex1 = new Vertex(0, 0, 0);
+        Vertex vertex2 = new Vertex(0, 0, 1);
+        Vertex vertex3 = new Vertex(1, 0, 1);
+        Vertex vertex4 = new Vertex(1, 0, 0);
+
+        vertices.add(vertex1);
+        vertices.add(vertex2);
+        vertices.add(vertex3);
+        vertices.add(vertex4);
+
+        List<Vertex> edge1 = new ArrayList<>();
+        edge1.add(vertex1);
+        edge1.add(vertex2);
+        List<Vertex> edge2 = new ArrayList<>();
+        edge2.add(vertex3);
+        edge2.add(vertex2);
+        List<Vertex> edge3 = new ArrayList<>();
+        edge3.add(vertex3);
+        edge3.add(vertex4);
+        List<Vertex> edge4 = new ArrayList<>();
+        edge4.add(vertex1);
+        edge4.add(vertex4);
+
+        Method findEdges = Polygon.class.getDeclaredMethod("findEdges", List.class);
+        findEdges.setAccessible(true);
+        List<List<Vertex>> edges = (List<List<Vertex>>) findEdges.invoke(p, vertices);
+
+        assertEquals(edges.size(), 4);
+        assertThat(edges.contains(edge1) && edges.contains(edge2) && edges.contains(edge3) && edges.contains(edge4));
     }
 }
