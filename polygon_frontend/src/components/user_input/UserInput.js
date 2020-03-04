@@ -11,9 +11,9 @@ const UserInput = (props) => {
 
     const [vertices, setVertices] = useState([]);
 
-    const limitToBounds = (value) => {
-        if (value < -100) return -100;
-        if (100 < value) return 100;
+    const limitToBounds = (value, bound) => {
+        if (value < -bound) return -bound;
+        if (bound < value) return bound;
         return value;
     };
 
@@ -23,33 +23,37 @@ const UserInput = (props) => {
 
         switch(target) {
             case "x":
-                xInput.current.value = limitToBounds(value);
+                xInput.current.value = limitToBounds(value, 100);
                 break;
             case "y":
-                yInput.current.value = limitToBounds(value);
+                yInput.current.value = limitToBounds(value, 100);
                 break;
             case "z":
-                zInput.current.value = limitToBounds(value);
+                zInput.current.value = limitToBounds(value, 100);
                 break;
         }
     };
 
     const submitVertex = () => {
-        let x = parseInt(xInput.current.value);
-        let y = parseInt(yInput.current.value);
-        let z = parseInt(zInput.current.value);
+        let x = parseFloat(xInput.current.value);
+        let y = parseFloat(yInput.current.value);
+        let z = parseFloat(zInput.current.value);
 
         let vertex = {
-            x: x ? x : 0,
-            y: y ? y : 0,
-            z: z ? z : 0
+            x: x ? x : 0.0,
+            y: y ? y : 0.0 ,
+            z: z ? z : 0.0
         };
 
         setVertices(vertices => [...vertices, vertex]);
     };
 
-    const sendData = ()=> {
-        Axios.post("10.44.1.10:8080/custom", vertices)
+    const sendData = () => {
+        let body = {
+            vertices: vertices
+        };
+
+        Axios.post("http://localhost:8080/custom", body)
             .then( resp => console.log(resp) )
     };
 
