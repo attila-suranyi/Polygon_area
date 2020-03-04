@@ -2,8 +2,12 @@ import React, {useEffect, useState, useRef} from "react";
 import Button from "../styled_components/Button";
 import SubmitVertexButton from "../styled_components/SubmitVertexButton";
 import Axios from "axios";
+import Scene from "../scene/Scene";
 
 const UserInput = (props) => {
+
+    const [geometry, setGeometry] = useState(null);
+    const [area, setArea] = useState(null);
 
     const xInput = useRef();
     const yInput = useRef();
@@ -54,7 +58,13 @@ const UserInput = (props) => {
         };
 
         Axios.post("http://localhost:8080/custom", body)
-            .then( resp => console.log(resp) )
+            .then( resp => handleResp(resp.data) )
+    };
+
+    const handleResp = (resp) => {
+        console.log(resp);
+        setArea(resp.area);
+        setGeometry(resp.triangles);
     };
 
 
@@ -98,6 +108,14 @@ const UserInput = (props) => {
             {
                 vertices ? vertices.map(vertex => <p>x: {vertex.x} y: {vertex.y} z: {vertex.z}</p>)
                     : "no vertices"
+            }
+
+            { geometry && area ?
+                <div>
+                    <p>Custom polygon area: {area.toFixed(2)} units</p>
+                    <Scene geo={geometry} />
+                </div> :
+                <p>Computing polygon...</p>
             }
         </React.Fragment>
     )
