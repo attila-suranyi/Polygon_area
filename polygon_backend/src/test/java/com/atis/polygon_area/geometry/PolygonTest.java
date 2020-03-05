@@ -31,7 +31,7 @@ class PolygonTest {
     @Test
     void cubeHasTwentyTriangles() throws Exception {
         Cube cube = new Cube();
-        assertEquals(20, cube.getTriangles().size());
+        assertEquals(12, cube.getTriangles().size());
     }
 
     @Test

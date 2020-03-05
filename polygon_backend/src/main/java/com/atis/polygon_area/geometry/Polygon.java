@@ -117,7 +117,7 @@ public class Polygon {
         }
     }
 
-    //TODO in case of there are multiple "vertices" in a line, the ordered vertices might skip a "middle vertex"
+    //TODO exit condition in case of "middle vertex" doesnt work
     /**
      * Orders the vertices of the given edges of a face, so
      * iterating through the vertices we only traverse through
@@ -128,8 +128,11 @@ public class Polygon {
      * @return the ordered vertex sequence
      */
     private List<Vertex> orderVertices(List<List<Vertex>> edges) {
+        List<List<Vertex>> optimizedEdges = this.eliminateCollinearVertices(edges);
+
         List<Vertex> orderedVertices = edges.get(0);
 
+        //this condition will work after elimination
         while (orderedVertices.size() < edges.size()) {
             for (List<Vertex> edge : edges) {
                 if (edge.contains(orderedVertices.get(orderedVertices.size() - 1)) && !edge.contains(orderedVertices.get(orderedVertices.size() - 2))) {
@@ -146,8 +149,58 @@ public class Polygon {
         return orderedVertices;
     }
 
+    private List<List<Vertex>> eliminateCollinearVertices(List<List<Vertex>> edges) {
+        List<Vertex> points = new ArrayList<>();
+
+        for (List<Vertex> edge : edges) {
+            for (Vertex point : edge) {
+                if (!points.contains(point)) {
+                    points.add(point);
+                }
+            }
+        }
+        List<List<Vertex>> possibleTriangles = this.generateVertexCombinations(points, 3);
+
+        Set<Vertex> collinearPoints = new HashSet<>();
+
+        for (List<Vertex> triangle : possibleTriangles) {
+            if (this.calculateTriangleArea(triangle) == 0) {
+                double a = triangle.get(0).getX() + triangle.get(0).getZ();
+                double b = triangle.get(1).getX() + triangle.get(1).getZ();
+                double c = triangle.get(2).getX() + triangle.get(2).getZ();
+
+                if (a > b) {
+                    if (b > c) {
+                        collinearPoints.add(triangle.get(1));
+                    } else if (a > c) {
+                        collinearPoints.add(triangle.get(2));
+                    } else {
+                        collinearPoints.add(triangle.get(0));
+                    }
+                } else {
+                    if (a > c) {
+                        collinearPoints.add(triangle.get(0));
+                    } else if (b > c) {
+                        collinearPoints.add(triangle.get(2));
+                    } else {
+                        collinearPoints.add(triangle.get(1));
+                    }
+                }
+            }
+        }
+        List<List<Vertex>> removeEdges = new ArrayList<>();
+        for (List<Vertex> edge : edges) {
+            for (Vertex collinearPoint : collinearPoints) {
+                if (edge.contains(collinearPoint)) {
+                    removeEdges.add(edge);
+                }
+            }
+        }
+        edges.removeAll(removeEdges);
+        return edges;
+    }
+
     //TODO in case of there are multiple "vertices" in a line, the found edges are not necessary correct
-    // Important: face should be projected before reaching this method
     private List<List<Vertex>> findEdges(List<Vertex> face) {
         List<List<Vertex>> possibleEdges = this.generateVertexCombinations(face, 2);
         List<List<Vertex>> edges = new ArrayList<>();
