@@ -25,7 +25,7 @@ const PolygonLoader = (props) => {
 
     return (
         <Polygon
-            geo={customGeo ? customGeo : BuildGeometry(TestGeo().triangles)}
+            geo={customGeo}
             reflection={cubeCamera.renderTarget.texture}
         />
     );
