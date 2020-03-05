@@ -13,18 +13,6 @@ import Plane from "./plane/Plane";
  * Renders a scene with basic plane, polygon and other effects
  */
 const Scene = (props) => {
-    const {gl, scene, camera} = useThree();
-
-    const animate = () => {
-
-        setTimeout( function() {
-
-            requestAnimationFrame( animate );
-            gl.render(scene, camera);
-
-        }, 1000 / 30 );
-
-    };
 
     return (
         <Canvas
