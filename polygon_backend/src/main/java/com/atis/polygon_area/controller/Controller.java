@@ -1,13 +1,13 @@
 package com.atis.polygon_area.controller;
 
 import com.atis.polygon_area.geometry.GeometryCalculable;
+import com.atis.polygon_area.geometry.Polygon;
+import com.atis.polygon_area.model.UserPolygon;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -46,6 +46,19 @@ public class Controller {
     @GetMapping("/icosahedron")
     public ResponseEntity getDodecahedronGeometry() {
         Map<String, Object> model = icosahedron.getPolygonGeometry();
+
+        return ResponseEntity.ok(model);
+    }
+
+    // TODO vertex ID does not increment this way
+    @PostMapping("/custom")
+    public ResponseEntity userPolygon(@RequestBody UserPolygon points) throws Exception {
+        Polygon polygon = new Polygon();
+
+        points.vertices.forEach(polygon :: addVertex);
+        polygon.calculatePolygonGeometry();
+
+        Map<String, Object> model = polygon.getPolygonGeometry();
 
         return ResponseEntity.ok(model);
     }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Canvas } from "react-three-fiber";
 import * as THREE from "three";
 import "./sceneStyle.css";
