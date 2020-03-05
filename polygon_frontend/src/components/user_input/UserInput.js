@@ -76,7 +76,7 @@ const UserInput = (props) => {
     };
 
     const handleResp = (resp) => {
-        console.log(resp);
+        // console.log(resp);
         setArea(resp.area);
         setGeometry(resp.triangles);
         scrollToBottom();
@@ -163,7 +163,7 @@ const style = {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "stretch",
-        height: "25em"
+        height: "20em"
     },
     inputContainer: {
         display: "flex",

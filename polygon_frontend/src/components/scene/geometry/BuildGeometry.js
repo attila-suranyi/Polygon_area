@@ -7,14 +7,14 @@ import * as THREE from "three";
  * @returns {BufferGeometry} geometry built from faces and their vertices
  */
 const BuildGeometry = (trianglesData) => {
-    const testData = TestGeo();
+    const triangles = trianglesData ? trianglesData : TestGeo();
 
     let i = 0;
     let geometry = new THREE.Geometry();
 
     // will use data from parameter instead
 
-    for (let triangle of trianglesData) {
+    for (let triangle of triangles) {
     // for (let triangle of testData.triangles) {
 
         for (let vertex of triangle) {

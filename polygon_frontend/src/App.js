@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import GeometryLoader from "./components/scene/geometry/GeometryLoader";

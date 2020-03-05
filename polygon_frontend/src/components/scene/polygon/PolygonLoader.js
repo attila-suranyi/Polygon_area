@@ -1,11 +1,10 @@
-import React, {useContext} from "react";
+import React from "react";
 import {extend, useFrame} from "react-three-fiber";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import * as THREE from "three";
 
 import BuildGeometry from "../geometry/BuildGeometry";
 import Polygon from "./Polygon";
-import TestGeo from "../geometry/TestGeo";
 
 /**
  * Builds a polygon's geometry from Vector3 data, and reflections

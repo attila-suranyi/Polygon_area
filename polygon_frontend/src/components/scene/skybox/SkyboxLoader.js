@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import {Component} from "react";
 
 import right from "../textures/bluecloud/rt.jpg";
 import left from "../textures/bluecloud/lf.jpg";

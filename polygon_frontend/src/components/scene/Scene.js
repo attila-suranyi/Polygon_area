@@ -1,5 +1,5 @@
-import React, {useContext} from "react";
-import { Canvas } from "react-three-fiber";
+import React from "react";
+import {Canvas, useThree} from "react-three-fiber";
 import * as THREE from "three";
 import "./sceneStyle.css";
 
@@ -13,6 +13,18 @@ import Plane from "./plane/Plane";
  * Renders a scene with basic plane, polygon and other effects
  */
 const Scene = (props) => {
+    const {gl, scene, camera} = useThree();
+
+    const animate = () => {
+
+        setTimeout( function() {
+
+            requestAnimationFrame( animate );
+            gl.render(scene, camera);
+
+        }, 1000 / 30 );
+
+    };
 
     return (
         <Canvas
@@ -21,7 +33,7 @@ const Scene = (props) => {
                 gl.shadowMap.enabled = true;
                 gl.shadowMap.type = THREE.PCFSoftShadowMap;
             }}
-            alpha={true}
+            alpha={1}
         >
             <ambientLight />
             <spotLight
