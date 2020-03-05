@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import GeometryLoader from "./components/scene/geometry/GeometryLoader";
@@ -7,12 +7,15 @@ import { ThemeProvider } from "styled-components";
 import Theme from "./components/styled_components/themes/Theme";
 import UserInput from "./components/user_input/UserInput"
 import {GeometryProvider} from "./components/context/GeometryContext";
+import {IpContext, IpProvider} from "./components/context/IpContext";
 
 function App() {
-  const backendIp = "http://localhost:8080";
-  //const backendIp = "10.44.255.255:8080";
-  //TODO maybe put this in context
 
+  const {setBackendIp} = useContext(IpContext);
+  //localhost by default, edit here if needed
+
+  // const myIp = "https://myip:8080";
+  // setBackendIp(myIp);
 
   return (
     <div className="App">
@@ -20,23 +23,25 @@ function App() {
         <Router>
           <Navbar />
 
-          <GeometryProvider>
-            <Route path="/triangle">
-              <GeometryLoader shapeType="triangle" backendIp={backendIp} />
-            </Route>
+          <IpProvider>
+            <GeometryProvider>
+              <Route path="/triangle">
+                <GeometryLoader shapeType="triangle" />
+              </Route>
 
-            <Route path="/tetrahedron">
-              <GeometryLoader shapeType="tetrahedron" backendIp={backendIp} />
-            </Route>
+              <Route path="/tetrahedron">
+                <GeometryLoader shapeType="tetrahedron" />
+              </Route>
 
-            <Route path="/icosahedron">
-              <GeometryLoader shapeType="icosahedron" backendIp={backendIp} />
-            </Route>
+              <Route path="/icosahedron">
+                <GeometryLoader shapeType="icosahedron" />
+              </Route>
 
-            <Route path="/custom">
-              <UserInput />
-            </Route>
-          </GeometryProvider>
+              <Route path="/custom">
+                <UserInput />
+              </Route>
+            </GeometryProvider>
+          </IpProvider>
 
         </Router>
       </ThemeProvider>

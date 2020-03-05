@@ -5,16 +5,19 @@ import Scene from "../scene/Scene";
 import {GeometryContext} from "../context/GeometryContext";
 import CoordsInput from "./CoordsInput";
 import Vertices from "./Vertices";
+import {IpContext} from "../context/IpContext";
 
 const UserInput = (props) => {
 
     const {area, setArea, geometry, setGeometry} = useContext(GeometryContext);
+    const {backendIp} = useContext(IpContext);
 
     const xInput = useRef();
     const yInput = useRef();
     const zInput = useRef();
 
     const [vertices, setVertices] = useState([]);
+    const [vertexId, setVertexId] = useState(0);
 
     const submittable = vertices.length >= 3;
 
@@ -48,24 +51,27 @@ const UserInput = (props) => {
         let z = parseFloat(zInput.current.value) / 100;
 
         let vertex = {
+            id: vertexId,
             x: x ? x : 0.0,
             y: y ? y : 0.0,
             z: z ? z : 0.0
         };
 
         setVertices(vertices => [...vertices, vertex]);
+        setVertexId(vertexId+1);
+    };
+
+    const removeVertex = (id) => {
+        let newList = vertices.filter( vertex => vertex.id !== id);
+        setVertices(newList);
     };
 
     const sendData = () => {
-        for (let vertex in vertices) {
-
-        }
         let body = {
             vertices: vertices
         };
 
-        //TODO use backend ip here
-        Axios.post("http://localhost:8080/custom", body)
+        Axios.post(`${backendIp}/custom`, body)
             .then( resp => handleResp(resp.data) )
     };
 
@@ -73,6 +79,11 @@ const UserInput = (props) => {
         console.log(resp);
         setArea(resp.area);
         setGeometry(resp.triangles);
+        scrollToBottom();
+    };
+
+    const scrollToBottom = () => {
+        window.scrollTo(0,document.body.scrollHeight);
     };
 
 
@@ -81,7 +92,8 @@ const UserInput = (props) => {
     }, []);
 
     return (
-        //TODO refactor to eliminate scene code duplication
+        //TODO refactor to eliminate scene code duplication,
+        // break down to smaller components, decouple styling
         <React.Fragment>
             <div style={style.wrapper}>
                 <div style={style.wrapperMargin} />
@@ -113,7 +125,7 @@ const UserInput = (props) => {
                     <div style={style.verticesList}>
                         <p>Added vertices:</p>
                         <div style={style.scrollSpace}>
-                            { vertices ? <Vertices vertices={vertices} /> : "" }
+                            { vertices ? <Vertices vertices={vertices} removeVertex={removeVertex} /> : "" }
 
                         </div>
                     </div>
@@ -121,7 +133,7 @@ const UserInput = (props) => {
                     <div style={style.horizontalSeparator} />
 
                     <SubmitButton onClick={sendData} disabled={!submittable} style={style.submitButton}>
-                        Send data
+                        Generate polygon
                     </SubmitButton>
                     <div style={style.horizontalSeparator} />
 
@@ -145,11 +157,13 @@ const UserInput = (props) => {
 export default UserInput;
 
 const style = {
+    //TODO use colors via Theme
     wrapper: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "stretch",
+        height: "25em"
     },
     inputContainer: {
         display: "flex",
@@ -162,11 +176,10 @@ const style = {
     },
     input: {
         alignItems: "stretch",
-        border: "2px solid lightred",
         flex: 1,
     },
     sendButton: {
-        flex: 1
+        flex: 1,
     },
     verticesContainer: {
         display: "flex",
@@ -187,9 +200,8 @@ const style = {
         alignItems: "stretch",
         overflowY: "scroll",
         flex: "10 0 0",
-        // marginLeft: 10,
-        // marginRight: 10,
-        margin: 10
+        marginLeft: 10,
+        marginRight: 10
     },
     horizontalSeparator: {
         flex: 1
@@ -202,6 +214,7 @@ const style = {
     },
     submitButton: {
         flex: 1,
-        alignSelf: "center"
+        alignSelf: "center",
+        width: "12em"
     }
 };
