@@ -47,22 +47,18 @@ class PolygonTest {
     }
 
     @Test
-    void pointNotOnSurface() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    void pointNotOnSurface() {
         List<Vertex> plane = Arrays.asList(
                 new Vertex(0, 0, 10),
                 new Vertex(1, 0, 10),
                 new Vertex(2, 2, 10)
         );
-
         Vertex pointNotOnSurface = new Vertex(0, 0, 1);
-
         Vector normalVector = Vector.normalVector(plane.get(0), plane.get(1), plane.get(2));
 
-        Method pointDistanceFromPlane = Polygon.class.getDeclaredMethod("pointDistanceFromPlane", Vector.class, Vertex.class, Vertex.class);
-        pointDistanceFromPlane.setAccessible(true);
-        double distance = (double) pointDistanceFromPlane.invoke(new Polygon(), normalVector, plane.get(0), pointNotOnSurface);
+        double distance = GeometryCalculator.pointDistanceFromPlane(normalVector, plane.get(0), pointNotOnSurface);
 
-        assertFalse(distance == 0);
+        assertNotEquals(0, distance, 0.0);
     }
 
     @Test
@@ -115,54 +111,39 @@ class PolygonTest {
     }
 
     @Test
-    void faceProjection() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Polygon p = new Polygon();
+    void faceProjection() {
         List<Vertex> face = new ArrayList<>();
 
         for (int i=0; i < 3; i++) {
             Vertex v = new Vertex(Util.generateRandomDoubleBetween(0, 100), Util.generateRandomDoubleBetween(0, 100), Util.generateRandomDoubleBetween(0, 100));
             face.add(v);
         }
-
-        Method projectFace = Polygon.class.getDeclaredMethod("projectFace", Polygon.class, List.class);
-        projectFace.setAccessible(true);
-        List<Vertex> projectedFace = (List<Vertex>) projectFace.invoke(p, p, face);
+        List<Vertex> projectedFace = GeometryCalculator.projectFace(face);
 
         assertThat(projectedFace.get(0).getY() == projectedFace.get(1).getY() && projectedFace.get(0).getY() == projectedFace.get(2).getY());
     }
 
     @Test
-    void pointNotOnLine() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Polygon p = new Polygon();
+    void pointNotOnLine() {
         List<Vertex> line = new ArrayList<>();
         line.add(new Vertex(0, 0, 0));
         line.add(new Vertex(1, 0, 1));
         Vertex point = new Vertex(0, 0, 1);
 
-        Class[] methodArguments = new Class[2];
-        methodArguments[0] = List.class;
-        methodArguments[1] = Vertex.class;
-        Method pointDistanceFromLine = Polygon.class.getDeclaredMethod("pointDistanceFromLine", methodArguments);
-        pointDistanceFromLine.setAccessible(true);
-        double distance = (double) pointDistanceFromLine.invoke(p, line, point);
+        double distance = GeometryCalculator.pointDistanceFromLine(line, point);
 
         assertThat(distance != 0);
     }
 
     @Test
-    void pointOnLine() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    void pointOnLine() {
         Polygon p = new Polygon();
         List<Vertex> line = new ArrayList<>();
         line.add(new Vertex(0, 0, 0));
         line.add(new Vertex(1, 0, 1));
         Vertex point = new Vertex(2, 0, 2);
 
-        Class[] methodArguments = new Class[2];
-        methodArguments[0] = List.class;
-        methodArguments[1] = Vertex.class;
-        Method pointDistanceFromLine = Polygon.class.getDeclaredMethod("pointDistanceFromLine", methodArguments);
-        pointDistanceFromLine.setAccessible(true);
-        double distance = (double) pointDistanceFromLine.invoke(p, line, point);
+        double distance = GeometryCalculator.pointDistanceFromLine(line, point);
 
         assertEquals(distance, 0);
     }
