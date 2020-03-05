@@ -29,9 +29,9 @@ class PolygonTest {
     }
 
     @Test
-    void cubeHasTwelveTriangles() throws Exception {
+    void cubeHasTwentyTriangles() throws Exception {
         Cube cube = new Cube();
-        assertEquals(12, cube.getTriangles().size());
+        assertEquals(20, cube.getTriangles().size());
     }
 
     @Test
@@ -124,9 +124,9 @@ class PolygonTest {
             face.add(v);
         }
 
-        Method projectFace = Polygon.class.getDeclaredMethod("projectFace", List.class);
+        Method projectFace = Polygon.class.getDeclaredMethod("projectFace", Polygon.class, List.class);
         projectFace.setAccessible(true);
-        List<Vertex> projectedFace = (List<Vertex>) projectFace.invoke(p, face);
+        List<Vertex> projectedFace = (List<Vertex>) projectFace.invoke(p, p, face);
 
         assertThat(projectedFace.get(0).getY() == projectedFace.get(1).getY() && projectedFace.get(0).getY() == projectedFace.get(2).getY());
     }

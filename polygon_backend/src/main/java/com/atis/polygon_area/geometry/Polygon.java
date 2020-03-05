@@ -29,7 +29,10 @@ public class Polygon {
     public void calculatePolygonGeometry() throws Exception {
         this.findFaces();
         this.triangulateFaces();
-        this.calculatePolygonArea();
+
+        for (List<Vertex> triangle : triangles) {
+            this.area += this.calculateTriangleArea(triangle);
+        }
     }
 
     /**
@@ -47,6 +50,10 @@ public class Polygon {
             boolean pointsBelow = false;
 
             Vector normalVector = Vector.normalVector(plane.get(0), plane.get(1), plane.get(2));
+
+            if (normalVector.getZ() == 0 && normalVector.getY() == 0 && normalVector.getX() == 0) {
+                continue;
+            }
 
             for (Vertex vertex : this.getVertices()) {
                 if (!plane.contains(vertex)) {
@@ -77,7 +84,7 @@ public class Polygon {
 
         List<List<Vertex>> projectedFaces = this.faces.stream()
                 //.filter(face -> face.size() > 3)
-                .map(Polygon::projectFace)
+                .map(x -> Polygon.projectFace(this, x))
                 .map(this::findEdges)
                 .map(this::orderVertices)
                 .collect(Collectors.toList());
@@ -110,6 +117,7 @@ public class Polygon {
         }
     }
 
+    //TODO in case of there are multiple "vertices" in a line, the ordered vertices might skip a "middle vertex"
     /**
      * Orders the vertices of the given edges of a face, so
      * iterating through the vertices we only traverse through
@@ -138,6 +146,7 @@ public class Polygon {
         return orderedVertices;
     }
 
+    //TODO in case of there are multiple "vertices" in a line, the found edges are not necessary correct
     // Important: face should be projected before reaching this method
     private List<List<Vertex>> findEdges(List<Vertex> face) {
         List<List<Vertex>> possibleEdges = this.generateVertexCombinations(face, 2);
@@ -158,7 +167,6 @@ public class Polygon {
                         pointsOnOtherSide = true;
                     }
                 }
-
                 if (pointsOnOneSide && pointsOnOtherSide) {
                     break;
                 }
@@ -187,8 +195,8 @@ public class Polygon {
     }
 
     // TODO move static methods
-    private static List<Vertex> projectFace(List<Vertex> face) {
-        List<Vector> pm = projectionMatrix(face);
+    private static List<Vertex> projectFace(Polygon polygon, List<Vertex> face) {
+        List<Vector> pm = projectionMatrix(polygon, face);
         List<Vertex> projectedFace = new ArrayList<>();
 
         for (Vertex vertex : face) {
@@ -197,7 +205,21 @@ public class Polygon {
         return projectedFace;
     }
 
-    private static List<Vector> projectionMatrix(List<Vertex> triangle) {
+    private static List<Vector> projectionMatrix(Polygon polygon, List<Vertex> face) {
+
+        List<Vertex> triangle = new ArrayList<>();
+
+        pointsNotInLine:
+        for (int i = 1; i < face.size(); i++) {
+            for (int j = 2; j < face.size(); j++) {
+                triangle = Arrays.asList(face.get(0), face.get(i), face.get(j));
+                double triangleArea = polygon.calculateTriangleArea(triangle);
+                if (triangleArea != 0) {
+                    break pointsNotInLine;
+                }
+            }
+        }
+
         Vertex a = triangle.get(0);
         Vertex b = triangle.get(1);
         Vertex c = triangle.get(2);
@@ -262,17 +284,15 @@ public class Polygon {
      * Calculates the area of the polygon iterating through the found
      * triangles, using Heron's formula
      */
-    private void calculatePolygonArea() {
-        for (List<Vertex> triangle : this.triangles) {
+    private double calculateTriangleArea(List<Vertex> triangle) {
 
-            double sideA = this.calculateSideLength(triangle.get(0), triangle.get(1));
-            double sideB = this.calculateSideLength(triangle.get(0), triangle.get(2));
-            double sideC = this.calculateSideLength(triangle.get(1), triangle.get(2));
+        double sideA = this.calculateSideLength(triangle.get(0), triangle.get(1));
+        double sideB = this.calculateSideLength(triangle.get(0), triangle.get(2));
+        double sideC = this.calculateSideLength(triangle.get(1), triangle.get(2));
 
-            //Heron's formula
-            double s = (sideA + sideB + sideC) / 2;
-            this.area += (sqrt(s * (s - sideA) * (s - sideB) * (s - sideC)));
-        }
+        //Heron's formula
+        double s = (sideA + sideB + sideC) / 2;
+        return (sqrt(s * (s - sideA) * (s - sideB) * (s - sideC)));
     }
 
     private double calculateSideLength(Vertex pointA, Vertex pointB) {
@@ -312,6 +332,7 @@ public class Polygon {
         this.vertices.add(vertex);
     }
 
+    //TODO send back some notification if this exception occurs
     private void addTriangle(List<Vertex> triangle) throws Exception {
         if (triangle.size() > 3) {
             throw new Exception("Not a triangle");
