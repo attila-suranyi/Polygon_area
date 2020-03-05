@@ -50,7 +50,6 @@ public class Controller {
         return ResponseEntity.ok(model);
     }
 
-    // TODO vertex ID does not increment this way
     @PostMapping("/custom")
     public ResponseEntity userPolygon(@RequestBody UserPolygon points) throws Exception {
         Polygon polygon = new Polygon();
