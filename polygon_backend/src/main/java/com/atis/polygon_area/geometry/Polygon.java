@@ -13,6 +13,7 @@ import static java.lang.Math.sqrt;
 @Data
 @Service
 public class Polygon {
+    @Setter(AccessLevel.PRIVATE)
     private double area = 0;
 
     @Setter(AccessLevel.PRIVATE)
@@ -117,7 +118,6 @@ public class Polygon {
         }
     }
 
-    //TODO exit condition in case of "middle vertex" doesnt work
     /**
      * Orders the vertices of the given edges of a face, so
      * iterating through the vertices we only traverse through
@@ -200,7 +200,6 @@ public class Polygon {
         return edges;
     }
 
-    //TODO in case of there are multiple "vertices" in a line, the found edges are not necessary correct
     private List<List<Vertex>> findEdges(List<Vertex> face) {
         List<List<Vertex>> possibleEdges = this.generateVertexCombinations(face, 2);
         List<List<Vertex>> edges = new ArrayList<>();
@@ -248,7 +247,7 @@ public class Polygon {
     }
 
     // TODO move static methods
-    private static List<Vertex> projectFace(Polygon polygon, List<Vertex> face) {
+    private List<Vertex> projectFace(Polygon polygon, List<Vertex> face) {
         List<Vector> pm = projectionMatrix(polygon, face);
         List<Vertex> projectedFace = new ArrayList<>();
 

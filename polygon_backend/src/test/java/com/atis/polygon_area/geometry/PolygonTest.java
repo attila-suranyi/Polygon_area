@@ -215,6 +215,29 @@ class PolygonTest {
         assertEquals(orderedVertices, correctOrder);
     }
 
+    @Test
+    void cubeWithCollinearPointsHasTwelveTriangles() throws Exception {
+        Polygon cube = new Polygon();
+
+        cube.addVertex(new Vertex(0, 0, 0));
+        cube.addVertex(new Vertex(1, 0, 0));
+        cube.addVertex(new Vertex(2, 0, 0));
+        cube.addVertex(new Vertex(0, 2, 0));
+        cube.addVertex(new Vertex(1, 2, 0));
+        cube.addVertex(new Vertex(2, 2, 0));
+
+        cube.addVertex(new Vertex(0, 0, 2));
+        cube.addVertex(new Vertex(1, 0, 2));
+        cube.addVertex(new Vertex(2, 0, 2));
+        cube.addVertex(new Vertex(0, 2, 2));
+        cube.addVertex(new Vertex(1, 2, 2));
+        cube.addVertex(new Vertex(2, 2, 2));
+
+        cube.calculatePolygonGeometry();
+
+        assertEquals(12, cube.getTriangles().size());
+    }
+
 
 
 
