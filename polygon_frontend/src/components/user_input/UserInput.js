@@ -1,8 +1,10 @@
 import React, {useEffect, useState, useRef, useContext} from "react";
-import SubmitVertexButton from "../styled_components/SubmitVertexButton";
+import SubmitButton from "../styled_components/SubmitButton";
 import Axios from "axios";
 import Scene from "../scene/Scene";
 import {GeometryContext} from "../context/GeometryContext";
+import CoordsInput from "./CoordsInput";
+import Vertices from "./Vertices";
 
 const UserInput = (props) => {
 
@@ -13,6 +15,8 @@ const UserInput = (props) => {
     const zInput = useRef();
 
     const [vertices, setVertices] = useState([]);
+
+    const submittable = vertices.length >= 3;
 
     const limitToBounds = (value) => {
         let bound = 100;
@@ -45,7 +49,7 @@ const UserInput = (props) => {
 
         let vertex = {
             x: x ? x : 0.0,
-            y: y ? y : 0.0 ,
+            y: y ? y : 0.0,
             z: z ? z : 0.0
         };
 
@@ -53,6 +57,9 @@ const UserInput = (props) => {
     };
 
     const sendData = () => {
+        for (let vertex in vertices) {
+
+        }
         let body = {
             vertices: vertices
         };
@@ -70,57 +77,131 @@ const UserInput = (props) => {
 
 
     useEffect( () => {
-        console.log(vertices);
-    }, [vertices]);
+        setGeometry(null)
+    }, []);
 
     return (
-        //TODO change all divs to Fragment
         //TODO refactor to eliminate scene code duplication
         <React.Fragment>
-            <p>X</p>
-            <input type="number"
-                   name="x"
-                   onChange={ inputHandler }
-                   ref={xInput}
-            />
-            <p>Y</p>
-            <input type="number"
-                   name="y"
-                   onChange={ inputHandler }
-                   ref={yInput}
-            />
-            <p>Z</p>
-            <input type="number"
-                   name="z"
-                   onChange={ inputHandler }
-                   ref={zInput}
-            />
+            <div style={style.wrapper}>
+                <div style={style.wrapperMargin} />
 
-            <br />
-            <br />
+                {/*vertices input and add button*/}
+                <div style={style.inputContainer}>
 
-            <SubmitVertexButton onClick={submitVertex}>
-                Submit vertex
-            </SubmitVertexButton>
+                    <CoordsInput
+                        onChange={inputHandler}
+                        xRef={xInput}
+                        yRef={yInput}
+                        zRef={zInput}
+                        style={style.input}
+                    />
 
-            <SubmitVertexButton onClick={sendData}>
-                Send data
-            </SubmitVertexButton>
+                    <div style={style.horizontalSeparator} />
 
-            {
-                vertices ? vertices.map(vertex => <p>x: {vertex.x} y: {vertex.y} z: {vertex.z}</p>)
-                    : "no vertices"
-            }
+                    <SubmitButton onClick={submitVertex}  style={style.sendButton}>
+                        Submit vertex
+                    </SubmitButton>
+                    <div style={style.horizontalSeparator} />
+                </div>
 
-            { geometry && area ?
-                <div>
-                    <p>Custom polygon area: {area.toFixed(2)} units</p>
-                    <Scene geo={geometry} />
-                </div> :
-                <p>Computing polygon...</p>
-            }
+            <div style={style.wrapperCenter} />
+
+                {/*vertices list and send button*/}
+                <div style={style.verticesContainer}>
+
+                    <div style={style.verticesList}>
+                        <p>Added vertices:</p>
+                        <div style={style.scrollSpace}>
+                            { vertices ? <Vertices vertices={vertices} /> : "" }
+
+                        </div>
+                    </div>
+
+                    <div style={style.horizontalSeparator} />
+
+                    <SubmitButton onClick={sendData} disabled={!submittable} style={style.submitButton}>
+                        Send data
+                    </SubmitButton>
+                    <div style={style.horizontalSeparator} />
+
+                </div>
+
+            <div style={style.wrapperMargin} />
+            </div>
+
+            <div>
+                { geometry && area ?
+                    <div>
+                        <p>Custom polygon area: {area.toFixed(2)} units</p>
+                        <Scene geo={geometry} />
+                    </div> : ""
+                }
+            </div>
         </React.Fragment>
     )
 };
 
 export default UserInput;
+
+const style = {
+    wrapper: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "stretch",
+    },
+    inputContainer: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        flex: 20,
+        border: "2px solid #d7ddff",
+        borderRadius: "10px",
+        // padding: 5
+    },
+    input: {
+        alignItems: "stretch",
+        border: "2px solid lightred",
+        flex: 1,
+    },
+    sendButton: {
+        flex: 1
+    },
+    verticesContainer: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "stretch",
+        flex: 20,
+        border: "2px solid #d7ddff",
+        borderRadius: "10px",
+    },
+    verticesList: {
+        display: "flex",
+        flexDirection: "column",
+        flex: 15,
+    },
+    scrollSpace: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "stretch",
+        overflowY: "scroll",
+        flex: "10 0 0",
+        // marginLeft: 10,
+        // marginRight: 10,
+        margin: 10
+    },
+    horizontalSeparator: {
+        flex: 1
+    },
+    wrapperMargin: {
+        flex: 30
+    },
+    wrapperCenter: {
+        flex: 2
+    },
+    submitButton: {
+        flex: 1,
+        alignSelf: "center"
+    }
+};

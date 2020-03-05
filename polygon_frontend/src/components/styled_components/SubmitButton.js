@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const SubmitVertexButton = styled.button`
+const SubmitButton = styled.button`
     height: 3em;
     width: 10em;
     background: ${props => props.theme.ternary};
@@ -14,6 +14,9 @@ const SubmitVertexButton = styled.button`
       font-size: 1rem;
       cursor: pointer;
     }
+    &:disabled{
+      opacity: 0.5;
+    }
 `;
 
-export default SubmitVertexButton;
+export default SubmitButton;
