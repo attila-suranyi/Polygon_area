@@ -8,7 +8,7 @@ export const IpProvider = (props) => {
     const [backendIp, setBackendIp] = useState("http://localhost:8080");
 
     return (
-        <IpContext.Provider value={[backendIp, setBackendIp]} >
+        <IpContext.Provider value={{backendIp, setBackendIp}} >
             {props.children}
         </IpContext.Provider>
     )

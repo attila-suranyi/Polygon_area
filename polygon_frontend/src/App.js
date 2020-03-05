@@ -11,9 +11,10 @@ import {IpContext, IpProvider} from "./components/context/IpContext";
 
 function App() {
 
-  const [backendIp, setBackendIp] = useContext(IpContext);
+  const {setBackendIp} = useContext(IpContext);
+  //localhost by default, edit here if needed
 
-  // const myIp = "10.44.255.255:8080";
+  // const myIp = "https://myip:8080";
   // setBackendIp(myIp);
 
   return (

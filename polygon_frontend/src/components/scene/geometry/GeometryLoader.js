@@ -12,7 +12,7 @@ import {IpContext} from "../../context/IpContext";
 const GeometryLoader = (props) => {
 
     const {area, setArea, geometry, setGeometry} = useContext(GeometryContext);
-    const [backendIp, setBackendIp] = useContext(IpContext);
+    const {backendIp} = useContext(IpContext);
 
     /**
      * Fetches and handles shape data from backend
