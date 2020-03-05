@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 import static java.lang.Math.sqrt;
 
 @Data
-@Component("polygon")
 public class Polygon {
     @Setter(AccessLevel.PRIVATE)
     private double area = 0;
@@ -253,7 +252,7 @@ public class Polygon {
      * the layers are: triangle, vertices in a triangle, coordinates of the vertices
      */
     private List<List<List<Double>>> getOrderedTriangleCoordinates() {
-        List<List<Vertex>> sortedTriangles = new ArrayList<>(this.faces);
+        List<List<Vertex>> sortedTriangles = new ArrayList<>(this.triangles);
         sortedTriangles.sort(Comparator.comparing((l1) -> l1.get(0).getId()));
 
         List<List<List<Double>>> sortedCoordinates = new ArrayList<>();
