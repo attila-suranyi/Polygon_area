@@ -21,7 +21,6 @@ const Scene = (props) => {
                 gl.shadowMap.enabled = true;
                 gl.shadowMap.type = THREE.PCFSoftShadowMap;
             }}
-            alpha={true}
         >
             <ambientLight />
             <spotLight

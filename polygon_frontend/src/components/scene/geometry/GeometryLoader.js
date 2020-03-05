@@ -28,7 +28,7 @@ const GeometryLoader = (props) => {
      * @param resp The response data fetched from backend
      */
     const handleResp = (resp) => {
-        console.log(resp);
+        // console.log(resp);
         setArea(resp.area);
         setGeometry(resp.triangles);
 
@@ -45,10 +45,6 @@ const GeometryLoader = (props) => {
     useEffect(() => {
         fetchPolygonData();
     }, []);
-
-    useEffect( () => {
-        console.log(geometry);
-    }, [geometry]);
 
     return (
         <div className="scene-container" >

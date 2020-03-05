@@ -76,7 +76,7 @@ const UserInput = (props) => {
     };
 
     const handleResp = (resp) => {
-        console.log(resp);
+        // console.log(resp);
         setArea(resp.area);
         setGeometry(resp.triangles);
         scrollToBottom();
