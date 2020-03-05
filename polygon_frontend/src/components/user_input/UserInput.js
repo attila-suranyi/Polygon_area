@@ -6,7 +6,6 @@ import {GeometryContext} from "../context/GeometryContext";
 import CoordsInput from "./CoordsInput";
 import Vertices from "./Vertices";
 import {IpContext} from "../context/IpContext";
-import uuid from "react-uuid";
 
 const UserInput = (props) => {
 
@@ -18,6 +17,7 @@ const UserInput = (props) => {
     const zInput = useRef();
 
     const [vertices, setVertices] = useState([]);
+    const [vertexId, setVertexId] = useState(0);
 
     const submittable = vertices.length >= 3;
 
@@ -51,13 +51,14 @@ const UserInput = (props) => {
         let z = parseFloat(zInput.current.value) / 100;
 
         let vertex = {
-            id: uuid(),
+            id: vertexId,
             x: x ? x : 0.0,
             y: y ? y : 0.0,
             z: z ? z : 0.0
         };
 
         setVertices(vertices => [...vertices, vertex]);
+        setVertexId(vertexId+1);
     };
 
     const removeVertex = (id) => {

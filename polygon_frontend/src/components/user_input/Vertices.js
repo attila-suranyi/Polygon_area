@@ -6,7 +6,7 @@ const Vertices = (props) => {
     return (
         <React.Fragment>
             { vertices.map(vertex =>
-                <div style={style.container}>
+                <div style={style.container} key={vertex.id}>
                     <p style={style.vertex}>x: {vertex.x} y: {vertex.y} z: {vertex.z} </p>
                     <div style={style.separator} />
                     <p
