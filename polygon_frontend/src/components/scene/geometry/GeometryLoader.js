@@ -2,6 +2,8 @@ import React, {useState, useEffect, useContext} from "react";
 import Axios from "axios";
 import Scene from "../Scene";
 import {GeometryContext} from "../../context/GeometryContext";
+import BuildGeometry from "../geometry/BuildGeometry";
+import {IpContext} from "../../context/IpContext";
 
 /**
  * Requests shape vertex data from backend and builds a PolygonLoader component from it
@@ -10,12 +12,13 @@ import {GeometryContext} from "../../context/GeometryContext";
 const GeometryLoader = (props) => {
 
     const {area, setArea, geometry, setGeometry} = useContext(GeometryContext);
+    const [backendIp, setBackendIp] = useContext(IpContext);
 
     /**
      * Fetches and handles shape data from backend
      */
     const fetchPolygonData = () => {
-        Axios.get(`${props.backendIp}/${props.shapeType}`)
+        Axios.get(`${backendIp}/${props.shapeType}`)
             .then( resp => handleResp(resp.data)
         )
     };
@@ -30,7 +33,6 @@ const GeometryLoader = (props) => {
         setGeometry(resp.triangles);
 
         scrollToBottom();
-        //TODO use GeometryBuilder and scroll down here instead
     };
 
     /**

@@ -5,10 +5,13 @@ import Scene from "../scene/Scene";
 import {GeometryContext} from "../context/GeometryContext";
 import CoordsInput from "./CoordsInput";
 import Vertices from "./Vertices";
+import {IpContext} from "../context/IpContext";
+import uuid from "react-uuid";
 
 const UserInput = (props) => {
 
     const {area, setArea, geometry, setGeometry} = useContext(GeometryContext);
+    const [backendIp, setBackendIp] = useContext(IpContext);
 
     const xInput = useRef();
     const yInput = useRef();
@@ -48,6 +51,7 @@ const UserInput = (props) => {
         let z = parseFloat(zInput.current.value) / 100;
 
         let vertex = {
+            id: uuid(),
             x: x ? x : 0.0,
             y: y ? y : 0.0,
             z: z ? z : 0.0
@@ -56,16 +60,18 @@ const UserInput = (props) => {
         setVertices(vertices => [...vertices, vertex]);
     };
 
-    const sendData = () => {
-        for (let vertex in vertices) {
+    const removeVertex = (id) => {
+        let newList = vertices.filter( vertex => vertex.id !== id);
+        setVertices(newList);
+    };
 
-        }
+    const sendData = () => {
         let body = {
             vertices: vertices
         };
 
         //TODO use backend ip here
-        Axios.post("http://localhost:8080/custom", body)
+        Axios.post(`${backendIp}/custom`, body)
             .then( resp => handleResp(resp.data) )
     };
 
@@ -113,7 +119,7 @@ const UserInput = (props) => {
                     <div style={style.verticesList}>
                         <p>Added vertices:</p>
                         <div style={style.scrollSpace}>
-                            { vertices ? <Vertices vertices={vertices} /> : "" }
+                            { vertices ? <Vertices vertices={vertices} removeVertex={removeVertex} /> : "" }
 
                         </div>
                     </div>
