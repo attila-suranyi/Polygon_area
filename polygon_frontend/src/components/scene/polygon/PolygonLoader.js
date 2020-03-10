@@ -13,7 +13,7 @@ const PolygonLoader = (props) => {
     extend({ OrbitControls });
 
     let customGeo = BuildGeometry(props.geo);
-    let cubeCamera = new THREE.CubeCamera(1, 100000, 128 );
+    let cubeCamera = new THREE.CubeCamera(1, 1000, 128 );
 
     // re-renders reflections every frame
     useFrame(({ gl, scene }) => {
