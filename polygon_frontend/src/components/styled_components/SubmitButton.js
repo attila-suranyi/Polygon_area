@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const SubmitButton = styled.button`
     height: 3em;
-    width: 10em;
+    width: 12em;
     background: ${props => props.theme.ternary};
     border-radius: 5px;
     border: 4px solid ${props => props.theme.ternary};

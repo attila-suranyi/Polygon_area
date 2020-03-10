@@ -1,8 +1,9 @@
-import React, {useEffect, useState, useRef, useContext} from "react";
+import React, {useEffect, useContext} from "react";
 import {GeometryContext} from "../context/GeometryContext";
 import CoordsInput from "./CoordsInput";
 import CoordsList from "./CoordsList";
 import GeometryLoader from "../scene/geometry/GeometryLoader";
+import styled from "styled-components";
 
 const CustomPolygon = () => {
 
@@ -14,19 +15,19 @@ const CustomPolygon = () => {
 
     return (
         <React.Fragment>
-            <div style={style.wrapper}>
-                <div style={style.wrapperMargin} />
+            <Wrapper>
+                <WrapperMargin />
 
                 {/*vertices input and add vertex button*/}
                 <CoordsInput />
 
-                <div style={style.wrapperCenter} />
+                <WrapperCenter />
 
                 {/*vertices list and send data button*/}
                 <CoordsList />
 
-                <div style={style.wrapperMargin} />
-            </div>
+                <WrapperMargin />
+            </Wrapper>
 
             { geometry && area ? <GeometryLoader shapeType="custom" /> : ""}
         </React.Fragment>
@@ -35,21 +36,18 @@ const CustomPolygon = () => {
 
 export default CustomPolygon;
 
-const style = {
-    wrapper: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "stretch",
-        height: "20em"
-    },
-    horizontalSeparator: {
-        flex: 1
-    },
-    wrapperMargin: {
-        flex: 30
-    },
-    wrapperCenter: {
-        flex: 2
-    },
-};
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    height: 20em;
+`;
+
+const WrapperMargin = styled.div`
+    flex: 30;
+`;
+
+const WrapperCenter = styled.div`
+    flex: 2;
+`;

@@ -1,6 +1,8 @@
 import React, {useContext, useRef} from "react";
 import SubmitButton from "../styled_components/SubmitButton";
 import {GeometryContext} from "../context/GeometryContext";
+import Separator from "../styled_components/Separator";
+import styled from "styled-components";
 
 const CoordsInput = () => {
 
@@ -54,9 +56,9 @@ const CoordsInput = () => {
     };
 
     return (
-        <div style={style.inputContainer}>
+        <InputContainer>
 
-            <div style={style.inputFields}>
+            <InputFields>
                 <div>
                     <p>X</p>
                     <input type="number"
@@ -83,42 +85,36 @@ const CoordsInput = () => {
                            ref={zInput}
                     />
                 </div>
-            </div>
+            </InputFields>
 
 
-            <div style={style.horizontalSeparator} />
+            <Separator />
 
-            <SubmitButton onClick={submitVertex}  style={style.sendButton}>
-                Submit vertex
-            </SubmitButton>
+            <ButtonWrapper>
+                <SubmitButton onClick={submitVertex} > Submit vertex </SubmitButton>
+            </ButtonWrapper>
 
-            <div style={style.horizontalSeparator} />
-        </div>
+            <Separator />
+        </InputContainer>
     )
 };
 
 export default CoordsInput;
 
-const style = {
-    //TODO use colors via Theme
-    inputContainer: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        flex: 20,
-        border: "2px solid #d7ddff",
-        borderRadius: "10px",
-        // padding: 5
-    },
-    inputFields: {
-        alignItems: "stretch",
-        flex: 1,
-    },
-    sendButton: {
-        flex: 1,
-    },
+const InputContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 20;
+    border: 2px solid ${props => props.theme.primary};
+    border-radius: 10px;
+`;
 
-    horizontalSeparator: {
-        flex: 1
-    },
-};
+const InputFields = styled.div`
+    align-items: stretch;
+    flex: 1;
+`;
+
+const ButtonWrapper = styled.div`
+    flex: 1;
+`;

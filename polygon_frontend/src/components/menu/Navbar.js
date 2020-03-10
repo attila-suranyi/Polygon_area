@@ -4,7 +4,7 @@ import Nav from "../styled_components/Nav"
 import StyledLink from "../styled_components/StyledLink";
 import Button from "../styled_components/Button";
 
-const Navbar = (props) => {
+const Navbar = () => {
 
     return (
         <div>

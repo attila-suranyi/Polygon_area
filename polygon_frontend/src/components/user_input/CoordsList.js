@@ -4,6 +4,8 @@ import Vertices from "./Vertices";
 import Axios from "axios";
 import {IpContext} from "../context/IpContext";
 import {GeometryContext} from "../context/GeometryContext";
+import Separator from "../styled_components/Separator";
+import styled from "styled-components";
 
 const CoordsList = () => {
 
@@ -27,57 +29,54 @@ const CoordsList = () => {
     };
 
     return (
-        <div style={style.verticesContainer}>
-            <div style={style.verticesList}>
+        <VerticesContainer>
+            <VerticesList>
                 <p>Added vertices:</p>
-                <div style={style.scrollSpace}>
+                <ScrollSpace>
                     { vertices ? <Vertices vertices={vertices} removeVertex={removeVertex} /> : "" }
-                </div>
-            </div>
+                </ScrollSpace>
+            </VerticesList>
 
-            <div style={style.horizontalSeparator} />
+            <Separator />
 
-            <SubmitButton onClick={sendData} disabled={!submittable} style={style.submitButton}>
-                Generate polygon
-            </SubmitButton>
+            <ButtonWrapper>
+                <SubmitButton onClick={sendData} disabled={!submittable} > Generate polygon </SubmitButton>
+            </ButtonWrapper>
 
-            <div style={style.horizontalSeparator} />
-        </div>
+            <Separator />
+        </VerticesContainer>
     )
 };
 
 export default CoordsList;
 
-const style = {
-    //TODO use colors via Theme
-    verticesContainer: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "stretch",
-        flex: 20,
-        border: "2px solid #d7ddff",
-        borderRadius: "10px",
-    },
-    horizontalSeparator: {
-        flex: 1
-    },
-    verticesList: {
-        display: "flex",
-        flexDirection: "column",
-        flex: 15,
-    },
-    scrollSpace: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "stretch",
-        overflowY: "scroll",
-        flex: "10 0 0",
-        marginLeft: 10,
-        marginRight: 10
-    },
-    submitButton: {
-        flex: 1,
-        alignSelf: "center",
-        width: "12em"
-    }
-};
+const VerticesContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 20;
+    border: 2px solid ${props => props.theme.primary};
+    border-radius: 10px;
+`;
+
+const VerticesList = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex: 15;
+`;
+
+const ScrollSpace = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    overflow-y: scroll;
+    flex: 10 0 0;
+    margin-left: 10%;
+    margin-right: 10%;
+`;
+
+const ButtonWrapper = styled.div`
+    flex: 1;
+    align-self: center;
+`;
+
