@@ -11,7 +11,7 @@ import {scrollToBottom} from "../../../Util";
  */
 const GeometryLoader = (props) => {
 
-    const {area, setArea, geometry, setGeometry} = useContext(GeometryContext);
+    const {area, geometry, handleResp} = useContext(GeometryContext);
     const {backendIp} = useContext(IpContext);
 
     /**
@@ -21,18 +21,6 @@ const GeometryLoader = (props) => {
         Axios.get(`${backendIp}/${props.shapeType}`)
             .then( resp => handleResp(resp.data)
         )
-    };
-
-    /**
-     * Sets the vertex coordinates
-     * @param resp The response data fetched from backend
-     */
-    const handleResp = (resp) => {
-        // console.log(resp);
-        setArea(resp.area);
-        setGeometry(resp.triangles);
-
-        scrollToBottom();
     };
 
     useEffect(() => {
@@ -53,6 +41,7 @@ const GeometryLoader = (props) => {
                 <p>Waiting for server...</p>
             }
 
+            {/*//TODO keep this?*/}
              {/*<Scene geo={geometry} />*/}
 
         </div>

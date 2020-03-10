@@ -6,11 +6,10 @@ import {GeometryContext} from "../context/GeometryContext";
 import CoordsInput from "./CoordsInput";
 import Vertices from "./Vertices";
 import {IpContext} from "../context/IpContext";
-import {scrollToBottom} from "../../Util";
 
 const UserInput = (props) => {
 
-    const {area, setArea, geometry, setGeometry} = useContext(GeometryContext);
+    const {area, geometry, setGeometry, handleResp} = useContext(GeometryContext);
     const {backendIp} = useContext(IpContext);
 
     const xInput = useRef();
@@ -76,13 +75,6 @@ const UserInput = (props) => {
 
         Axios.post(`${backendIp}/custom`, body)
             .then( resp => handleResp(resp.data) )
-    };
-
-    const handleResp = (resp) => {
-        // console.log(resp);
-        setArea(resp.area);
-        setGeometry(resp.triangles);
-        scrollToBottom();
     };
 
     useEffect( () => {
