@@ -17,7 +17,8 @@ const CoordsInput = () => {
     const zInput = useRef();
 
     const limitToBounds = (value) => {
-        let bound = 100;
+        console.log(value);
+        let bound = 1;
         if (value < -bound) return -bound;
         if (bound < value) return bound;
         return value;
@@ -25,7 +26,8 @@ const CoordsInput = () => {
 
     const inputHandler = (event) => {
         let target = event.target.name;
-        let value = parseInt(event.target.value);
+        let value = parseFloat(event.target.value);
+        console.log(value);
 
         switch(target) {
             case "x":
@@ -46,9 +48,9 @@ const CoordsInput = () => {
      * Adds vertex to the vertices list
      */
     const submitVertex = () => {
-        let x = parseFloat(xInput.current.value) / 100;
-        let y = parseFloat(yInput.current.value) / 100;
-        let z = parseFloat(zInput.current.value) / 100;
+        let x = parseFloat(xInput.current.value);
+        let y = parseFloat(yInput.current.value);
+        let z = parseFloat(zInput.current.value);
 
         let vertex = {
             id: vertexId,
@@ -68,27 +70,30 @@ const CoordsInput = () => {
                 <div>
                     <p>X</p>
                     <input type="number"
+                           step={0.01}
                            name="x"
-                           onChange={ inputHandler }
                            ref={xInput}
+                           onChange={ inputHandler }
                     />
                 </div>
 
                 <div>
                     <p>Y</p>
                     <input type="number"
+                           step={0.01}
                            name="y"
-                           onChange={ inputHandler }
                            ref={yInput}
+                           onChange={ inputHandler }
                     />
                 </div>
 
                 <div>
                     <p>Z</p>
                     <input type="number"
+                           step={0.01}
                            name="z"
-                           onChange={ inputHandler }
                            ref={zInput}
+                           onChange={ inputHandler }
                     />
                 </div>
             </InputFields>
