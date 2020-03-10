@@ -10,7 +10,7 @@ import styled from "styled-components";
 const CoordsInput = () => {
 
     //TODO why is 'vertices' unused / not needed?
-    
+
     // const {vertices, setVertices, vertexId, setVertexId} = useContext(GeometryContext);
     const {setVertices, vertexId, setVertexId} = useContext(GeometryContext);
 
@@ -19,7 +19,6 @@ const CoordsInput = () => {
     const zInput = useRef();
 
     const limitToBounds = (value) => {
-        console.log(value);
         let bound = 1;
         if (value < -bound) return -bound;
         if (bound < value) return bound;

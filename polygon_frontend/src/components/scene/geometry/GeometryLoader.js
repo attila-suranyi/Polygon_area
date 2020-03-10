@@ -17,9 +17,13 @@ const GeometryLoader = (props) => {
      * Fetches and handles shape data from backend
      */
     const fetchPolygonData = () => {
-        Axios.get(`${backendIp}/${props.shapeType}`)
-            .then( resp => handleResp(resp.data)
-        )
+        //TODO find a better solution to resolve this
+        if (props.shapeType !== "custom") {
+
+            Axios.get(`${backendIp}/${props.shapeType}`)
+                .then(resp => handleResp(resp.data)
+            )
+        }
     };
 
     useEffect(() => {
