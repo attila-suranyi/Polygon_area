@@ -5,13 +5,21 @@ import Axios from "axios";
 import {IpContext} from "../context/IpContext";
 import {GeometryContext} from "../context/GeometryContext";
 
-const CoordsList = (props) => {
+const CoordsList = () => {
+
     const {backendIp} = useContext(IpContext);
-    const {handleResp} = useContext(GeometryContext);
+    const {vertices, setVertices, handleResp} = useContext(GeometryContext);
+
+    const submittable = vertices.length >= 3;
+
+    const removeVertex = (id) => {
+        let newList = vertices.filter( vertex => vertex.id !== id);
+        setVertices(newList);
+    };
 
     const sendData = () => {
         let body = {
-            vertices: props.vertices
+            vertices: vertices
         };
 
         Axios.post(`${backendIp}/custom`, body)
@@ -23,13 +31,13 @@ const CoordsList = (props) => {
             <div style={style.verticesList}>
                 <p>Added vertices:</p>
                 <div style={style.scrollSpace}>
-                    { props.vertices ? <Vertices vertices={props.vertices} removeVertex={props.removeVertex} /> : "" }
+                    { vertices ? <Vertices vertices={vertices} removeVertex={removeVertex} /> : "" }
                 </div>
             </div>
 
             <div style={style.horizontalSeparator} />
 
-            <SubmitButton onClick={sendData} disabled={!props.submittable} style={style.submitButton}>
+            <SubmitButton onClick={sendData} disabled={!submittable} style={style.submitButton}>
                 Generate polygon
             </SubmitButton>
 

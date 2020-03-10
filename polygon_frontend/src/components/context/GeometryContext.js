@@ -8,6 +8,9 @@ export const GeometryProvider = (props) => {
 
     const [area, setArea] = useState(null);
     const [geometry, setGeometry] = useState(null);
+    const [vertices, setVertices] = useState([]);
+    const [vertexId, setVertexId] = useState(0);
+
 
     /**
      * Sets the vertex coordinates
@@ -21,7 +24,13 @@ export const GeometryProvider = (props) => {
         scrollToBottom();
     };
 
-    const geoHandler = {area, setArea, geometry, setGeometry, handleResp};
+    const geoHandler = {
+        area, setArea,
+        geometry, setGeometry,
+        vertices, setVertices,
+        vertexId, setVertexId,
+        handleResp
+    };
 
     return (
         <GeometryContext.Provider value={geoHandler} >
