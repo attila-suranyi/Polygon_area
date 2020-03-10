@@ -1,18 +1,23 @@
 import React from "react";
+import styled from "styled-components";
+import Separator from "../styled_components/Separator";
 
+/**
+ * The vertices list stored in context
+ * @returns {*} The vertices as separate components
+ */
 const Vertices = (props) => {
     const vertices = props.vertices;
 
     return (
         <React.Fragment>
             { vertices.map(vertex =>
-                <div style={style.container} key={vertex.id}>
-                    <p style={style.vertex}>x: {vertex.x} y: {vertex.y} z: {vertex.z} </p>
-                    <div style={style.separator} />
-                    <p
-                        style={style.delete}
-                        onClick={ ()=> props.removeVertex(vertex.id)}>X</p>
-                </div>
+                <Container key={vertex.id}>
+                    <Vertex>x: {vertex.x} y: {vertex.y} z: {vertex.z} </Vertex>
+                    <Separator />
+
+                    <Delete onClick={ ()=> props.removeVertex(vertex.id)} > X </Delete>
+                </Container>
             )}
         </React.Fragment>
     )
@@ -20,19 +25,16 @@ const Vertices = (props) => {
 
 export default Vertices;
 
-const style = {
-    container: {
-        display: "flex"
-    },
-    vertex: {
-        flex: 4
-    },
-    separator: {
-        flex: 1
-    },
-    delete: {
-        flex: 1,
-        cursor: "pointer"
-    }
-};
+const Container = styled.div`
+    display: flex;
+`;
+
+const Vertex = styled.p`
+    flex: 4;
+`;
+
+const Delete = styled.p`
+    flex: 1;
+    cursor: pointer;
+`;
 

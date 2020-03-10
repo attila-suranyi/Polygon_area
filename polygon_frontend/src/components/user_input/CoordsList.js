@@ -7,6 +7,9 @@ import {GeometryContext} from "../context/GeometryContext";
 import Separator from "../styled_components/Separator";
 import styled from "styled-components";
 
+/**
+ * Handles vertices stored in context
+ */
 const CoordsList = () => {
 
     const {backendIp} = useContext(IpContext);
@@ -14,11 +17,18 @@ const CoordsList = () => {
 
     const submittable = vertices.length >= 3;
 
+    /**
+     * Removes vertex from the vertices list
+     * @param id the vertex id
+     */
     const removeVertex = (id) => {
         let newList = vertices.filter( vertex => vertex.id !== id);
         setVertices(newList);
     };
 
+    /**
+     * Sends vertices list to the server and saves generated polygon data response to context
+     */
     const sendData = () => {
         let body = {
             vertices: vertices

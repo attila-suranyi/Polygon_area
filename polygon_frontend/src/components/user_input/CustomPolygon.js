@@ -5,6 +5,9 @@ import CoordsList from "./CoordsList";
 import GeometryLoader from "../scene/geometry/GeometryLoader";
 import styled from "styled-components";
 
+/**
+ * Builds polygon using custom vertices read from user input
+ */
 const CustomPolygon = () => {
 
     const { area, geometry, setGeometry } = useContext(GeometryContext);

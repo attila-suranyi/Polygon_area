@@ -1,7 +1,6 @@
 import React, {useState, createContext} from "react";
 import {scrollToBottom} from "../../Util";
 
-
 export const GeometryContext = createContext([]);
 
 export const GeometryProvider = (props) => {
@@ -10,7 +9,6 @@ export const GeometryProvider = (props) => {
     const [geometry, setGeometry] = useState(null);
     const [vertices, setVertices] = useState([]);
     const [vertexId, setVertexId] = useState(0);
-
 
     /**
      * Sets the vertex coordinates

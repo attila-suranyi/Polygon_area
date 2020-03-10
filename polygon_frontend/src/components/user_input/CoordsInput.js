@@ -4,6 +4,9 @@ import {GeometryContext} from "../context/GeometryContext";
 import Separator from "../styled_components/Separator";
 import styled from "styled-components";
 
+/**
+ * Reads vertex coordinates entered by the user and saves them to context
+ */
 const CoordsInput = () => {
 
     //TODO why is vertices unused?
@@ -39,6 +42,9 @@ const CoordsInput = () => {
         }
     };
 
+    /**
+     * Adds vertex to the vertices list
+     */
     const submitVertex = () => {
         let x = parseFloat(xInput.current.value) / 100;
         let y = parseFloat(yInput.current.value) / 100;
