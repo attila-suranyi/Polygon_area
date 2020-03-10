@@ -6,11 +6,11 @@ import {GeometryContext} from "../context/GeometryContext";
 import CoordsInput from "./CoordsInput";
 import {IpContext} from "../context/IpContext";
 import CoordsList from "./CoordsList";
+import GeometryLoader from "../scene/geometry/GeometryLoader";
 
 const CustomPolygon = (props) => {
 
-    const {area, geometry, setGeometry, handleResp} = useContext(GeometryContext);
-    const {backendIp} = useContext(IpContext);
+    const {area, geometry, setGeometry} = useContext(GeometryContext);
 
     const xInput = useRef();
     const yInput = useRef();
@@ -100,14 +100,7 @@ const CustomPolygon = (props) => {
                 <div style={style.wrapperMargin} />
             </div>
 
-            <div>
-                { geometry && area ?
-                    <div>
-                        <p>Custom polygon area: {area.toFixed(2)} units</p>
-                        <Scene geo={geometry} />
-                    </div> : ""
-                }
-            </div>
+            { geometry && area ? <GeometryLoader shapeType="custom" /> : ""}
         </React.Fragment>
     )
 };

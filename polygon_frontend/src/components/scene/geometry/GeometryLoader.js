@@ -31,7 +31,7 @@ const GeometryLoader = (props) => {
 
             { geometry && area ?
                 <div>
-                    <p>{props.shapeType} area: {area.toFixed(2)} units</p>
+                    <p>Area: {area.toFixed(2)} units</p>
                     <Scene geo={geometry}/>
                     {/*NOTE: React's context cannot be shared across renderers (e.g. Canvas), therefore*/}
                     {/*the geometry needs to be passed as prop here.*/}
