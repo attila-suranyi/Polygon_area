@@ -15,8 +15,10 @@ const PolygonLoader = (props) => {
     let customGeo = BuildGeometry(props.geo);
     let cubeCamera = new THREE.CubeCamera(1, 100000, 128 );
 
-     // re-renders reflections every frame
+    // re-renders reflections every frame
     useFrame(({ gl, scene }) => {
+        //TODO resolve WebGL render errors
+        
         cubeCamera.visible = false;
         cubeCamera.update(gl, scene);
         cubeCamera.visible = true;

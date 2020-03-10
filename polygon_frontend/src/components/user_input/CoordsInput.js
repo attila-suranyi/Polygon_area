@@ -28,7 +28,6 @@ const CoordsInput = () => {
     const inputHandler = (event) => {
         let target = event.target.name;
         let value = parseFloat(event.target.value);
-        console.log(value);
 
         switch(target) {
             case "x":

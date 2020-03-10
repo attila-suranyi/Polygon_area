@@ -15,7 +15,7 @@ export const GeometryProvider = (props) => {
      * @param resp The response data fetched from backend
      */
     const handleResp = (resp) => {
-        console.log(resp);
+        // console.log(resp);
         setArea(resp.area);
         setGeometry(resp.triangles);
 
