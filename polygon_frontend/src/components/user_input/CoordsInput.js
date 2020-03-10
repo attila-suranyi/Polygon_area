@@ -50,6 +50,7 @@ const CoordsInput = (props) => {
 export default CoordsInput;
 
 const style = {
+    //TODO use colors via Theme
     inputContainer: {
         display: "flex",
         flexDirection: "column",
