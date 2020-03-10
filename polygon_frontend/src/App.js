@@ -5,7 +5,7 @@ import GeometryLoader from "./components/scene/geometry/GeometryLoader";
 import Navbar from "./components/menu/Navbar";
 import { ThemeProvider } from "styled-components";
 import Theme from "./components/styled_components/themes/Theme";
-import UserInput from "./components/user_input/UserInput"
+import CustomPolygon from "./components/user_input/CustomPolygon"
 import {GeometryProvider} from "./components/context/GeometryContext";
 import {IpContext, IpProvider} from "./components/context/IpContext";
 
@@ -38,7 +38,7 @@ function App() {
               </Route>
 
               <Route path="/custom">
-                <UserInput />
+                <CustomPolygon />
               </Route>
             </GeometryProvider>
           </IpProvider>

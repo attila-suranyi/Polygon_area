@@ -3,7 +3,6 @@ import Axios from "axios";
 import Scene from "../Scene";
 import {GeometryContext} from "../../context/GeometryContext";
 import {IpContext} from "../../context/IpContext";
-import {scrollToBottom} from "../../../Util";
 
 /**
  * Requests shape vertex data from backend and builds a PolygonLoader component from it
@@ -30,7 +29,6 @@ const GeometryLoader = (props) => {
     return (
         <div className="scene-container" >
 
-        {/*use this when the server is up!*/}
             { geometry && area ?
                 <div>
                     <p>{props.shapeType} area: {area.toFixed(2)} units</p>
@@ -40,9 +38,6 @@ const GeometryLoader = (props) => {
                 </div> :
                 <p>Waiting for server...</p>
             }
-
-            {/*//TODO keep this?*/}
-             {/*<Scene geo={geometry} />*/}
 
         </div>
     )

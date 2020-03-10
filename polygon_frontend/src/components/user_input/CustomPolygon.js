@@ -89,25 +89,15 @@ const UserInput = (props) => {
                 <div style={style.wrapperMargin} />
 
                 {/*vertices input and add button*/}
-                <div style={style.inputContainer}>
+                <CoordsInput
+                    xRef={xInput}
+                    yRef={yInput}
+                    zRef={zInput}
+                    onChange={inputHandler}
+                    submitVertex={submitVertex}
+                />
 
-                    <CoordsInput
-                        onChange={inputHandler}
-                        xRef={xInput}
-                        yRef={yInput}
-                        zRef={zInput}
-                        style={style.input}
-                    />
-
-                    <div style={style.horizontalSeparator} />
-
-                    <SubmitButton onClick={submitVertex}  style={style.sendButton}>
-                        Submit vertex
-                    </SubmitButton>
-                    <div style={style.horizontalSeparator} />
-                </div>
-
-            <div style={style.wrapperCenter} />
+                <div style={style.wrapperCenter} />
 
                 {/*vertices list and send button*/}
                 <div style={style.verticesContainer}>
@@ -128,7 +118,7 @@ const UserInput = (props) => {
 
                 </div>
 
-            <div style={style.wrapperMargin} />
+                <div style={style.wrapperMargin} />
             </div>
 
             <div>
@@ -153,22 +143,6 @@ const style = {
         justifyContent: "center",
         alignItems: "stretch",
         height: "20em"
-    },
-    inputContainer: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        flex: 20,
-        border: "2px solid #d7ddff",
-        borderRadius: "10px",
-        // padding: 5
-    },
-    input: {
-        alignItems: "stretch",
-        flex: 1,
-    },
-    sendButton: {
-        flex: 1,
     },
     verticesContainer: {
         display: "flex",
