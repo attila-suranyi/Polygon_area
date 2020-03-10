@@ -1,4 +1,3 @@
-import React from "react";
 
 import right from "../textures/bluecloud/rt.jpg";
 import left from "../textures/bluecloud/lf.jpg";

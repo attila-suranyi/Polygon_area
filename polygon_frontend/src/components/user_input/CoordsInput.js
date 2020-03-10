@@ -9,8 +9,10 @@ import styled from "styled-components";
  */
 const CoordsInput = () => {
 
-    //TODO why is vertices unused?
-    const {vertices, setVertices, vertexId, setVertexId} = useContext(GeometryContext);
+    //TODO why is 'vertices' unused / not needed?
+    
+    // const {vertices, setVertices, vertexId, setVertexId} = useContext(GeometryContext);
+    const {setVertices, vertexId, setVertexId} = useContext(GeometryContext);
 
     const xInput = useRef();
     const yInput = useRef();

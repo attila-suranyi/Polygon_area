@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import GeometryLoader from "./components/scene/geometry/GeometryLoader";
@@ -7,11 +7,12 @@ import { ThemeProvider } from "styled-components";
 import Theme from "./components/styled_components/themes/Theme";
 import CustomPolygon from "./components/user_input/CustomPolygon"
 import {GeometryProvider} from "./components/context/GeometryContext";
-import {IpContext, IpProvider} from "./components/context/IpContext";
+import {IpProvider} from "./components/context/IpContext";
+import "./main.css";
 
 function App() {
 
-  const {setBackendIp} = useContext(IpContext);
+  // const {setBackendIp} = useContext(IpContext);
   //localhost by default, edit here if needed
 
   // const myIp = "https://myip:8080";

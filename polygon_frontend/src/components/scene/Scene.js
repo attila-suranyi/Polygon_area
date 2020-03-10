@@ -1,7 +1,6 @@
 import React from "react";
-import {Canvas, useThree} from "react-three-fiber";
+import {Canvas} from "react-three-fiber";
 import * as THREE from "three";
-import "./sceneStyle.css";
 
 import PolygonLoader from "./polygon/PolygonLoader";
 

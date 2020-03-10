@@ -13,7 +13,8 @@ const CustomPolygon = () => {
     const { area, geometry, setGeometry } = useContext(GeometryContext);
 
     useEffect( () => {
-        setGeometry(null)
+        setGeometry(null);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
