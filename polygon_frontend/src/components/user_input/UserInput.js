@@ -6,6 +6,7 @@ import {GeometryContext} from "../context/GeometryContext";
 import CoordsInput from "./CoordsInput";
 import Vertices from "./Vertices";
 import {IpContext} from "../context/IpContext";
+import {scrollToBottom} from "../../Util";
 
 const UserInput = (props) => {
 
@@ -42,6 +43,8 @@ const UserInput = (props) => {
             case "z":
                 zInput.current.value = limitToBounds(value);
                 break;
+            default:
+                console.log(`Incorrect key: ${target}`);
         }
     };
 
@@ -82,11 +85,6 @@ const UserInput = (props) => {
         scrollToBottom();
     };
 
-    const scrollToBottom = () => {
-        window.scrollTo(0,document.body.scrollHeight);
-    };
-
-
     useEffect( () => {
         setGeometry(null)
     }, []);
@@ -126,7 +124,6 @@ const UserInput = (props) => {
                         <p>Added vertices:</p>
                         <div style={style.scrollSpace}>
                             { vertices ? <Vertices vertices={vertices} removeVertex={removeVertex} /> : "" }
-
                         </div>
                     </div>
 

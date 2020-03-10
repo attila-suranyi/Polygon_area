@@ -3,6 +3,7 @@ import Axios from "axios";
 import Scene from "../Scene";
 import {GeometryContext} from "../../context/GeometryContext";
 import {IpContext} from "../../context/IpContext";
+import {scrollToBottom} from "../../../Util";
 
 /**
  * Requests shape vertex data from backend and builds a PolygonLoader component from it
@@ -34,13 +35,6 @@ const GeometryLoader = (props) => {
         scrollToBottom();
     };
 
-    /**
-     *  Scrolls down to bottom to focus on the canvas
-     */
-    const scrollToBottom = () => {
-        window.scrollTo(0,document.body.scrollHeight);
-    };
-
     useEffect(() => {
         fetchPolygonData();
     }, []);
@@ -56,7 +50,7 @@ const GeometryLoader = (props) => {
                     {/*NOTE: React's context cannot be shared across renderers (e.g. Canvas), therefore*/}
                     {/*the geometry needs to be passed as prop here.*/}
                 </div> :
-                <p>Fetching {props.shapeType} data...</p>
+                <p>Waiting for server...</p>
             }
 
              {/*<Scene geo={geometry} />*/}
