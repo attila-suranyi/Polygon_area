@@ -6,14 +6,25 @@ import com.atis.polygon_area.shapes.Tetrahedron;
 import com.atis.polygon_area.shapes.Triangle;
 import com.atis.polygon_area.util.Util;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.mockito.ArgumentMatchers.contains;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+
+@SpringBootTest
 class PolygonTest {
 
     @Test
